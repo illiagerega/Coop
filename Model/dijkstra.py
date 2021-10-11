@@ -5,14 +5,14 @@
 
 from math import inf
 
-wmat = [[0, 2, 0, 0, 0, 1, 0, 0],
-        [2, 0, 2, 2, 4, 0, 0, 0],
-        [0, 2, 0, 0, 3, 0, 0, 1],
-        [0, 2, 0, 0, 4, 3, 0, 0],
-        [0, 4, 3, 4, 0, 0, 7, 0],
-        [1, 0, 0, 3, 0, 0, 5, 0],
-        [0, 0, 0, 0, 7, 5, 0, 6],
-        [0, 0, 1, 0, 0, 0, 6, 0]]
+# wmat = [[0, 2, 0, 0, 0, 1, 0, 0],
+#         [2, 0, 2, 2, 4, 0, 0, 0],
+#         [0, 2, 0, 0, 3, 0, 0, 1],
+#         [0, 2, 0, 0, 4, 3, 0, 0],
+#         [0, 4, 3, 4, 0, 0, 7, 0],
+#         [1, 0, 0, 3, 0, 0, 5, 0],
+#         [0, 0, 0, 0, 7, 5, 0, 6],
+#         [0, 0, 1, 0, 0, 0, 6, 0]]
 
 
 def find_all(wmat, start, end=-1):
@@ -39,7 +39,7 @@ def find_all(wmat, start, end=-1):
     spVertex = [False]*n
     parent = [-1]*n
 
-    path = [{}]*n
+    path = [None]*n
 
     for count in range(n-1):
         minix = inf
@@ -66,8 +66,8 @@ def find_all(wmat, start, end=-1):
         s = s[::-1]
 
         dp = []
-        for j in range(len(s) - 1):
-            dp.append([wmat[s[j - 1]][s[j]][1], s[j - 1], s[j]])
+        for j in range(1, len(s)):
+            dp.append([wmat[s[j - 1]][s[j]][1], s[j - 1], s[j]]) # road, v, u
 
         path[i] = dp
 

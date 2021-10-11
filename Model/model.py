@@ -20,12 +20,12 @@ class Line:
 
 
 class Road:
-    def __init__(self, start_node, end_node, number_of_lines):
+    def __init__(self, nodes, start_node, end_node, number_of_lines):
         self.n_lines = number_of_lines
         self.start_node = start_node
         self.end_node = end_node
-        self.length = hypot(start_node.apos[0] - end_node.apos[0], start_node.apos[1] - end_node.apos[1])
-        self.lines = [{start_node: []}, {end_node: []}]
+        self.length = int(hypot(nodes[start_node].apos[0] - nodes[end_node].apos[0], nodes[start_node].apos[1] - nodes[end_node].apos[1]))
+        self.lines = {start_node: [], end_node: []}
 
         if number_of_lines == 1:
             self.lines[start_node] = [(Line(start_node, end_node, self.length))]

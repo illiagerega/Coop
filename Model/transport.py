@@ -1,5 +1,6 @@
 import random
 import model
+from math import inf
 from dijkstra import find_shortest_path
 
 Acceleration = 1
@@ -46,7 +47,7 @@ class CarDriver:
             self._spawn_nodes.append(node)
 
             node.queue.append(car)
-            car.way = way
+            car.way = way # road, v, u
             car.pos = (0, None)
 
 
@@ -62,11 +63,31 @@ class CarDriver:
 
 
         for car in self._cars:
-            line = car.way[car.pos[0]][0].lines[car.pos[1]]
+            line = car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]]
             gap = line.cells.indexOf(1, car.x)
             if gap == -1:
-                if car.x == len(car.x)
+                next_x = car.CompV(inf)
             else:
+                next_x = car.CompV(gap)
+
+            if next_x >= len(line.cells):
+                if car.pos[0] + 1 >= len(car.way):
+                    del car
+                else:
+                    next_x -= line.length
+                    line.cells[car.x] = 0
+                    car.pos[0] += 1
+                    car.pos[1] = random.randrange(len(car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]]))
+                    car.x = next_x
+                    car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]][car.pos[1]].cells[car.x] = 1
+
+            else:
+                line.cells[car.x] = 0
+                car.pos[0] += 1
+                car.pos[1] = random.randrange(len(car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]]))
+                car.x = next_x
+                car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]][car.pos[1]].cells[car.x] = 1
+
 
 
 
