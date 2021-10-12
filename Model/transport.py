@@ -79,6 +79,7 @@ class CarDriver:
                     car.pos[0] += 1
                     car.pos[1] = random.randrange(len(car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]]))
                     car.x = next_x
+
                     car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]][car.pos[1]].cells[car.x] = 1
 
             else:

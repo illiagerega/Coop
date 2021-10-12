@@ -56,20 +56,20 @@ def find_all(wmat, start, end=-1):
                 parent[v] = u
                 dist[v] = dist[u] + wmat[u][v][0]
 
-    for i in range(n):
-        j = i
-        s = []
-        while parent[j] != -1:
-            s.append(j)
-            j = parent[j]
-        s.append(start)
-        s = s[::-1]
+    i = end
+    j = i
+    s = []
+    while parent[j] != -1:
+        s.append(j)
+        j = parent[j]
+    s.append(start)
+    s = s[::-1]
 
-        dp = []
-        for j in range(1, len(s)):
-            dp.append([wmat[s[j - 1]][s[j]][1], s[j - 1], s[j]]) # road, v, u
+    dp = []
+    for j in range(1, len(s)):
+        dp.append([wmat[s[j - 1]][s[j]][1], s[j - 1], s[j]]) # road, v, u
 
-        path[i] = dp
+    path[i] = dp
 
 
     return (dist[end], path[end]) if end >= 0 else (dist, path)
