@@ -1,64 +1,82 @@
 from Util.dijkstra import find_shortest_path
 from Util.CarInstance import Car
 from Util.MapController import Map
+from Util.RoadInstance import Road
+from Util.LineInstance import Line
 import random
 from math import inf
 
 
 class CarDriver:
-    cars_array = []
+    cars_array: list[Car] = []
 
     @staticmethod
     def init():
         print(Map.n_cars)
         for i in range(Map.n_cars):
             node = random.choice(Map.spawn_nodes)
-            way = find_shortest_path(Map.distance_matrix, node, random.choice([i for i in Map.spawn_nodes if i != node]))
+            #way = find_shortest_path(Map.distance_matrix, node, random.choice([i for i in Map.spawn_nodes if i != node]))
+            way = find_shortest_path(Map.distance_matrix, 0, 4)
             pos = (0, None)
 
             car = Car(-1)
-            car.way = way
+            for x in way:
+                car.addWayNode(x[0], x[1], x[2])
             car.pos = pos
 
             Map.nodes[node].queue.append(car)
             CarDriver.cars_array.append(car)
 
+            CarDriver.assignCars()
+
     @staticmethod
-    def comp(self):  # dt = 1 s
+    def assignCars():
+        for spawn_node in Map.spawn_nodes:
+            for car in Map.nodes[spawn_node].queue:
+                car.wayProgress = 0
+                assigned = False
+                for i in range(0, len(car.getLines()[0].cells), 2):
+                    for index, line in enumerate(car.getLines()):
+                        if line.cells[i] == 0:
+                            line.cells[i] = 1
+                            print("Assign " + str(i))
+                            car.x = i
+                            car.currentLine = index
+                            assigned = True
+                    if assigned:
+                        break
 
-        for i in Map.spawn_nodes:
-            for car in i.queue:
-                for line in car.way[0].lines[car.way[1]]:
-                    if line.cells[0] != 1:
-                        car.x = 0
-                        car.pos[1] = car.way[0].lines.indexOf(line)
+            Map.nodes[spawn_node].queue.clear()
 
-        for car in self.cars:
-            line = car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]]
-            gap = line.cells.indexOf(1, car.x)
-            if gap == -1:
-                next_x = car.CompV(inf)
-            else:
-                next_x = car.CompV(gap)
+    @staticmethod
+    def comp():  # dt = 1 s
 
-            if next_x >= len(line.cells):
-                if car.pos[0] + 1 >= len(car.way):
-                    del car
+        for car_index, car in enumerate(CarDriver.cars_array):
+            line = car.getLines()[car.currentLine]
+            try:
+                gap = line.cells.index(1, car.x + 1)
+                if gap == -1:
+                    car.next_x = car.CompV(max(3, len(line.cells) - car.x))
                 else:
-                    next_x -= line.length
-                    line.cells[car.x] = 0
-                    car.pos[0] += 1
-                    car.pos[1] = random.randrange(len(car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]]))
-                    car.x = next_x
+                    car.next_x = car.CompV(gap)
+            except ValueError:
+                car.next_x = car.CompV(max(3, len(line.cells) - car.x))
+        for car_index, car in enumerate(CarDriver.cars_array):
+            line = car.getLines()[car.currentLine]
+            line.cells[car.x] = 0
+            if car.next_x >= len(line.cells):
+                if car.wayProgress + 1 >= len(car.way):
 
-                    car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]][car.pos[1]].cells[car.x] = 1
+                    del CarDriver.cars_array[car_index]
+                    del car
+                    continue
+                else:
+                    car.next_x -= len(line.cells)
+                    car.wayProgress += 1
 
-            else:
-                line.cells[car.x] = 0
-                car.pos[0] += 1
-                car.pos[1] = random.randrange(len(car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]]))
-                car.x = next_x
-                car.way[car.pos[0]][0].lines[car.way[car.pos[0]][1]][car.pos[1]].cells[car.x] = 1
+            car.currentLine = random.randrange(len(car.getLines()))
+            car.x = car.next_x
+            car.getLines()[car.currentLine].cells[car.x] = 1
 
     def __get_path(u, v):
         return find_shortest_path(Map.distance_matrix, u, v)
