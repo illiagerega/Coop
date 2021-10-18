@@ -6,7 +6,7 @@
 import transport
 import dijkstra
 
-def GetDistances(nodes):
+def GetDistances(nodes): # ф-ція для Дейкстрі (поки що працює)
     dmat = []
     k = 0
     for node in nodes:
@@ -24,7 +24,8 @@ def GetDistances(nodes):
 
     return dmat
 
-
+""" Весь граф складається з нодів і доріг, які розподіляються на лінії
+    лінії - це те, що взяли з ресерчу й імплементували"""
 
 class Topology:
     def __init__(self, nodes, roads, n_cars, spawn_nodes):
@@ -38,3 +39,6 @@ class Topology:
 
     def GetPath(self, u, v):
         return dijkstra.find_shortest_path(self.dmat, u, v)
+
+    def ReturnCarPos(self):
+        return self.car_driver.ReturnCarPos()

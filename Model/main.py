@@ -37,13 +37,19 @@ for i in range(n_roads):
 
 opology = topology.Topology(nodes, roads, n_cars, spawn_nodes)
 
-with open("output.txt", 'w') as f:
-    for mat in opology.GetPath(0, 2):
-        for at in mat:
-            f.write(str(at))
+# with open("output.txt", 'w') as f:
+#     for mat in opology.GetPath(0, 2):
+#         for at in mat:
+#             f.write(str(at))
+#
+#         #f.write('\n')
 
-        #f.write('\n')
+while True:
+    a = input()
+    opology.Comp()
+    buf = opology.ReturnCarPos()
+    print(buf)
 
 
 
-print(nodes)
+

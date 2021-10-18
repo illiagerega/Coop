@@ -1,7 +1,7 @@
 import random
 from math import hypot
 
-Separation = 5
+Separation = 1
 types = ['s', 'i']
 
 
@@ -10,6 +10,7 @@ class Line:
         self.cells = [0]*(length // Separation)
         self.v = start_node
         self.u = end_node
+        self.length = length
         #self.cars = []
 
     def sortCars(self): # by distance
