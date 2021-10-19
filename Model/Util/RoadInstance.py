@@ -22,5 +22,4 @@ class Road:
                 self.lines[end_node].append(line)
 
     def __str__(self):
-        this_road = "Road: " + str(self.start_node) + ' ' + str(self.end_node)
-        return this_road
+        return "Road: " + str(self.start_node) + ' ' + str(self.end_node)

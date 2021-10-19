@@ -4,8 +4,12 @@ from .NodeInstance import Node
 
 class Map:
 
-    n_nodes = n_roads = n_cars = int()
-    nodes = spawn_nodes = roads = []
+    n_nodes: int
+    n_road: int
+    n_cars: int
+    nodes: list[Node] = []
+    spawn_nodes: list[int]
+    roads: list[Road] = []
     distance_matrix = []
 
     @staticmethod
