@@ -43,7 +43,7 @@ class Map:
 
         for i in range(Map.n_nodes):
             type_name, x, y = list(map(int, graph.readline().split()))  # types: 0 - spawn, 1 - intersect
-            node = Node(type_name, (x, y))
+            node = Node(type_name, (x, y), i)
             Map.nodes[i] = node
 
             if type_name == 0:
