@@ -19,6 +19,8 @@ def main():
         for car in CarDriver.cars_array:
             print(car.x)
             print(car.getLines()[car.currentLine])
+            print(car.getCoordinates())
+
         CarDriver.comp()
         print()
         print()

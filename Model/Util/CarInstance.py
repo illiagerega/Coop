@@ -1,11 +1,9 @@
 from .RoadInstance import Road
 from .LineInstance import Line
+from .Consts import *
 import random
+from math import atan, pi, copysign
 
-Acceleration = 1
-StartVelocity = 0
-MaxVelocity = 3
-Probability = 0.5  # for city - 0.5; for highway - 0.3
 
 
 class Car:
@@ -23,15 +21,15 @@ class Car:
         self._a = Acceleration
         self.pause = 0
         self.x = x
-        self.apos = (ax, ay)
+        self.apos = [ax, ay]
         self.way = []
         self.wayProgress = -1
         self.currentLine = -1
         self.next_x = -1
 
-    def CompV(self, gap):
+    def CompV(self, gap) -> int:
         self._v = min(self._v + self._a, MaxVelocity)
-        self._v = min(self._v, gap - 1)
+        self._v = min(self._v, gap - 2)
         if random.randint(0, 10) >= Probability * 10:
             self._v = max(self._v - 1, 0)
 
@@ -57,3 +55,20 @@ class Car:
             return self.getRoad().lines[self.__getNode().start_node]
         else:
             return []
+
+    def getCoordinates(self) -> [[int, int], int]: # apos, angle
+
+        from .MapController import Map
+
+        current_node = self.__getNode()
+        start_node = Map.nodes[current_node.start_node]
+        end_node = Map.nodes[current_node.end_node]
+
+        x = end_node.apos[0] - start_node.apos[0]
+        y = end_node.apos[1] - start_node.apos[1]
+
+        self.apos[0] = (self.x / len(self.getLines()[0].cells)) * (x) + start_node.apos[0]
+        self.apos[1] = (self.x / len(self.getLines()[0].cells)) * (y) + start_node.apos[1]
+
+
+        return [self.apos, atan(y / x) if x != 0.00 else copysign(pi / 2, y)]

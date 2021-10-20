@@ -2,18 +2,9 @@
 # Author: Cristian Bastidas
 # GitHub: https://github.com/crixodia
 # Date: 2020-10-7
+# Modified for our purposes
 
 from math import inf
-
-# wmat = [[0, 2, 0, 0, 0, 1, 0, 0],
-#         [2, 0, 2, 2, 4, 0, 0, 0],
-#         [0, 2, 0, 0, 3, 0, 0, 1],
-#         [0, 2, 0, 0, 4, 3, 0, 0],
-#         [0, 4, 3, 4, 0, 0, 7, 0],
-#         [1, 0, 0, 3, 0, 0, 5, 0],
-#         [0, 0, 0, 0, 7, 5, 0, 6],
-#         [0, 0, 1, 0, 0, 0, 6, 0]]
-
 
 
 def find_all(wmat, start, end=-1):

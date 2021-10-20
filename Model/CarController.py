@@ -4,6 +4,7 @@ from Util.MapController import Map
 from Util.RoadInstance import Road
 from Util.LineInstance import Line
 import random
+import json
 from math import inf
 
 
@@ -61,12 +62,14 @@ class CarDriver:
                     car.next_x = car.CompV(gap)
             except ValueError:
                 car.next_x = car.CompV(max(3, len(line.cells) - car.x))
+
+
         for car_index, car in enumerate(CarDriver.cars_array):
+
             line = car.getLines()[car.currentLine]
             line.cells[car.x] = 0
             if car.next_x >= len(line.cells):
                 if car.wayProgress + 1 >= len(car.way):
-
                     del CarDriver.cars_array[car_index]
                     del car
                     continue
@@ -77,6 +80,9 @@ class CarDriver:
             car.currentLine = random.randrange(len(car.getLines()))
             car.x = car.next_x
             car.getLines()[car.currentLine].cells[car.x] = 1
+
+    def getEverythingIntoFile(self): # print coordinates into file .json
+        pass
 
     def __get_path(u, v):
         return find_shortest_path(Map.distance_matrix, u, v)
