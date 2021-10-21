@@ -3,7 +3,6 @@ from .NodeInstance import Node
 
 
 class Map:
-
     n_nodes: int
     n_road: int
     n_cars: int
@@ -14,20 +13,19 @@ class Map:
 
     @staticmethod
     def get_distances():
-        Map.distance_matrix = []
-        k = 0
-        for node in Map.nodes:
-            mat = [[0, None]] * len(Map.nodes)
-            for i in node.start_roads:
-                if i.end_node != k:
-                    mat[i.end_node] = [i.length, i]
-                elif i.start_node != k and i.lines != 1:
-                    mat[i.start_node] = [i.length, i]
-                else:
-                    pass
+        # This has to be bidirectional
+        for i in range(Map.n_nodes):
+            temp= []
+            for j in range(Map.n_nodes):
+                temp.append([0, None])
+            Map.distance_matrix.append(temp)
 
-            Map.distance_matrix.append(mat)
-            k += 1
+        for index, node in enumerate(Map.nodes):
+            for road in node.start_roads:
+                Map.distance_matrix[road.start_node][road.end_node] = [road.length, road]
+
+        for i in Map.distance_matrix:
+            print(i)
 
 
     @staticmethod
@@ -59,12 +57,13 @@ class Map:
             Map.nodes[e_n].addRoad(road, 'end')
 
             if n_lines > 1:
-                Map.nodes[e_n].addRoad(road)
-                Map.nodes[s_n].addRoad(road, 'end')
+                # Це якись убогий костиль, треба якось його забрати, но поки що і так сойдет
+                # (поки що, робим вигляд шо у нас або 1 або 2 лінії (одностороннє або двухстороннє))
+                reverse_road = Road(Map.nodes, e_n, s_n, n_lines)
+                Map.nodes[e_n].addRoad(reverse_road)
+                Map.nodes[s_n].addRoad(reverse_road, 'end')
 
         Map.get_distances()
         # spawn_point, end_point = list(map(int, input().split()))
 
         # way = list(map(int, input().split()))
-
-

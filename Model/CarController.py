@@ -16,8 +16,11 @@ class CarDriver:
         print(Map.n_cars)
         for i in range(Map.n_cars):
             node = random.choice(Map.spawn_nodes)
-            #way = find_shortest_path(Map.distance_matrix, node, random.choice([i for i in Map.spawn_nodes if i != node]))
-            way = find_shortest_path(Map.distance_matrix, 0, 4)
+            way = find_shortest_path(Map.distance_matrix, node, random.choice([i for i in Map.spawn_nodes if i != node]))
+           # way = find_shortest_path(Map.distance_matrix, 0, 4)
+            print(node)
+            print("DKJFDSLKFJDSKLFJDSKLFJDSKL")
+
             pos = (0, None)
 
             car = Car(-1)
@@ -36,6 +39,8 @@ class CarDriver:
             for car in Map.nodes[spawn_node].queue:
                 car.wayProgress = 0
                 assigned = False
+
+                print(car.way)
                 for i in range(0, len(car.getLines()[0].cells), 2):
                     for index, line in enumerate(car.getLines()):
                         if line.cells[i] == 0:
