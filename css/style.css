@@ -12,22 +12,6 @@ body{
     background-color: black;
     
 }
-.t_cross{
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    background: url(../img/T-crossing.png);
-    background-color: var(--main_color);
-    background-size: 100px;
-    background-repeat: no-repeat;
-}
-.x_cross{
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    background: url(../img/X-crossing.png);
-    background-color: var(--main_color);
-}
 .main_circle{
     width: 60px;
     height: 60px;
@@ -42,4 +26,11 @@ body{
     position: absolute;
     background: var(--pavement_color);
     border-radius: 50%;
+}
+.car_red{
+    width: 30px;
+    height: 17px;
+    background: url(../img/car_red.png);
+    background-color: var(--road_color);
+    position: absolute;
 }
