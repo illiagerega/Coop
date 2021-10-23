@@ -5,3 +5,5 @@ MaxVelocity = 3
 Probability = 0.5  # for city - 0.5; for highway - 0.3
 StartPeriodLow = 10
 StartPeriodHigh = 50
+NameCarsFile = "../data/cars.json"
+NameMapFile = "../data/map.json"

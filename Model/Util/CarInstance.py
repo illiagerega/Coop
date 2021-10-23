@@ -29,7 +29,7 @@ class Car:
 
     def CompV(self, gap) -> int:
         self._v = min(self._v + self._a, MaxVelocity)
-        self._v = min(self._v, gap - 2)
+        self._v = min(self._v, gap - 1)
         if random.randint(0, 10) >= Probability * 10:
             self._v = max(self._v - 1, 0)
 

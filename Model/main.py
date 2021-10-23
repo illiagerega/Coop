@@ -1,11 +1,15 @@
 from Util.MapController import Map
 from CarController import CarDriver
+from LightsController import LightsController
 
 
 def main():
     Map.init("test.txt")
+    Map.getEverythingIntoFile()
 
     CarDriver.init()
+    LightsController.init()
+
     for node in CarDriver.cars_array[0].way:
         print(node)
 
@@ -24,5 +28,7 @@ def main():
         CarDriver.comp()
         print()
         print()
+
+        CarDriver.getEverythingIntoFile()
 if __name__ == "__main__":
     main()

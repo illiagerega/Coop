@@ -3,6 +3,8 @@ from Util.CarInstance import Car
 from Util.MapController import Map
 from Util.RoadInstance import Road
 from Util.LineInstance import Line
+from Util.Consts import NameCarsFile
+import os
 import random
 import json
 from math import inf
@@ -16,8 +18,12 @@ class CarDriver:
         print(Map.n_cars)
         for i in range(Map.n_cars):
             node = random.choice(Map.spawn_nodes)
-            #way = find_shortest_path(Map.distance_matrix, node, random.choice([i for i in Map.spawn_nodes if i != node]))
-            way = find_shortest_path(Map.distance_matrix, 0, 4)
+            way = find_shortest_path(Map.distance_matrix, node, random.choice([i for i in Map.spawn_nodes if i != node]))
+            #way = find_shortest_path(Map.distance_matrix, 0, 4)
+
+            print(node)
+            print("DKJFDSLKFJDSKLFJDSKLFJDSKL")
+
             pos = (0, None)
 
             car = Car(-1)
@@ -55,7 +61,7 @@ class CarDriver:
         for car_index, car in enumerate(CarDriver.cars_array):
             line = car.getLines()[car.currentLine]
             try:
-                gap = line.cells.index(1, car.x + 1)
+                gap = line.cells.index(1, car.x + 1) - car.x
                 if gap == -1:
                     car.next_x = car.CompV(max(3, len(line.cells) - car.x))
                 else:
@@ -81,8 +87,16 @@ class CarDriver:
             car.x = car.next_x
             car.getLines()[car.currentLine].cells[car.x] = 1
 
-    def getEverythingIntoFile(self): # print coordinates into file .json
-        pass
+    @staticmethod
+    def getEverythingIntoFile(): # print coordinates into file .json
+        export = open(NameCarsFile, 'w')
+
+        row = []
+
+        for car_index, car in enumerate(CarDriver.cars_array):
+            row.append({car_index : car.getCoordinates()})
+
+        json.dump({"cars" : row}, export)
 
     def __get_path(u, v):
         return find_shortest_path(Map.distance_matrix, u, v)

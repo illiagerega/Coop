@@ -1,5 +1,7 @@
 from .RoadInstance import Road
 from .NodeInstance import Node
+from .Consts import NameMapFile
+import json
 
 
 class Map:
@@ -28,6 +30,9 @@ class Map:
 
             Map.distance_matrix.append(mat)
             k += 1
+
+        # for line in Map.distance_matrix:
+        #     print(line)
 
 
     @staticmethod
@@ -67,4 +72,17 @@ class Map:
 
         # way = list(map(int, input().split()))
 
+    @staticmethod
+    def getEverythingIntoFile():
+        export = open(NameMapFile, 'w')
 
+        row_nodes = []
+        row_roads = []
+
+        for node in Map.nodes:
+            row_nodes.append({node.index : [node.apos, node.type]})
+
+        for index_road, road in enumerate(Map.roads):
+            row_roads.append({ index_road : [(road.start_node, road.end_node), road.n_lines]})
+
+        json.dump({"nodes" : row_nodes, "roads" : row_roads}, export)

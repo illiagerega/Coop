@@ -1,15 +1,16 @@
 from .NodeInstance import Node
 from .MapController import Map
+from.LineInstance import Line
 
 class TrafficLight:
     # Lines, which connected to node, separated into two arrays:
-    array_lines1 : list[Line] = []
-    array_lines2 : list[Line] = []
+    array_lines : list[list[Line], list[Line]] = [[], []]
 
     # Those arrays represent the separation for traffic light
     # We declare that traffic light has two periods
     periods : list[int, int]
-    is_first_open : bool = True
+    _is_first_open : bool = True
+    counter : int = 0
 
     # When period one changes : traffic light 1 and 3 (2 and 4) change the colours to green (red)
     #                           traffic light 2 and 4 (1 and 3) change the colours to red (green)
@@ -33,13 +34,38 @@ class TrafficLight:
         sample_roads2 = [array_of_roads[i] for i, road in enumerate(array_of_roads) if array_of_roads.index(road) == -1]
 
         for road in sample_roads1:
-            self.array_lines1.extend(road.lines[index])
+            self.array_lines[0].extend(road.lines[index])
 
         for road in sample_roads2:
-            self.array_lines2.extend(road.lines[index])
+            self.array_lines[1].extend(road.lines[index])
 
         # initializing the periods
 
         self.periods = init_periods
         self.node : Node = Map.nodes[index]
+
+    def ChangeLine(self):
+        if self._is_first_open:
+            for line in self.array_lines[0]:
+                line.cells[-1] = 0
+            for line in self.array_lines[1]:
+                line.cells[-1] = 1
+        else:
+            for line in self.array_lines[1]:
+                line.cells[-1] = 0
+            for line in self.array_lines[0]:
+                line.cells[-1] = 1
+
+
+        self._is_first_open = not self._is_first_open
+
+    def Change(self):
+        self.counter += 1
+        flag = int(self._is_first_open)
+        if self.counter >= self.periods[flag]:
+            self.counter = 0
+            self.ChangeLine()
+
+
+
 
