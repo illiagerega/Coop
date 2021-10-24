@@ -7,3 +7,4 @@ StartPeriodLow = 10
 StartPeriodHigh = 50
 NameCarsFile = "../data/cars.json"
 NameMapFile = "../data/map.json"
+NameOsmFile = "../data/map_big.osm"

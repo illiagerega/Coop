@@ -87,16 +87,5 @@ class CarDriver:
             car.x = car.next_x
             car.getLines()[car.currentLine].cells[car.x] = 1
 
-    @staticmethod
-    def getEverythingIntoFile(): # print coordinates into file .json
-        export = open(NameCarsFile, 'w')
-
-        row = []
-
-        for car_index, car in enumerate(CarDriver.cars_array):
-            row.append({car_index : car.getCoordinates()})
-
-        json.dump({"cars" : row}, export)
-
     def __get_path(u, v):
         return find_shortest_path(Map.distance_matrix, u, v)

@@ -72,17 +72,3 @@ class Map:
 
         # way = list(map(int, input().split()))
 
-    @staticmethod
-    def getEverythingIntoFile():
-        export = open(NameMapFile, 'w')
-
-        row_nodes = []
-        row_roads = []
-
-        for node in Map.nodes:
-            row_nodes.append({node.index : [node.apos, node.type]})
-
-        for index_road, road in enumerate(Map.roads):
-            row_roads.append({ index_road : [(road.start_node, road.end_node), road.n_lines]})
-
-        json.dump({"nodes" : row_nodes, "roads" : row_roads}, export)

@@ -1,11 +1,14 @@
 from Util.MapController import Map
 from CarController import CarDriver
 from LightsController import LightsController
-
+from PortController import PortDriver
+from Util.SimulationShrimp import sim
 
 def main():
     Map.init("test.txt")
-    Map.getEverythingIntoFile()
+    #Map.getEverythingIntoFile()
+    # PortDriver.setMapFromFile(True)
+    PortDriver.getMapIntoFile()
 
     CarDriver.init()
     LightsController.init()
@@ -25,10 +28,12 @@ def main():
             print(car.getLines()[car.currentLine])
             print(car.getCoordinates())
 
+        sim(CarDriver)
         CarDriver.comp()
         print()
         print()
 
-        CarDriver.getEverythingIntoFile()
+        PortDriver.getCarsIntoFile()
+
 if __name__ == "__main__":
     main()
