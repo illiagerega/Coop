@@ -21,7 +21,7 @@ class CarDriver:
             way = find_shortest_path(Map.distance_matrix, node, random.choice([i for i in Map.spawn_nodes if i != node]))
             #way = find_shortest_path(Map.distance_matrix, 0, 4)
 
-            print(node)
+            print(way)
             print("DKJFDSLKFJDSKLFJDSKLFJDSKL")
 
             pos = (0, None)

@@ -71,4 +71,4 @@ class Car:
         self.apos[1] = (self.x / len(self.getLines()[0].cells)) * (y) + start_node.apos[1]
 
 
-        return [self.apos, atan(y / x) if x != 0.00 else copysign(pi / 2, y)]
+        return [self.apos, atan(y / x) if x != 0.00 else copysign(pi / 2, y), self._v]

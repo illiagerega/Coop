@@ -12,10 +12,11 @@ class LightsController:
 
 
         for node_index, node in enumerate(Map.nodes):
-            if node.type != 'intersect':
+            if node.type != 'intersect' or len(node.end_roads) < 2:
                 continue
 
-            LightsController.traffic_lights.append(TrafficLight(node.end_nodes,
+
+            LightsController.traffic_lights.append(TrafficLight(node.end_roads,
                                                     [randrange(StartPeriodLow, StartPeriodHigh),
                                                      randrange(StartPeriodLow, StartPeriodHigh)],
                                                     node_index))

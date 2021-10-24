@@ -1,6 +1,7 @@
 from .NodeInstance import Node
 from .MapController import Map
 from.LineInstance import Line
+from random import sample
 
 class TrafficLight:
     # Lines, which connected to node, separated into two arrays:
@@ -31,13 +32,16 @@ class TrafficLight:
     def __init__(self, array_of_roads,  init_periods, index):
         # in the beginning, I used random function for distribution of lines
         sample_roads1 = sample(array_of_roads, len(array_of_roads) // 2)
-        sample_roads2 = [array_of_roads[i] for i, road in enumerate(array_of_roads) if array_of_roads.index(road) == -1]
+        sample_roads2 = [array_of_roads[i] for i, road in enumerate(array_of_roads) if not (road in sample_roads1)]
 
         for road in sample_roads1:
             self.array_lines[0].extend(road.lines[index])
 
         for road in sample_roads2:
             self.array_lines[1].extend(road.lines[index])
+
+        # Another application of setting the roads into types
+
 
         # initializing the periods
 

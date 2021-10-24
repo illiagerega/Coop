@@ -28,7 +28,7 @@ def main():
             print(car.getLines()[car.currentLine])
             print(car.getCoordinates())
 
-        sim(CarDriver)
+        #sim(CarDriver)
         CarDriver.comp()
         print()
         print()

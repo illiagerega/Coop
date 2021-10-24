@@ -11,14 +11,14 @@ class Road:
         self.lines = {start_node: [], end_node: []}
 
         if number_of_lines == 1:
-            self.lines[start_node] = [(Line(start_node, end_node, self.length))]
+            self.lines[start_node] = [(Line(start_node, end_node, self))]
         else:
             for i in range(number_of_lines // 2):
-                line = Line(start_node, end_node, self.length)
+                line = Line(start_node, end_node, self)
                 self.lines[start_node].append(line)
 
             for i in range(number_of_lines // 2, number_of_lines):
-                line = Line(end_node, start_node, self.length)
+                line = Line(end_node, start_node, self)
                 self.lines[end_node].append(line)
 
     def __str__(self):

@@ -4,7 +4,7 @@ from LightsController import LightsController
 from Util.Consts import *
 
 import json
-import osm2geojson
+#import osmnx
 
 class PortDriver:
 
@@ -37,6 +37,10 @@ class PortDriver:
         json.dump({"nodes": row_nodes, "roads": row_roads}, export_file)
         export_file.close()
 
+
+
+
+
     @staticmethod
     def setMapFromFile(osm=False): # in development
         if not osm:
@@ -55,6 +59,8 @@ class PortDriver:
             for string in import_string:
                 xml_string += string.split('\n')[0]
 
-            data = osm2geojson.xml2geojson(xml_string)
+            #graph = osmnx.graph_from_xml(xml_string)
+
+            #data = osm2geojson.xml2geojson(xml_string)
             data = json.loads(data)
             print(data)

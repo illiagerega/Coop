@@ -52,7 +52,7 @@ def sim(CarDriver):
             y1 = Map.nodes[line.start_node].apos[1]
             y2 = Map.nodes[line.end_node].apos[1]
 
-            print(x1, x2, y1, y2)
+            #print(x1, x2, y1, y2)
             # okay, i will just go through every possibility
             # не обращай вніманія, тут я грався і радувався життю
             # Ok, as you said
@@ -91,8 +91,8 @@ def sim(CarDriver):
             y_values.extend([y1 + y_res * cnt, y2 + y_res * cnt])
             plt.plot(x_values, y_values, "#2471A3")  # blue
             cnt += 1
-        print()
-        print()
+        # print()
+        # print()
 
     color = 0
     for car in CarDriver.cars_array:
