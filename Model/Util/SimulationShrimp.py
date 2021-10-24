@@ -84,6 +84,12 @@ def sim(CarDriver):
             elif x2 > x1 and y2 < y1:
                 x_res = distance_between_line
                 y_res = distance_between_line
+            elif x2 > x1 and y2 == y1:
+                x_res = 0
+                y_res = distance_between_line * 1
+            elif x2 == x1 and y2 == y1:
+                x_res = 0
+                y_res = 0
             else:
                 raise Exception("something (accidentally) went wrong")
 

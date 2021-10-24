@@ -11,7 +11,7 @@ class Node:
 
     def __init__(self, type, apos, index):
         self.type = types[type]  # 'spawn', 'intersect'
-        self.apos: (int, int) = apos  # absolute position (x, y)
+        self.apos: (int, int) = list(map(int, apos))  # absolute position (x, y)
         self.start_roads: list[Road] = []
         self.end_roads: list[Road] = []
         self.queue: list[Car] = []
