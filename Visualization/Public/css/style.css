@@ -1,0 +1,37 @@
+body{
+    --main_color: #54de62;
+    background: var(--main_color);
+    --road_color: #4a4a4a;
+    --pavement_color: #6b6b6b;
+}
+.road{
+    height: 50px;
+    position: absolute;
+    z-index: 1;
+    background: url(../img/road.png);
+    background-color: black;
+    
+}
+.main_circle{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    z-index: 2;
+    background: var(--road_color);
+    border-radius: 50%;
+}
+.main_circle_border{
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    background: var(--pavement_color);
+    border-radius: 50%;
+}
+.car_red{
+    width: 30px;
+    height: 17px;
+    background: url(../img/car_red.png);
+    background-color: var(--road_color);
+    position: absolute;
+    z-index: 3;
+}
