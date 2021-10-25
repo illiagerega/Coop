@@ -16,20 +16,20 @@ class Map:
 
     @staticmethod
     def get_distances():
-        Map.distance_matrix = []
-        k = 0
-        for node in Map.nodes:
-            mat = [[0, None]] * len(Map.nodes)
-            for i in node.start_roads:
-                if i.end_node != k:
-                    mat[i.end_node] = [i.length, i]
-                elif i.start_node != k and i.lines != 1:
-                    mat[i.start_node] = [i.length, i]
-                else:
-                    pass
+        # Map.distance_matrix = []
+        # k = 0
+        for i in range(Map.n_nodes):
+            temp = []
+            for j in range(Map.n_nodes):
+                temp.append([0, None])
+            Map.distance_matrix.append(temp)
 
-            Map.distance_matrix.append(mat)
-            k += 1
+        for index, node in enumerate(Map.nodes):
+            for road in node.start_roads:
+                Map.distance_matrix[road.start_node][road.end_node] = [road.length, road]
+
+        # for i in Map.distance_matrix:
+        #     print(i)
 
         # for line in Map.distance_matrix:
         #     print(line)

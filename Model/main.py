@@ -9,7 +9,7 @@ def main():
     #Map.init("test.txt")
     #Map.getEverythingIntoFile()
     PortDriver.setMapFromFile(NameOsmFile)  #("test.txt")
-    # PortDriver.getMapIntoFile()
+    PortDriver.getMapIntoFile()
 
     CarDriver.init()
     LightsController.init()

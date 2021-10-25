@@ -45,6 +45,7 @@ class PortDriver:
 
     @staticmethod
     def setMapFromFile(fileName):
+
         if '.json' in fileName:
             import_file = open(fileName, 'r')
 
@@ -58,22 +59,17 @@ class PortDriver:
             roads = []
 
             for node_index, node in enumerate(row_nodes):
-                nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
-                spawn_nodes.append(nodes[-1].index)
-                nodes_indexes[node] = node_index
-                pass
+                nodes.append(Node(node[1], node[0], node_index))
+                if nodes[-1].type == 0:
+                    spawn_nodes.append(nodes[-1].index)
 
-            for edge in graph.edges:
-                attributes = graph.edges[edge]
-                s_n = nodes_indexes[edge[0]]
-                e_n = nodes_indexes[edge[1]]
-                roads.append(Road(nodes, s_n, e_n, int(attributes['lanes']) if 'lanes' in attributes.keys() else 1))
+
+            for road in row_roads:
+                s_n = road[0][0]
+                e_n = road[0][1]
+                roads.append(Road(nodes, s_n, e_n, road[1]))
                 nodes[s_n].addRoad(roads[-1])
                 nodes[e_n].addRoad(roads[-1], 'end')
-
-                if roads[-1].n_lines > 1:
-                    nodes[e_n].addRoad(roads[-1])
-                    nodes[s_n].addRoad(roads[-1], 'end')
 
             Map.init(nodes, spawn_nodes, roads)
             return [nodes, spawn_nodes, roads]
@@ -94,7 +90,9 @@ class PortDriver:
             for node_index, node in enumerate(graph.nodes):
                 attributes = graph.nodes[node]
                 nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
-                spawn_nodes.append(node)
+                if nodes[-1].type == "spawn":
+                    spawn_nodes.append(node)
+
                 nodes_indexes[node] = node_index
                 pass
 
@@ -129,13 +127,14 @@ class PortDriver:
                 attributes = graph.edges[edge]
                 s_n = nodes_indexes[edge[0]]
                 e_n = nodes_indexes[edge[1]]
-                roads.append(Road(nodes, s_n, e_n, int(attributes['lanes']) if 'lanes' in attributes.keys() else 1))
+                roads.append(Road(nodes, s_n, e_n, (int(attributes['lanes']) + 1) // 2 if 'lanes' in attributes.keys() else 1))
                 nodes[s_n].addRoad(roads[-1])
                 nodes[e_n].addRoad(roads[-1], 'end')
 
-                if roads[-1].n_lines > 1:
-                    nodes[e_n].addRoad(roads[-1])
-                    nodes[s_n].addRoad(roads[-1], 'end')
+
+                # if roads[-1].n_lines > 1:
+                #     nodes[e_n].addRoad(roads[-1])
+                #     nodes[s_n].addRoad(roads[-1], 'end')
 
 
             Map.init(nodes, spawn_nodes, roads)
@@ -162,15 +161,17 @@ class PortDriver:
                 s_n, e_n, n_lines = list(
                     map(int,
                         graph.readline().split()))  # start node, end node, length, number of lines, absolute position
-                road = Road(nodes, s_n, e_n, n_lines)
+                road = Road(nodes, s_n, e_n, n_lines // 2 if n_lines > 1 else n_lines)
                 roads[i] = road
 
                 nodes[s_n].addRoad(road)
                 nodes[e_n].addRoad(road, 'end')
 
                 if n_lines > 1:
-                    nodes[e_n].addRoad(road)
-                    nodes[s_n].addRoad(road, 'end')
+                    reverse_road = Road(nodes, e_n, s_n, n_lines // 2)
+                    roads.append(reverse_road)
+                    nodes[e_n].addRoad(reverse_road)
+                    nodes[s_n].addRoad(reverse_road, 'end')
 
             Map.init(nodes, spawn_nodes, roads)
             return [nodes, spawn_nodes, roads]

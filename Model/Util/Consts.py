@@ -10,4 +10,4 @@ NCars = 1
 ForbiddenHighways = ["motorway", "motorway_link", "living_street", "pedestrian", "track", "escape", "footway", "bridleway", "steps", "corridor", "path"]
 NameCarsFile = "../data/cars.json"
 NameMapFile = "../data/map.json"
-NameOsmFile = "../data/map_small.osm"
+NameOsmFile = "../data/map_big.osm"
