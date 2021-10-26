@@ -9,3 +9,10 @@ Requirements:
   
   Js:
     node.js
+
+
+Commands:
+"quit" - for quitting
+...
+
+All of them must be typed in terminal (or the place that the programm is running)
