@@ -1,9 +1,9 @@
-from Util.dijkstra import find_shortest_path
-from Util.CarInstance import Car
-from Util.MapController import Map
-from Util.RoadInstance import Road
-from Util.LineInstance import Line
-from Util.Consts import NameCarsFile
+from .Util.dijkstra import find_shortest_path
+from .Util.CarInstance import Car
+from .Util.MapController import Map
+from .Util.RoadInstance import Road
+from .Util.LineInstance import Line
+from .Util.Consts import NameCarsFile
 import os
 import random
 import json

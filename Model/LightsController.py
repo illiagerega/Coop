@@ -1,7 +1,7 @@
 from random import randrange
-from Util.TrafficLightInstance import TrafficLight
-from Util.MapController import Map
-from Util.Consts import StartPeriodLow, StartPeriodHigh
+from .Util.TrafficLightInstance import TrafficLight
+from .Util.MapController import Map
+from .Util.Consts import StartPeriodLow, StartPeriodHigh
 
 class LightsController:
 

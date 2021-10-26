@@ -1,9 +1,9 @@
-from Util.MapController import Map
-from CarController import CarDriver
-from LightsController import LightsController
-from Util.NodeInstance import Node
-from Util.RoadInstance import Road
-from Util.Consts import *
+from .Util.MapController import Map
+from .CarController import CarDriver
+from .LightsController import LightsController
+from .Util.NodeInstance import Node
+from .Util.RoadInstance import Road
+from .Util.Consts import *
 
 import json
 import osmnx
@@ -72,6 +72,7 @@ class PortDriver:
                 nodes[e_n].addRoad(roads[-1], 'end')
 
             Map.init(nodes, spawn_nodes, roads)
+            import_file.close()
             return [nodes, spawn_nodes, roads]
 
 
