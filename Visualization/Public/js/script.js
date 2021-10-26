@@ -1,29 +1,32 @@
-var dump = "";
-var socket = io("localhost:3001", {transports : ['websocket'] } )
-socket.on("connect", function() {
-    console.log("connected ow");
-})
-socket.on("sendDump", (string) => {
-    console.log("recived string");
-    dump = string;
-    let array = JSON.parse(dump);
-    console.log(array)
-});
-
 const root = document.body;
+
+let dump = "";
 
 // {"nodes": [[[0, 0], "spawn"], [[2, 0], "spawn"], [[1, 4], "spawn"]};
 
-addNode(0, 3, 3);
-addNode(1, 12, 8);
-addNode(2, 16, 4);
-addNode(3, 6, 10);
-addNode(4, 16, 12);
-roadWay([0,1], [1,2], [0,2], [0,3], [1,3], [1,4], [2,4], [3,4]);
+var socket = io("localhost:3001", {transports : ['websocket'] } )
+socket.on("connect", function() {
+})
+socket.on("sendDump", (string) => {
+    dump = string;
+    array = JSON.parse(dump);
+    let nx = [];
+    let ny = [];
+    
+    for(let i = 0; i < array['nodes'].length; i++){
+        let x = +array['nodes'][i][0][0] + 2000; 
+        let y = +array['nodes'][i][0][1] + 2000; 
+        addNode(i, x, y);
+    }  
+    roadWay(array['roads']);
+});
 
-addCar(0, 4.5, 3, 0);
-
-moveCar(0, 1);
+function getMaxOfArray(numArray) {
+    return Math.max.apply(null, numArray);
+}
+function getMinOfArray(numArray) {
+    return Math.min.apply(null, numArray);
+}
 
 function addRoad(x, y, length, incline){
     const road = document.createElement('div');
@@ -38,8 +41,8 @@ function addRoad(x, y, length, incline){
 }
 
 function addNode(index, x, y){
-    x *= 50;
-    y *= 50; 
+    x *= 10;
+    y *= 10;
     const mainCircle = document.createElement('div');
     const pavement = document.createElement('div');
     mainCircle.classList.add('main_circle');
@@ -82,9 +85,9 @@ function moveCar(index, v){
 }
 
 function roadWay(...c){
-    for(let i of c){
-        const node1 = document.getElementById(i[0]); 
-        const node2 = document.getElementById(i[1]);
+    for(let i of c[0]){
+        const node1 = document.getElementById(i[0][0]); 
+        const node2 = document.getElementById(i[0][1]);
 
         let x1 = parseInt(node1.style.left) + 35;
         let y1 = parseInt(node1.style.top) + 35;

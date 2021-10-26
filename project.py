@@ -1,11 +1,12 @@
 from Model.MainController import Controller
-import socket, time, os
+import socket, time
 from subprocess import call
 from json import load
 import threading
+import os
 
 settings_path = "/settings.json"
-with open(os.path.dirname(__file__) + settings_path, 'r') as file:
+with open(os.getcwd() + settings_path, 'r') as file:
     settings = load(file)
     file.close()
 
@@ -45,7 +46,7 @@ class SocketDriver:
         self.socket_main.send(command)
 
 def calling():
-    call(["node", os.path.dirname(__file__) + settings["server_path"]])
+    call(["node", settings["server_path"]])
 
 def decode(string, MainSocket):
     if string == "quit":
@@ -53,19 +54,16 @@ def decode(string, MainSocket):
         return 1
 
 def main():
-    try:
-        thread = threading.Thread(target=calling, args=())
-        thread.daemon = True
-        thread.start()
-        time.sleep(5)
-        MainSocket = SocketDriver()
+    thread = threading.Thread(target=calling, args=())
+    thread.daemon = True
+    thread.start()
+    time.sleep(5)
+    MainSocket = SocketDriver()
 
-        while True:
-            command = str(input())
-            if decode(command, MainSocket):
-                break
-    except:
-        decode("quit", MainSocket)
+    while True:
+        command = str(input())
+        if decode(command, MainSocket):
+            break
 
 
 
