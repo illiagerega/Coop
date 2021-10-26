@@ -1,11 +1,11 @@
 from Model.MainController import Controller
-import socket, time
+import socket, time, os
 from subprocess import call
 from json import load
 import threading
 
-settings_path = "settings.json"
-with open(settings_path, 'r') as file:
+settings_path = "/settings.json"
+with open(os.getcwd() + settings_path, 'r') as file:
     settings = load(file)
     file.close()
 
@@ -53,16 +53,19 @@ def decode(string, MainSocket):
         return 1
 
 def main():
-    thread = threading.Thread(target=calling, args=())
-    thread.daemon = True
-    thread.start()
-    time.sleep(5)
-    MainSocket = SocketDriver()
+    try:
+        thread = threading.Thread(target=calling, args=())
+        thread.daemon = True
+        thread.start()
+        time.sleep(5)
+        MainSocket = SocketDriver()
 
-    while True:
-        command = str(input())
-        if decode(command, MainSocket):
-            break
+        while True:
+            command = str(input())
+            if decode(command, MainSocket):
+                break
+    except:
+        decode("quit", MainSocket)
 
 
 
