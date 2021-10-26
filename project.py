@@ -5,7 +5,7 @@ from json import load
 import threading
 
 settings_path = "/settings.json"
-with open(os.getcwd() + settings_path, 'r') as file:
+with open(os.path.dirname(__file__) + settings_path, 'r') as file:
     settings = load(file)
     file.close()
 
@@ -45,7 +45,7 @@ class SocketDriver:
         self.socket_main.send(command)
 
 def calling():
-    call(["node", settings["server_path"]])
+    call(["node", os.path.dirname(__file__) + settings["server_path"]])
 
 def decode(string, MainSocket):
     if string == "quit":

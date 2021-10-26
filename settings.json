@@ -1,1 +1,1 @@
-{ "port_main" : 9090, "host_main" :  "127.0.0.1", "buf_size" :  1024, "port_server" : 3000, "server_path" :  "Visualization/js/server.js"}
+{ "port_main" : 9090, "host_main" :  "127.0.0.1", "buf_size" :  1024, "port_server" : 3000, "server_path" :  "/Visualization/js/server.js"}
