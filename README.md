@@ -4,7 +4,8 @@ Start using "python3 project.py"
 
 Requirements:
   Python:
-    osmnx
+    osmnx,
+    numpy
   
   Js:
     node.js
