@@ -30,25 +30,37 @@ var server = http.createServer(app)
 var io = socketIO(port_io)
 
 var socket = net.createServer(function(connection) {
-    console.log("client connected!")
+    console.log("Python connected!")
 
     connection.on("end", function() {
-        console.log("disconnected")
+        console.log("Python disconnected")
     })
 
+    connection.on("data", function(data){
+        data = data.toString()
+
+        if (data == "quit")
+        {
+            
+            server.close()
+            io.close()
+            socket.close()
+            console.log("Js disconected!")
+        }
+    })
 
 })
 
 io.on("connection", function(socket){
 
     var data = fs.readFileSync(path_.join(__dirname + path_data)).toString()
-    console.log("connected!")
+    console.log("connected with site!")
     socket.emit("sendDump", data)
 })
 
 
 
-server.listen(process.env.port || port, () => console.log(`Example app listening on port ${port}!`))
+server.listen(process.env.port || port, () => console.log(`App listening on port ${port}!`))
 socket.listen(port_main, function(){
     console.log("server is listening!")
 })
