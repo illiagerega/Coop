@@ -1,6 +1,6 @@
 # Coop
 
-Запуск через "python3 project.py"
+Start using "python3 project.py"
 
 Requirements:
   Python:
