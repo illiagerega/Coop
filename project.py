@@ -23,8 +23,18 @@ class SocketDriver:
         self.thread.daemon = True
         self.thread.start()
 
-    def _decode(self, string):
-        return string
+    def _decode(self, data):
+        data = data.decode().split('#') # separate by '#'. The first part is a command,
+                                        # the another one is data
+
+        if data[0] == "setMap":
+            Controller.setMap(data[1])
+
+
+        if data[0] == "init":
+            Controller.init()
+
+        self.send(data[0])
 
     def _listen(self):
         print("Connected by")
@@ -32,6 +42,7 @@ class SocketDriver:
             if self._kill:
                 break
             data = self.socket_main.recv(settings["buf_size"])
+            self._decode(data)
 
 
 
@@ -52,6 +63,8 @@ def decode(string, MainSocket):
     if string == "quit":
         MainSocket.end()
         return 1
+    if string == "setMap":
+        MainSocket.send("setMap")
 
 def main():
     thread = threading.Thread(target=calling, args=())
@@ -60,6 +73,7 @@ def main():
     time.sleep(5)
     MainSocket = SocketDriver()
 
+    MainSocket.send("ready")
     while True:
         command = str(input())
         if decode(command, MainSocket):

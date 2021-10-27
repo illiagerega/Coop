@@ -3,9 +3,12 @@ const http = require('http')
 const fs = require('fs')
 const path_ = require('path')
 const net = require('net')
+const events = require('events')
 const socketIO = require('socket.io')
+
 let app = express()
 let router = express.Router()
+let eventEmmiter = new events()
 
 const path = "/../index.html"
 const path_data = "/../../data/map.json"
@@ -17,6 +20,8 @@ const settings = JSON.parse(fs.readFileSync(path_.join(__dirname + settings_path
 const port = settings["port_server"]
 const port_io = port + 1
 const port_main = settings["port_main"]
+
+var current_client = null
 
 router.get('/', (request, response) => {
     //var data = fs.readFileSync(__dirname + path, 'utf-8')
@@ -36,6 +41,10 @@ var socket = net.createServer(function(connection) {
         console.log("Python disconnected")
     })
 
+    eventEmmiter.on("data", (data) => {
+        connection.write(data)
+    })
+
     connection.on("data", function(data){
         data = data.toString()
 
@@ -47,20 +56,52 @@ var socket = net.createServer(function(connection) {
             socket.close()
             console.log("Js disconected!")
         }
+        if(data == "setMap")
+        {
+            eventEmmiter.emit(data)
+        }
+        if(data == "getCars")
+        {
+            eventEmmiter.emit(data)
+        }
+        if(data == "ready")
+        {
+            eventEmmiter.emit(data)
+        }
+
     })
 
 })
 
-io.on("connection", function(socket){
-
-    var data = fs.readFileSync(path_.join(__dirname + path_data)).toString()
-    console.log("connected with site!")
-    socket.emit("sendDump", data)
+socket.listen(port_main, function(){
+    console.log("server is listening!")
 })
+
+io.on("connection", function(client){
+
+    //var data = fs.readFileSync(path_.join(__dirname + path_data)).toString()
+    //console.log("connected with site!")
+    // socket.emit("sendDump", data)
+
+    eventEmmiter.on("setMap", () =>{
+        var json = fs.readFileSync(path_.join(__dirname + path_data)).toString()
+        client.emit("setMap", json)
+    })
+
+    eventEmmiter.on("ready", () =>{
+        console.log("\x1b[32m", "Everything is ready for usage!")
+        console.log("\x1b[1m")
+        client.emit("ready")
+    })
+
+    client.on("message", function(data) {
+
+        console.log(data)
+        eventEmmiter.emit("data", data)
+    })
+})
+
 
 
 
 server.listen(process.env.port || port, () => console.log(`App listening on port ${port}!`))
-socket.listen(port_main, function(){
-    console.log("server is listening!")
-})

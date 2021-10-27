@@ -15,6 +15,7 @@ class Node:
         self.start_roads: list[Road] = []
         self.end_roads: list[Road] = []
         self.queue: list[Car] = []
+        self.attributes = []
         self.index: int = index
         # self.traffic_light = TrafficLight() if self.type == 'spawn' else self.traffic_light = None
 

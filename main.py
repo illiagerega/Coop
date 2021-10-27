@@ -1,21 +1,22 @@
-from Util.MapController import Map
-from CarController import CarDriver
-from LightsController import LightsController
-from PortController import PortDriver
-from Util.SimulationShrimp import sim
-from Util.Consts import *
+from Model.Util.MapController import Map
+from Model.CarController import CarDriver
+from Model.LightsController import LightsController
+from Model.PortController import PortDriver
+from Model.Util.SimulationShrimp import sim
+from Model.Util.Consts import *
 
 def main():
     #Map.init("test.txt")
     #Map.getEverythingIntoFile()
     PortDriver.setMapFromFile(NameOsmFile)  #("test.txt")
     PortDriver.getMapIntoFile()
+    Map.init()
 
-    CarDriver.init()
-    LightsController.init()
+    #CarDriver.init()
+    #LightsController.init()
 
-    for node in CarDriver.cars_array[0].way:
-        print(node)
+    #for node in CarDriver.cars_array[0].way:
+        #print(node)
 
     print()
     print()
@@ -29,7 +30,7 @@ def main():
             print(car.getLines()[car.currentLine])
             print(car.getCoordinates())
 
-        sim(CarDriver)
+        #sim(CarDriver)
         CarDriver.comp()
         print()
         print()

@@ -10,7 +10,7 @@ class Map:
     n_roads: int
     n_cars: int
     nodes: list[Node] = []
-    spawn_nodes: list[int]
+    spawn_nodes: list[int] = []
     roads: list[Road] = []
     distance_matrix = []
 
@@ -35,12 +35,9 @@ class Map:
         #     print(line)
 
     @staticmethod
-    def init(nodes, spawn_nodes, roads):
-        Map.n_nodes = len(nodes)
-        Map.n_roads = len(roads)
+    def init():
+        Map.n_nodes = len(Map.nodes)
+        Map.n_roads = len(Map.roads)
         Map.n_cars = NCars
-        Map.nodes = nodes
-        Map.roads = roads
-        Map.spawn_nodes = spawn_nodes
         Map.get_distances()
 
