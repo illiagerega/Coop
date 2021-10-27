@@ -65,6 +65,13 @@ def decode(string, MainSocket):
         return 1
     if string == "setMap":
         MainSocket.send("setMap")
+    if string == "set":
+        Controller.setMap("data/map_big.osm")
+        Controller.init()
+        print("setting is end")
+    if string == "getCars":
+        Controller.change()
+        MainSocket.send("setCars")
 
 def main():
     thread = threading.Thread(target=calling, args=())

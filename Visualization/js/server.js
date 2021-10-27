@@ -12,6 +12,7 @@ let eventEmmiter = new events()
 
 const path = "/../index.html"
 const path_data = "/../../data/map.json"
+const path_cars = "/../../data/cars.json"
 const public_directory = "/../Public"
 const settings_path = "/../../settings.json"
 
@@ -86,6 +87,11 @@ io.on("connection", function(client){
     eventEmmiter.on("setMap", () =>{
         var json = fs.readFileSync(path_.join(__dirname + path_data)).toString()
         client.emit("setMap", json)
+    })
+
+    eventEmmiter.on("setCars", () => {
+        var json = fs.readFileSync(path_.join(__dirname + path_cars)).toString()
+        client.emit("setCars", json)
     })
 
     eventEmmiter.on("ready", () =>{

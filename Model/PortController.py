@@ -44,6 +44,9 @@ class PortDriver:
     def setMapByName(Name):
         graph = osmnx.graph_from_place(Name, simplify=True)
 
+        Map.nodes = []
+        Map.roads = []
+        Map.spawn_nodes = []
         nodes_indexes = {}
         roads_to_delete = []
 
@@ -121,6 +124,9 @@ class PortDriver:
             row_nodes = data['nodes']
             row_roads = data['roads']
 
+            Map.nodes = []
+            Map.roads = []
+            Map.spawn_nodes = []
 
             for node_index, node in enumerate(row_nodes):
                 Map.nodes.append(Node(node[1], node[0], node_index))
@@ -143,6 +149,9 @@ class PortDriver:
         elif '.osm' in fileName: # from .osm
             graph = osmnx.graph_from_xml(fileName, simplify=True)
 
+            Map.nodes = []
+            Map.roads = []
+            Map.spawn_nodes = []
             nodes_indexes = {}
             roads_to_delete = []
 

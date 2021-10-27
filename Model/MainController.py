@@ -16,7 +16,7 @@ class Controller:
 
 
     @staticmethod
-    def Init():
+    def init():
         #PortDriver.setMapFromFile(NameOsmFile)  # ("test.txt")
 
         PortDriver.getMapIntoFile()
@@ -26,12 +26,12 @@ class Controller:
         LightsController.init()
 
     @staticmethod
-    def Change():
+    def change():
 
         CarDriver.comp()
 
         PortDriver.getCarsIntoFile()
 
     @staticmethod
-    def SetMapJson():
+    def setMapJson():
         PortDriver.setMapFromFile(NameMapFile)

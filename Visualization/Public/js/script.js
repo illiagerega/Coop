@@ -33,6 +33,11 @@ socket.on("setMap", (string) => {
     roadWay(array['roads']);
 });
 
+socket.on("setCars", (string) => {
+    // Our turn
+
+});
+
 
 
 // Frontend

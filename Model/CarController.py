@@ -38,27 +38,44 @@ class CarDriver:
 
     @staticmethod
     def assignCars():
+        # for spawn_node in Map.spawn_nodes:
+        #     for car in Map.nodes[spawn_node].queue:
+        #         car.wayProgress = 0
+        #         assigned = False
+        #         for i in range(0, len(car.getLines()[0].cells), 2):
+        #             for index, line in enumerate(car.getLines()):
+        #                 if line.cells[i] == 0:
+        #                     line.cells[i] = 1
+        #                     print("Assign " + str(i))
+        #                     car.x = i
+        #                     car.currentLine = index
+        #                     assigned = True
+        #             if assigned:
+        #                 break
+        # Map.nodes[spawn_node].queue.clear()
+
         for spawn_node in Map.spawn_nodes:
+            queue_del = []
             for car in Map.nodes[spawn_node].queue:
                 car.wayProgress = 0
-                assigned = False
-                for i in range(0, len(car.getLines()[0].cells), 2):
-                    for index, line in enumerate(car.getLines()):
-                        if line.cells[i] == 0:
-                            line.cells[i] = 1
-                            print("Assign " + str(i))
-                            car.x = i
-                            car.currentLine = index
-                            assigned = True
-                    if assigned:
-                        break
+                for line in car.getLines():
+                    if line.cells[0] == 0:
+                        car.x = 0
+                        queue_del.append(car)
 
-            Map.nodes[spawn_node].queue.clear()
+                Map.nodes[spawn_node].queue = [temp for temp in Map.nodes[spawn_node].queue if not (temp in queue_del) ]
+
+
 
     @staticmethod
     def comp():  # dt = 1 s
 
+        self.assignCars()
+
         for car_index, car in enumerate(CarDriver.cars_array):
+            if car.x == -1:
+                continue
+
             line = car.getLines()[car.currentLine]
             try:
                 gap = line.cells.index(1, car.x + 1) - car.x
