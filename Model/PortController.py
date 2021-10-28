@@ -29,13 +29,18 @@ class PortDriver:
         export_file = open(NameMapFile, 'w')
 
         row_nodes = []
-        row_roads = []
+        row_roads = {}
 
         for node in Map.nodes:
             row_nodes.append([node.apos, node.type])
+            temp = {}
+            for road in node.start_roads:
+                temp[road.end_node] = [road.n_lines, road.angle]
 
-        for index_road, road in enumerate(Map.roads):
-            row_roads.append([(road.start_node, road.end_node), road.n_lines])
+            row_roads.append(temp)
+
+
+
 
         json.dump({"nodes": row_nodes, "roads": row_roads}, export_file)
         export_file.close()
