@@ -4,14 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/menu_style.css">
     <title>Traffic Model</title>
+
+    <style type="text/css" media="screen, print">
+
+     </style>
+
+
 </head>
 <body>
-	<script src="js/Socket-io/socket.io.js"></script>
-	<script src="js/pixi.min.js"></script>
-	<script src="js/engine.js"></script>
-    <script src="js/script.js"></script>
+<div class="menu_body">
+    <ul class="menu_list">              
+        <li class="title_li" >
+            <h1 class="title_text">  Traffic    Model </h1>
+        </li>
+        <li class="button_li" onclick="go_start()">
+                 Start
+        </li>
+        <li class="button_li">
+                Settings
+        </li>
+        <li class="button_li">
+                    Exit
+        </li>
+    </ul>
 
+    <script>
+        function go_start(){
+            location.href = 'model';
+        }
+    </script>
+</div>
 </body>
 </html>
