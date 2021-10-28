@@ -11,6 +11,7 @@ let router = express.Router()
 let eventEmmiter = new events()
 
 const menu_path = "/../index.html"
+const settings_html_path = "/../settings.html";
 const model_path = "/../model.html"
 const path_data = "/../../data/map.json"
 const path_cars = "/../../data/cars.json"
@@ -36,6 +37,10 @@ router.get('/model', (request, response) => {
     response.sendFile(path_.join(__dirname + model_path))
 })
 
+router.get('/settings', (request, response) => {
+    //var data = fs.readFileSync(__dirname + path, 'utf-8')
+    response.sendFile(path_.join(__dirname + settings_html_path))
+})
 
 app.use('/', router)
 app.use(express.static(path_.join(__dirname + public_directory)))
