@@ -61,36 +61,37 @@ socket.on("setMap", (string) => {
             addTree(x, y, Math.random() * 360);
         }
     }
-
-    //socket.send("setCars");
 });
 
-socket.on("setCars", (string) => {
+let start = setInterval(() => {socket.on("setCars", (string) => {
     let array = JSON.parse(string);
-    
+    console.log(string);
+
     for(let i of array['cars']){
         let index = Object.keys(i);
         let x = i[Object.keys(i)][0][0] - minX + 4;
         let y = i[Object.keys(i)][0][1] - minY + 4;
         let incline = i[Object.keys(i)][1] * 180 / Math.PI;
-        
+
         addCar(index, x, y, incline);
     }
-});
 
-document.addEventListener('keypress', moveWin);
+    socket.send("setCars"); 
+})}, 1000);
 
-let zoom = 0;
+// document.addEventListener('keypress', moveWin);
 
-document.addEventListener('wheel', (event) => {
-    if(event.deltaY < 0){
-        zoom += 0.01;
-        root.style.transform = 'scale(' + (1 + zoom) + ')';
-    }else{
-        zoom -= 0.01;
-        root.style.transform = 'scale(' + (1 + zoom) + ')';
-    } 
-});
+// let zoom = 0;
+
+// document.addEventListener('wheel', (event) => {
+//     if(event.deltaY < 0){
+//         zoom += 0.01;
+//         root.style.transform = 'scale(' + (1 + zoom) + ')';
+//     }else{
+//         zoom -= 0.01;
+//         root.style.transform = 'scale(' + (1 + zoom) + ')';
+//     } 
+// });
 
 function moveWin(event){  
     if(event.key == 'w'){
