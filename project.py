@@ -69,7 +69,7 @@ def decode(string, MainSocket):
         Controller.setMap("data/map_big.osm")
         Controller.init()
         print("setting is end")
-    if string == "getCars":
+    if string == "setCars":
         Controller.change()
         MainSocket.send("setCars")
 

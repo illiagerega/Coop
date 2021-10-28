@@ -61,7 +61,7 @@ var socket = net.createServer(function(connection) {
         {
             eventEmmiter.emit(data)
         }
-        if(data == "getCars")
+        if(data == "setCars")
         {
             eventEmmiter.emit(data)
         }
@@ -91,6 +91,7 @@ io.on("connection", function(client){
     })
 
     eventEmmiter.on("setCars", () => {
+        console.log("setting cars...")
         var json = fs.readFileSync(path_.join(__dirname + path_cars)).toString()
         client.emit("setCars", json)
     })
