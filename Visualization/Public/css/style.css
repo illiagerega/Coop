@@ -13,7 +13,14 @@ body{
     background: url(../img/road.png);
     background-position: center;
     background-color: black;
-    
+}
+.road_one_line{
+    height: 12px;
+    position: absolute;
+    z-index: 1;
+    background: url(../img/road_one.png);
+    background-position: center;
+    background-color: black;
 }
 .main_circle{
     width: 30px;

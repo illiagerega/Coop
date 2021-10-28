@@ -37,7 +37,7 @@ class PortDriver:
             for road in node.start_roads:
                 temp[road.end_node] = [road.n_lines, road.angle]
 
-            row_roads.append(temp)
+            row_roads[node.index] = temp
 
 
 
@@ -107,7 +107,7 @@ class PortDriver:
             e_n = nodes_indexes[edge[1]]
             lanes = (int(attributes['lanes']) if not isinstance(attributes['lanes'], list) else int(
                 attributes['lanes'][0])) if 'lanes' in attributes.keys() else 1
-            Map.roads.append(Road(Map.nodes, s_n, e_n, (lanes + 1) // 2))
+            Map.roads.append(Road(Map.nodes, s_n, e_n, 1)#(lanes + 1) // 2))
             Map.nodes[s_n].addRoad(Map.roads[-1])
             Map.nodes[e_n].addRoad(Map.roads[-1], 'end')
 
@@ -210,7 +210,7 @@ class PortDriver:
                 s_n = nodes_indexes[edge[0]]
                 e_n = nodes_indexes[edge[1]]
                 lanes = (int(attributes['lanes']) if not isinstance(attributes['lanes'], list) else int(attributes['lanes'][0])) if 'lanes' in attributes.keys() else 1
-                Map.roads.append(Road(Map.nodes, s_n, e_n, (lanes + 1) // 2 ))
+                Map.roads.append(Road(Map.nodes, s_n, e_n, 1) )# (lanes + 1) // 2 ))
                 Map.nodes[s_n].addRoad(Map.roads[-1])
                 Map.nodes[e_n].addRoad(Map.roads[-1], 'end')
 

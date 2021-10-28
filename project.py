@@ -32,7 +32,6 @@ class SocketDriver:
 
         if data[0] == "setCars":
             Controller.change()
-            MainSocket.send("setCars")
 
         if data[0] == "init":
             Controller.init()
@@ -69,7 +68,7 @@ def decode(string, MainSocket):
     if string == "setMap":
         MainSocket.send("setMap")
     if string == "set":
-        Controller.setMap("data/map_big.osm")
+        Controller.setMap("data/map_small.osm")
         Controller.init()
         print("setting is end")
     if string == "setCars":

@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="70281555-69bb-4e71-b4ad-10dd59a2eff5" name="Default Changelist" comment="Щось та й вже є, залишилося зробити візуалізацію для виправлення багів і покращення алгоритмів, наприклад, світлофори." />
+    <list default="true" id="70281555-69bb-4e71-b4ad-10dd59a2eff5" name="Default Changelist" comment="project.py changed">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_21__8_59_PM__Default_Changelist_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/PortController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/PortController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Visualization/Public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Visualization/Public/img/car_red.png" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/img/car_red.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Visualization/Public/js/engine.js" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/js/engine.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Visualization/Public/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/js/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Visualization/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Visualization/model.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/cars.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/cars.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/map.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/map.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project.py" beforeDir="false" afterPath="$PROJECT_DIR$/project.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +47,18 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/data/map.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Model/CarController.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Model/Util/TrafficLightInstance.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Model/Util/RoadInstance.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/main.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Model/Util/MapController.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Model/Util/CarInstance.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Model/Util/Consts.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/project.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Visualization/js/server.js" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="1zMwNeCpSeZoya0phxIW1cQxqcd" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -45,10 +71,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/" />
       <recent name="$PROJECT_DIR$/Model/" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.project">
     <configuration name="Python" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -61,7 +88,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Model/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -70,6 +97,36 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="project" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.9" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/project.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.Python" />
+      <item itemvalue="Python.project" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.project" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -157,7 +214,98 @@
       <option name="project" value="LOCAL" />
       <updated>1635150378671</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Є сервак">
+      <created>1635242194763</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1635242194763</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Є сервак">
+      <created>1635244537826</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1635244537826</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Є сервак">
+      <created>1635248406860</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1635248406860</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Є сервак [patching]">
+      <created>1635248791852</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1635248791852</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Є сервак [patching]">
+      <created>1635341978120</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1635341978121</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Є сервак [patching]">
+      <created>1635344650740</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1635344650740</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Є сервак [patching]">
+      <created>1635413603903</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1635413603903</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Є сервак [patching]">
+      <created>1635414851779</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1635414851779</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Є сервак [patching]">
+      <created>1635415324486</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1635415324486</updated>
+    </task>
+    <task id="LOCAL-00021" summary="PixiJS, тобавлена фігня, аби ви не парилися">
+      <created>1635415635933</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1635415635933</updated>
+    </task>
+    <task id="LOCAL-00022" summary="PixiJS, тобавлена фігня, аби ви не парилися">
+      <created>1635417201597</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1635417201597</updated>
+    </task>
+    <task id="LOCAL-00023" summary="PixiJS">
+      <created>1635439560806</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1635439560806</updated>
+    </task>
+    <task id="LOCAL-00024" summary="project.py changed">
+      <created>1635446666098</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1635446666099</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -181,7 +329,12 @@
     <MESSAGE value="Є виведення у файл&#10;Буде з файлу введення&#10;Якісь світлофори є (точніше якась мінімальна концепція)" />
     <MESSAGE value="main.py - у ньому запускається програма" />
     <MESSAGE value="Щось та й вже є, залишилося зробити візуалізацію для виправлення багів і покращення алгоритмів, наприклад, світлофори." />
-    <option name="LAST_COMMIT_MESSAGE" value="Щось та й вже є, залишилося зробити візуалізацію для виправлення багів і покращення алгоритмів, наприклад, світлофори." />
+    <MESSAGE value="Є сервак" />
+    <MESSAGE value="Є сервак [patching]" />
+    <MESSAGE value="PixiJS, тобавлена фігня, аби ви не парилися" />
+    <MESSAGE value="PixiJS" />
+    <MESSAGE value="project.py changed" />
+    <option name="LAST_COMMIT_MESSAGE" value="project.py changed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -192,9 +345,19 @@
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Model/Util/dijkstra.py</url>
-          <line>30</line>
-          <option name="timeStamp" value="30" />
+          <url>file://$PROJECT_DIR$/Model/PortController.py</url>
+          <line>55</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Model/PortController.py</url>
+          <line>44</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/project.py</url>
+          <line>32</line>
+          <option name="timeStamp" value="49" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
