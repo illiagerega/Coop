@@ -10,7 +10,8 @@ let app = express()
 let router = express.Router()
 let eventEmmiter = new events()
 
-const path = "/../index.html"
+const menu_path = "/../index.html"
+const model_path = "/../model.html"
 const path_data = "/../../data/map.json"
 const path_cars = "/../../data/cars.json"
 const public_directory = "/../Public"
@@ -26,8 +27,15 @@ var current_client = null
 
 router.get('/', (request, response) => {
     //var data = fs.readFileSync(__dirname + path, 'utf-8')
-    response.sendFile(path_.join(__dirname + path))
+    response.sendFile(path_.join(__dirname + menu_path))
 })
+
+
+router.get('/model', (request, response) => {
+    //var data = fs.readFileSync(__dirname + path, 'utf-8')
+    response.sendFile(path_.join(__dirname + model_path))
+})
+
 
 app.use('/', router)
 app.use(express.static(path_.join(__dirname + public_directory)))
