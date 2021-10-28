@@ -22,47 +22,20 @@ socket.on("connect", function() {
 socket.on("setMap", (string) => {
     dump = string;
     array = JSON.parse(dump);
-
     let nx = [];
     let ny = [];
-    
-    for(let i = 0; i < array['nodes'].length; i++){
-        nx.push(array['nodes'][i][0][0]);
-        ny.push(array['nodes'][i][0][1]);
-    }  
-
-    let minX = getMinOfArray(nx);
-    let minY = getMinOfArray(ny);
-    let maxX = getMaxOfArray(nx);
-    let maxY = getMaxOfArray(ny);
 
     for(let i = 0; i < array['nodes'].length; i++){
-        let x = +array['nodes'][i][0][0] - minX + 4; 
-        let y = +array['nodes'][i][0][1] - minY + 4; 
 
+        let x = +array['nodes'][i][0][0] + 2000;
+        let y = +array['nodes'][i][0][1] + 2000;
         addNode(i, x, y);
-    }
-
+    }  
     roadWay(array['roads']);
-
-    for(let i = 0; i < 1000; i++){
-        let x = Math.random() * ((maxX - minX) * 10);
-        let y = Math.random() * ((maxY - minY) * 10);
-        console.log(document.elementFromPoint(x,y));
-        if(
-            !document.elementFromPoint(x, y) &&  
-            !document.elementFromPoint(x + 20, y) && 
-            !document.elementFromPoint(x - 20, y) &&
-            !document.elementFromPoint(x, y + 20) &&
-            !document.elementFromPoint(x, y - 20)
-        ){
-            addTree(x, y, Math.random() * 360);
-        }
-    }
 });
 
 socket.on("setCars", (string) => {
-    // Your turn
+    // Our turn
 
 });
 
@@ -115,10 +88,6 @@ function getMinOfArray(numArray) {
     return Math.min.apply(null, numArray);
 }
 
-function getMaxOfArray(numArray) {
-    return Math.max.apply(null, numArray);
-}
-
 function addRoad(x, y, length, incline){
     const road = document.createElement('div');
     road.classList.add('road');
@@ -132,8 +101,8 @@ function addRoad(x, y, length, incline){
 }
 
 function addNode(index, x, y){
-    x *= 10;
-    y *= 10;
+    x *= 3;
+    y *= 3;
     const mainCircle = document.createElement('div');
     const pavement = document.createElement('div');
     mainCircle.classList.add('main_circle');
@@ -152,8 +121,8 @@ function addNode(index, x, y){
 }
 
 function addCar(index, x, y, direct){
-    x *= 10;
-    y *= 10;
+    x *= 3;
+    y *= 3;
     const car = document.createElement('div');
     car.classList.add('car_red');
     car.id = index;
