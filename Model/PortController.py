@@ -17,7 +17,8 @@ class PortDriver:
         row = []
 
         for car_index, car in enumerate(CarDriver.cars_array):
-            row.append(car.getCoordinates(), )
+            if car.x != -1:
+                row.append({ car_index : car.getCoordinates()} )
 
         json.dump({"cars": row}, export_file)
 

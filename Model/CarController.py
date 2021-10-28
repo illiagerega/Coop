@@ -61,6 +61,7 @@ class CarDriver:
                 for line in car.getLines():
                     if line.cells[0] == 0:
                         car.x = 0
+                        line.cells[0] = 1
                         queue_del.append(car)
 
                 Map.nodes[spawn_node].queue = [temp for temp in Map.nodes[spawn_node].queue if not (temp in queue_del) ]
@@ -70,7 +71,7 @@ class CarDriver:
     @staticmethod
     def comp():  # dt = 1 s
 
-        self.assignCars()
+        CarDriver.assignCars()
 
         for car_index, car in enumerate(CarDriver.cars_array):
             if car.x == -1:
@@ -88,6 +89,8 @@ class CarDriver:
 
 
         for car_index, car in enumerate(CarDriver.cars_array):
+            if car.x == -1:
+                continue
 
             line = car.getLines()[car.currentLine]
             line.cells[car.x] = 0

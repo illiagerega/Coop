@@ -86,6 +86,7 @@ io.on("connection", function(client){
 
     eventEmmiter.on("setMap", () =>{
         var json = fs.readFileSync(path_.join(__dirname + path_data)).toString()
+        console.log("setMap to site")
         client.emit("setMap", json)
     })
 
