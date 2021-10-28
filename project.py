@@ -30,6 +30,9 @@ class SocketDriver:
         if data[0] == "setMap":
             Controller.setMap(data[1])
 
+        if data[0] == "setCars":
+            Controller.change()
+            MainSocket.send("setCars")
 
         if data[0] == "init":
             Controller.init()
