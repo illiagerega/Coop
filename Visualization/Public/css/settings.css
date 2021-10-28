@@ -194,6 +194,7 @@ summary.radios {
 
 input[type=radio] {
     color: #333333;
+    font-family: "TitleFont";
 	counter-increment: radios;
 	appearance: none;
 	display: none;
