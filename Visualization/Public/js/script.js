@@ -62,7 +62,7 @@ socket.on("setMap", (string) => {
 });
 
 socket.on("setCars", (string) => {
-    // Our turn
+    // Your turn
 
 });
 
