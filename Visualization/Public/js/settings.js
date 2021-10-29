@@ -1,3 +1,18 @@
-let FileOrName = "data/map_small.osm"; // "Ivano-Frankivsk, Ivano-Frankivsk, Ukraine"
-let NCars = 4;
+let FileOrName = 'Ivano-Frankivsk, Ivano-Frankivsk, Ukraine'; // "Ivano-Frankivsk, Ivano-Frankivsk, Ukraine"
+let NCars = 3;
+
+
+module.exports ={
+    setFileOrName: function(fileOrName){
+        FileOrName = fileOrName
+    },
+    setNCars: function(nCars){
+        NCars = nCars
+    },
+    getFileOrName: function() { return FileOrName },
+    getNCars: function() { return NCars}
+
+};
+
+
 
