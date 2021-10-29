@@ -1,4 +1,4 @@
-Separation = 1
+Separation = 10
 Acceleration = 1
 StartVelocity = 0
 MaxVelocity = 3

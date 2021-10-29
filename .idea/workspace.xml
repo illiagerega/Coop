@@ -3,14 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="70281555-69bb-4e71-b4ad-10dd59a2eff5" name="Default Changelist" comment="Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/CarController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/CarController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualization/Public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualization/Public/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/js/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualization/Public/js/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/js/settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualization/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualization/js/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/js/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/Util/Consts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Util/Consts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Visualization/model.html" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/model.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualization/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/settings.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/cars.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/cars.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project.py" beforeDir="false" afterPath="$PROJECT_DIR$/project.py" afterDir="false" />
     </list>
@@ -331,7 +325,21 @@
       <option name="project" value="LOCAL" />
       <updated>1635466196296</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Update">
+      <created>1635526432097</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1635526432097</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Update">
+      <created>1635526871463</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1635526871463</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -79,7 +79,7 @@ class SocketDriver:
 
             Controller.change()
             self.send("setCars")
-            time.sleep(4)
+            time.sleep(2)
 
 
 
