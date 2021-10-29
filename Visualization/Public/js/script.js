@@ -2,6 +2,9 @@ const root = document.body;
 
 let dump = "";
 
+let is_paused = false;
+let is_started = false;
+
 // Echo of backend
 
 var socket = io("localhost:3001", {transports : ['websocket'] } )
@@ -63,21 +66,41 @@ socket.on("setMap", (string) => {
     }
 });
 
-let start = setInterval(() => {socket.on("setCars", (string) => {
-    let array = JSON.parse(string);
-    console.log(string);
+let cars_loop;
+setTimer();
 
-    for(let i of array['cars']){
-        let index = Object.keys(i);
-        let x = i[Object.keys(i)][0][0] - minX + 4;
-        let y = i[Object.keys(i)][0][1] - minY + 4;
-        let incline = i[Object.keys(i)][1] * 180 / Math.PI;
+function setTimer()
+{
+    cars_loop = setInterval(() => {socket.on("setCars", (string) => {
+        if (!is_paused){
+    
+            let array = JSON.parse(string);
+            console.log(string);
+        
+            for(let i of array['cars']){
+                let index = Object.keys(i);
+                let x = i[Object.keys(i)][0][0] - minX + 4;
+                let y = i[Object.keys(i)][0][1] - minY + 4;
+                let incline = i[Object.keys(i)][1] * 180 / Math.PI;
+        
+                // console.log(x);
+        
+                addCar(index, x, y, incline);
+            }
+        
+            socket.send("setCars"); 
+        }
+    })}, 1000);
+}
 
-        addCar(index, x, y, incline);
-    }
+function clearScene()
+{
+    // past something here
 
-    socket.send("setCars"); 
-})}, 1000);
+    
+    
+}
+
 
 // document.addEventListener('keypress', moveWin);
 
@@ -227,7 +250,7 @@ function roadWay(...c){
     };
 }
 
-addTree(400, 100, 0);
+// addTree(400, 100, 0);
 
 function addTree(x, y, incline){
     const mainBranch = document.createElement('div');

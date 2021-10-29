@@ -27,6 +27,17 @@ class SocketDriver:
         data = data.decode().split('#') # separate by '#'. The first part is a command,
                                         # the another one is data
 
+        if data[0] == "quit":
+            self.end()
+
+        if data[0] == "set":
+            Controller.setMap(data[1])
+            Controller.init(data[2])
+            self.send("setMap")
+            time.sleep(2)
+            self.send("setCars")
+            print("setting is end")
+
         if data[0] == "setMap":
             Controller.setMap(data[1])
 
@@ -52,6 +63,7 @@ class SocketDriver:
         self.send("quit")
         self._kill = True
         self.socket_main.close()
+        return 0
 
 
     def send(self, command):

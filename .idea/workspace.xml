@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="70281555-69bb-4e71-b4ad-10dd59a2eff5" name="Default Changelist" comment="project.py changed">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_21__8_59_PM__Default_Changelist_.xml" beforeDir="false" />
+    <list default="true" id="70281555-69bb-4e71-b4ad-10dd59a2eff5" name="Default Changelist" comment="Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/PortController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/PortController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/CarController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/CarController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/MainController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/MainController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/Util/MapController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Util/MapController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Visualization/Public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualization/Public/img/car_red.png" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/img/car_red.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualization/Public/js/engine.js" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/js/engine.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Visualization/Public/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/Public/js/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Visualization/Public/model.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Visualization/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualization/model.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Visualization/js/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/js/server.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/cars.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/cars.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/map.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/map.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/script.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project.py" beforeDir="false" afterPath="$PROJECT_DIR$/project.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -305,7 +303,21 @@
       <option name="project" value="LOCAL" />
       <updated>1635446666099</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Update">
+      <created>1635451351298</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1635451351298</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Update">
+      <created>1635455536455</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1635455536456</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -334,7 +346,8 @@
     <MESSAGE value="PixiJS, тобавлена фігня, аби ви не парилися" />
     <MESSAGE value="PixiJS" />
     <MESSAGE value="project.py changed" />
-    <option name="LAST_COMMIT_MESSAGE" value="project.py changed" />
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -350,14 +363,14 @@
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Model/PortController.py</url>
-          <line>44</line>
-          <option name="timeStamp" value="48" />
+          <url>file://$PROJECT_DIR$/Model/CarController.py</url>
+          <line>97</line>
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/project.py</url>
-          <line>32</line>
-          <option name="timeStamp" value="49" />
+          <line>33</line>
+          <option name="timeStamp" value="51" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

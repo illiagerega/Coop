@@ -15,6 +15,7 @@ class CarDriver:
 
     @staticmethod
     def init():
+        CarDriver.cars_array = []
         print(Map.n_cars)
         for i in range(Map.n_cars):
             node = random.choice(Map.spawn_nodes)

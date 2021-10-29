@@ -16,7 +16,7 @@ class Map:
 
     @staticmethod
     def get_distances():
-        # Map.distance_matrix = []
+        Map.distance_matrix = []
         # k = 0
         for i in range(Map.n_nodes):
             temp = []

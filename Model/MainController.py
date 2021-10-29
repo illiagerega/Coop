@@ -16,11 +16,11 @@ class Controller:
 
 
     @staticmethod
-    def init():
+    def init(n_cars):
         #PortDriver.setMapFromFile(NameOsmFile)  # ("test.txt")
+        NCars = n_cars
 
         PortDriver.getMapIntoFile()
-
         Map.init()
         CarDriver.init()
         LightsController.init()

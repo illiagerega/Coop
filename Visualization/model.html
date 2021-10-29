@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Traffic Model</title>
+</head>
+<body>
+    <div class="menu_body">
+        <ul class="menu_sim">    
+            <li class="name_menu">      
+                Menu
+            </li>
+            <li class="button_sim" id="start" onclick="goStart()">
+                    Start
+            </li>
+            <li class="button_sim" id="pause" style="display: none;" onclick="goPause()">
+                    Pause
+            </li>
+            <li class="button_sim" onclick="goQuit()"> Back </li>
+        </ul>
+    </div>
+
+	<script src="js/Socket-io/socket.io.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        function goPause()
+        {
+            if(is_paused)
+            {
+                document.getElementById("pause").innerHTML = "Resume";
+                
+            }
+            else{
+                document.getElementById("pause").innerHTML = "Pause";
+            }
+            is_paused = !is_paused;
+        }
+
+        function goStart()
+        {
+            if(is_started)
+            {
+                document.getElementById("start").innerHTML = "Start";
+                document.getElementById("pause").style.display = "none";
+                document.getElementById("pause").innerHTML = "Pause";
+                if(cars_loop) clearTimeout(cars_loop);
+                clearScene();
+                
+            }
+            else {
+                document.getElementById("start").innerHTML = "Stop";
+                document.getElementById("pause").style.display = "block";
+                setTimer();
+                socket.send(["set", FileOrName, NCars].join('#'));
+            }
+            is_paused = false;
+            is_started = !is_started
+        }
+
+        function goQuit()
+        {
+            if(cars_loop) clearTimeout(cars_loop);
+            
+            //socket.send("quit");
+
+            location.href = '/';
+        }
+    </script>
+    <script src="js/settings.js"> </script>
+    
+
+</body>
+</html>

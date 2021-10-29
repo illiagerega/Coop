@@ -12,6 +12,7 @@ let eventEmmiter = new events()
 
 const menu_path = "/../index.html"
 const model_path = "/../model.html"
+const settings_html_path = "/../settings.html"
 const path_data = "/../../data/map.json"
 const path_cars = "/../../data/cars.json"
 const public_directory = "/../Public"
@@ -34,6 +35,11 @@ router.get('/', (request, response) => {
 router.get('/model', (request, response) => {
     //var data = fs.readFileSync(__dirname + path, 'utf-8')
     response.sendFile(path_.join(__dirname + model_path))
+})
+
+router.get('/settings', (request, response) => {
+    //var data = fs.readFileSync(__dirname + path, 'utf-8')
+    response.sendFile(path_.join(__dirname + settings_html_path))
 })
 
 
