@@ -70,7 +70,6 @@ app.post('/settings', (req, res) => {
         form.parse(req, function (err, fields, files) {
             
         if(fields.item == 'UploadFile'){
-        console.log(fields);
         var oldpath = files.inputFile.path;
           console.log(oldpath);
           var newpath = path_.join(__dirname + maps_path + "user_selected.osm");
@@ -80,7 +79,7 @@ app.post('/settings', (req, res) => {
           setFileOrName(newpath);
         }
         else{
-            setFileOrName(fields.item);
+            setFileOrName( path_.join(__dirname + maps_path + fields.item));
         }
         setNCars(fields.cars_n);
          
@@ -90,7 +89,7 @@ app.post('/settings', (req, res) => {
 
         var file = path_.join(__dirname + public_directory + "/js/settings.js")
         var newNCars = getNCars();
-
+        var newFile = getFileOrName();
         updateFile(file, [{
             rule: 'NCars',
             replacer: newNCars
@@ -100,7 +99,7 @@ app.post('/settings', (req, res) => {
 
         updateFile(file, [{
             rule: 'FileOrName',
-            replacer: ("'" + getFileOrName() + "'").replace(/\\/g, "/")
+            replacer: (("'" + newFile + "'").replace(/\\/g, "/"))
         }], function (err) {
             sails.log.info((err));
         });
