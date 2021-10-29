@@ -36,8 +36,10 @@
             else{
                 document.getElementById("pause").innerHTML = "Pause";
             }
-            socket.send(["setPause", is_paused].join('#'));
             is_paused = !is_paused;
+
+            if (is_paused) socket.send(["setPause", 1].join('#'));
+            else socket.send(["setPause", 0].join('#'));
         }
 
         function goStart()

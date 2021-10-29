@@ -48,7 +48,7 @@ class SocketDriver:
             self.stop_sim = True
 
         if data[0] == "setPause":
-            self.is_paused = data[1]
+            self.is_paused = bool(int(data[1]))
 
         if data[0] == "setMap":
             Controller.setMap(data[1])
