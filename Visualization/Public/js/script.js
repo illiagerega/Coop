@@ -5,6 +5,7 @@ let dump = "";
 let is_paused = false;
 let is_started = false;
 let generated = false;
+let cars_created = false;
 
 // Echo of backend
 
@@ -104,10 +105,11 @@ socket.on("setCars", (string) => {
             let incline = i[Object.keys(i)][1] * 180 / Math.PI;
     
             // console.log(x);
-    
-            addCar(index, x, y, incline);
+            if (!cars_created) addCar(index, x, y, incline);
+            else moveCar(index, x, y, incline)
         }
-    
+        
+        cars_created = True;
         socket.send("setCars"); 
     }
 })
@@ -231,14 +233,16 @@ function addCar(index, x, y, direct){
     root.prepend(car);
 }
 
-function moveCar(index, v){
+function moveCar(index, x2, y2, direction){
     let car = document.getElementById(index);
-    let x = +car.style.left.slice(0, car.style.left.length - 2);
-    let y = +car.style.top.slice(0, car.style.top.length - 2);
-    let road = document.elementFromPoint(x - 1, y + 8);
-    let incline = +road.style.transform.slice(7, road.style.transform.length - 4);
+    let x1 = +car.style.left.slice(0, car.style.left.length - 2);
+    let y1 = +car.style.top.slice(0, car.style.top.length - 2);
+    let deltaX = (Math.abs(x1 - x2) ** 2 + Math.abs(y1 - y2) ** 2) ** 0.5;
 
-    car.style.transform = 'rotate(' + incline + 'deg)';
+    car.style.left = x2*10 + 'px';
+    car.style.top = y2*10 + 'px';
+
+    car.style.transform = 'rotate(' + direction + 'deg)';
 }
 
 function roadWay(...c){
