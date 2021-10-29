@@ -18,9 +18,11 @@ class SocketDriver:
     def __init__(self):
         self.socket_main = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket_main.connect((address, port))
+        self.is_paused = False
         self._kill = False
         self.thread = threading.Thread(target=self._listen, args=())
         self.thread.daemon = True
+
         self.thread.start()
 
     def _decode(self, data):
@@ -35,8 +37,18 @@ class SocketDriver:
             Controller.init(data[2])
             self.send("setMap")
             time.sleep(2)
-            self.send("setCars")
+            self.sim_thread = threading.Thread(target=self._settingCars, args=())
+            self.sim_thread.daemon = True
+            self.is_paused = False
+            self.stop_sim = False
+            self.sim_thread.start()
             print("setting is end")
+
+        if data[0] == "stop":
+            self.stop_sim = True
+
+        if data[0] == "setPause":
+            self.is_paused = data[1]
 
         if data[0] == "setMap":
             Controller.setMap(data[1])
@@ -54,8 +66,20 @@ class SocketDriver:
         while True:
             if self._kill:
                 break
+
             data = self.socket_main.recv(settings["buf_size"])
             self._decode(data)
+
+    def _settingCars(self):
+        while True:
+            if self.stop_sim:
+                break
+            if self.is_paused:
+                continue
+
+            Controller.change()
+            self.send("setCars")
+            time.sleep(4)
 
 
 
@@ -104,5 +128,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

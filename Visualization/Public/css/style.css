@@ -79,7 +79,7 @@ body{
 }
 
 .road{
-    height: 24px;
+    height: 28px;
     position: absolute;
     z-index: 1;
     background: url(../img/road.png);
@@ -87,7 +87,7 @@ body{
     background-color: black;
 }
 .road_one_line{
-    height: 12px;
+    height: 14px;
     position: absolute;
     z-index: 1;
     background: url(../img/road_one.png);

@@ -1,3 +1,3 @@
-let FileOrName = "data/map_small.osm";
-let NCars = 100;
+let FileOrName = "data/map_small.osm"; // "Ivano-Frankivsk, Ivano-Frankivsk, Ukraine"
+let NCars = 4;
 

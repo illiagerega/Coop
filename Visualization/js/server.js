@@ -1,3 +1,4 @@
+
 const express = require('express')
 const http = require('http')
 const fs = require('fs')
@@ -105,7 +106,7 @@ io.on("connection", function(client){
     })
 
     eventEmmiter.on("setCars", () => {
-        console.log("setting cars...")
+        // console.log("setting cars...")
         var json = fs.readFileSync(path_.join(__dirname + path_cars)).toString()
         client.emit("setCars", json)
     })
@@ -121,6 +122,10 @@ io.on("connection", function(client){
         console.log(data)
         eventEmmiter.emit("data", data)
     })
+
+    client.on('disconnect', function() {
+        delete client;
+    });
 })
 
 

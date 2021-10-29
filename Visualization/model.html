@@ -36,6 +36,7 @@
             else{
                 document.getElementById("pause").innerHTML = "Pause";
             }
+            socket.send(["setPause", is_paused].join('#'));
             is_paused = !is_paused;
         }
 
@@ -46,14 +47,20 @@
                 document.getElementById("start").innerHTML = "Start";
                 document.getElementById("pause").style.display = "none";
                 document.getElementById("pause").innerHTML = "Pause";
-                if(cars_loop) clearTimeout(cars_loop);
-                clearScene();
+                socket.send(["setPause", is_paused].join('#'));
+                socket.send("stop");
+                socket.send("stop");
+                socket.send("stop");
+                socket.send("stop");
+                location.href = '/model';
+                // if(cars_loop) clearTimeout(cars_loop);
+                // clearScene();
                 
             }
             else {
                 document.getElementById("start").innerHTML = "Stop";
                 document.getElementById("pause").style.display = "block";
-                setTimer();
+                // setTimer();
                 socket.send(["set", FileOrName, NCars].join('#'));
             }
             is_paused = false;
@@ -62,9 +69,9 @@
 
         function goQuit()
         {
-            if(cars_loop) clearTimeout(cars_loop);
+            // if(cars_loop) clearTimeout(cars_loop);
             
-            //socket.send("quit");
+            socket.send("stop");
 
             location.href = '/';
         }

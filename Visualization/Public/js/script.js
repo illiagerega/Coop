@@ -4,6 +4,7 @@ let dump = "";
 
 let is_paused = false;
 let is_started = false;
+let generated = false;
 
 // Echo of backend
 
@@ -25,13 +26,35 @@ let minY;
 let maxX;
 let maxY;
 
+// const adasd = [[-393.4310344827586, 46.80344827586207], -0.33261969157391236, 3]
+// const dd = [[-382.0708333333333, 101.3763888888889], 1.0019484683735376, 2]
+
+// function testCar()
+// {
+//     var x = adasd[0][0] - minX + 2;
+//     var y = adasd[0][1] - minY + 2;
+//     var incline = adasd[1] * 180 / Math.PI;
+//     console.log(minX);
+//     addCar(0, x, y, incline);
+
+
+//      x = dd[0][0] - minX + 2;
+//      y = dd[0][1] - minY + 2;
+//      incline = dd[1] * 180 / Math.PI;
+//     console.log(minX);
+//     addCar(0, x, y, incline);
+// }
+
 socket.on("setMap", (string) => {
+    if(generated) return;
+    generated = true;
+
     dump = string;
     array = JSON.parse(dump);
 
     let nx = [];
     let ny = [];
-    
+
     for(let i = 0; i < array['nodes'].length; i++){
         nx.push(array['nodes'][i][0][0]);
         ny.push(array['nodes'][i][0][1]);
@@ -42,6 +65,8 @@ socket.on("setMap", (string) => {
     maxX = getMaxOfArray(nx);
     maxY = getMaxOfArray(ny);
 
+    // testCar();
+
     for(let i = 0; i < array['nodes'].length; i++){
         let x = +array['nodes'][i][0][0] - minX + 4; 
         let y = +array['nodes'][i][0][1] - minY + 4; 
@@ -51,7 +76,7 @@ socket.on("setMap", (string) => {
 
     roadWay(array['roads']);
 
-    for(let i = 0; i < 1000; i++){
+    for(let i = 0; i < 200; i++){
         let x = Math.random() * ((maxX - minX) * 10);
         let y = Math.random() * ((maxY - minY) * 10);
         if(
@@ -66,32 +91,26 @@ socket.on("setMap", (string) => {
     }
 });
 
-let cars_loop;
-setTimer();
+socket.on("setCars", (string) => {
+    if (!is_paused){
 
-function setTimer()
-{
-    cars_loop = setInterval(() => {socket.on("setCars", (string) => {
-        if (!is_paused){
+        let array = JSON.parse(string);
+        console.log(string);
     
-            let array = JSON.parse(string);
-            console.log(string);
-        
-            for(let i of array['cars']){
-                let index = Object.keys(i);
-                let x = i[Object.keys(i)][0][0] - minX + 4;
-                let y = i[Object.keys(i)][0][1] - minY + 4;
-                let incline = i[Object.keys(i)][1] * 180 / Math.PI;
-        
-                // console.log(x);
-        
-                addCar(index, x, y, incline);
-            }
-        
-            socket.send("setCars"); 
+        for(let i of array['cars']){
+            let index = Object.keys(i);
+            let x = i[Object.keys(i)][0][0] - minX + 1.8;
+            let y = i[Object.keys(i)][0][1] - minY + 2;
+            let incline = i[Object.keys(i)][1] * 180 / Math.PI;
+    
+            // console.log(x);
+    
+            addCar(index, x, y, incline);
         }
-    })}, 1000);
-}
+    
+        socket.send("setCars"); 
+    }
+})
 
 function clearScene()
 {
@@ -102,7 +121,8 @@ function clearScene()
 }
 
 
-// document.addEventListener('keypress', moveWin);
+
+document.addEventListener('keypress', moveWin);
 
 // let zoom = 0;
 
