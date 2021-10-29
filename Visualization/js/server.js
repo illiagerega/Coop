@@ -6,6 +6,8 @@ const path_ = require('path')
 const net = require('net')
 const events = require('events')
 const socketIO = require('socket.io')
+const formidable = require('formidable')
+
 
 let app = express()
 let router = express.Router()
@@ -18,6 +20,11 @@ const path_data = "/../../data/map.json"
 const path_cars = "/../../data/cars.json"
 const public_directory = "/../Public"
 const settings_path = "/../../settings.json"
+const maps_path = "/../../data/"
+
+
+const {setFileOrName, setNCars, getFileOrName, getNCars} = require(path_.join(__dirname + public_directory + "/js/settings.js")) 
+
 
 const settings = JSON.parse(fs.readFileSync(path_.join(__dirname + settings_path)))
 
@@ -27,6 +34,14 @@ const port_main = settings["port_main"]
 
 var current_client = null
 
+
+app.use('/', router)
+app.use(express.static(path_.join(__dirname + public_directory)))
+
+app.set("view engine", "pug");
+app.set("views", path_.join(__dirname, "views"));
+
+
 router.get('/', (request, response) => {
     //var data = fs.readFileSync(__dirname + path, 'utf-8')
     response.sendFile(path_.join(__dirname + menu_path))
@@ -35,17 +50,69 @@ router.get('/', (request, response) => {
 
 router.get('/model', (request, response) => {
     //var data = fs.readFileSync(__dirname + path, 'utf-8')
-    response.sendFile(path_.join(__dirname + model_path))
+    console.log(getNCars());
+    response.sendFile(path_.join(__dirname + model_path));
 })
 
 router.get('/settings', (request, response) => {
     //var data = fs.readFileSync(__dirname + path, 'utf-8')
+
     response.sendFile(path_.join(__dirname + settings_html_path))
 })
 
 
-app.use('/', router)
-app.use(express.static(path_.join(__dirname + public_directory)))
+
+
+
+app.post('/settings', (req, res) => {    
+    if (req.method == 'POST') {
+        var form = new formidable.IncomingForm();
+        form.parse(req, function (err, fields, files) {
+            
+        if(fields.item == 'UploadFile'){
+        console.log(fields);
+        var oldpath = files.inputFile.path;
+          console.log(oldpath);
+          var newpath = path_.join(__dirname + maps_path + "user_selected.osm");
+          fs.copyFile(oldpath, newpath, function (err) {
+            if (err) throw err;
+          });
+          setFileOrName(newpath);
+        }
+        else{
+            setFileOrName(fields.item);
+        }
+        setNCars(fields.cars_n);
+         
+        console.log("Link to file: ", getFileOrName());
+        console.log("NCars: ", getNCars());
+
+
+        var file = path_.join(__dirname + public_directory + "/js/settings.js")
+        var newNCars = getNCars();
+
+        updateFile(file, [{
+            rule: 'NCars',
+            replacer: newNCars
+        }], function (err) {
+            sails.log.info((err));
+        });
+
+        updateFile(file, [{
+            rule: 'FileOrName',
+            replacer: ("'" + getFileOrName() + "'").replace(/\\/g, "/")
+        }], function (err) {
+            sails.log.info((err));
+        });
+
+
+
+
+     });
+
+
+    }
+})
 
 var server = http.createServer(app)
 var io = socketIO(port_io)
@@ -129,6 +196,33 @@ io.on("connection", function(client){
 })
 
 
+
+
+
+// Це такий костиль шо просто.....
+  function updateFile(filename, replacements) {
+            return new Promise(function(resolve) {
+                fs.readFile(filename, 'utf-8', function(err, data) {
+                    var regex, replaceStr;
+                    if (err) {
+                        throw (err);
+                    } else {
+                        regex = new RegExp("(\\" + 'let' + "\\s* ]*" + replacements[0].rule + "\\s*=\\s*)([^\\n;}]+)([\\s*;}])");
+                            replaceStr = "$1" + replacements[0].replacer + "$3";
+                            data = data.replace(regex, replaceStr);
+
+                    }
+                    fs.writeFile(filename, data, 'utf-8', function(err) {
+
+                        if (err) {
+                            throw (err);
+                        } else {
+                            resolve();
+                        }
+                    });
+                });
+            })
+        }
 
 
 server.listen(process.env.port || port, () => console.log(`App listening on port ${port}!`))
