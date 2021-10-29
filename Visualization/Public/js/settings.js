@@ -1,5 +1,5 @@
-let FileOrName = 'Ivano-Frankivsk, Ivano-Frankivsk, Ukraine'; // "Ivano-Frankivsk, Ivano-Frankivsk, Ukraine"
-let NCars = 3;
+let FileOrName = 'E:/coop6/Coop-main/data/user_selected.osm'; // "Ivano-Frankivsk, Ivano-Frankivsk, Ukraine"
+let NCars = 4;
 
 
 module.exports ={
@@ -13,6 +13,23 @@ module.exports ={
     getNCars: function() { return NCars}
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

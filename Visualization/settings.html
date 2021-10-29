@@ -15,54 +15,57 @@
 </head>
 <body>
 <div class="menu_body">
-    <ul class="menu_list">              
-        <li class="title_li" >
+    <ul class="menu_list">
+        <li class="title_li">
             <h1 class="title_text"> Settings </h1>
-        </li>            
-        
-        <label for="file_selector" class="description">Select Map or Upload OSM file:
-        </label>
-        <li class="button_li">
+        </li>
+        <form method="post" id="save_form" action="/settings" enctype="multipart/form-data">
+            <label for="file_selector" class="description">
+                Select Map or Upload OSM file:
+            </label>
+            <li class="button_li">
 
-            <details id="file_selector" class="custom-select">
-                <summary class="radios">
-                    <input type="radio" name="item" id="item1" title="Ivano-Frankivsk" checked>
-                    <input type="radio" name="item" id="item2" title="Item 2">
-                    <input type="radio" name="item" id="item3" title="Item 3">
-                    <input type="radio" name="item" id="item4" title="Item 4"> 
-                    <input type="radio" name="item" id="UploadFilesRadio" title=" ">
-                </summary>
-                <input type="file" name="item" id="UploadFiles" title=" " onchange="getFile(event)" accept=".osm">
-                <ul class="list ul_select" >
-                    <li class = "li_select">
-                        <label for="item1">Ivano-Frankivsk</label>
-                    </li>
-                    <!-- <li class = "li_select">
+                <details id="file_selector" class="custom-select">
+                    <summary class="radios">
+                        <input type="radio" name="item" value="/ivano-frankivsk.osm" id="item1" title="Ivano-Frankivsk" checked>
+                        <input type="radio" name="item" id="item2" title="Item 2">
+                        <input type="radio" name="item" id="item3" title="Item 3">
+                        <input type="radio" name="item" id="item4" title="Item 4">
+                        <input type="radio" name="item" value="UploadFile" id="UploadFilesRadio" title=" ">
+                    </summary>
+                    <input type="file" name="inputFile" id="UploadFiles" title=" " onchange="getFile(event)" accept=".osm">
+
+                    <ul class="list ul_select">
+                        <li class="li_select">
+                            <label for="item1">Ivano-Frankivsk</label>
+                        </li>
+                        <!-- <li class = "li_select">
                         <label for="item2">Item 2</label>
                     </li>
-                    <li class = "li_select"> 
+                    <li class = "li_select">
                         <label for="item3">Item 3</label>
                     </li>
                     <li class = "li_select">
                         <label for="item4">Item 4</label>
                     </li> -->
-                    <li class = "li_select">
-                        <label for="UploadFiles">Upload from PC</label>
-                    </li>
-                </ul>
-            </details>
+                        <li class="li_select">
+                            <label for="UploadFiles">Upload from PC</label>
+                        </li>
+                    </ul>
+                </details>
             <li>
-                    <label for="cars_n" class="description">Number of cars:</label>
-                    <input type="number" name="cars_n" id="cars_n">
-                
+                <label for="cars_n" class="description">Number of cars:</label>
+                <input type="number" name="cars_n" id="cars_n">
+
             </li>
 
-        </li>
-        <li class="button_li presable" >
+            </li>
+            <li class="button_li presable" onclick="save_form()">
                 Save
-        </li>
+            </li>
+        </form>
         <li class="button_li presable" onclick="go_menu()">
-                    Back
+            Back
         </li>
     </ul>
 
@@ -74,10 +77,9 @@
             location.href = '/';
         }
 
-        // function save()
-        // {
-
-        // }
+        function save_form(){
+            document.getElementById("save_form").submit();
+        }
 
 
         function getFile(e){
