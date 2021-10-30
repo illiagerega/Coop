@@ -21,7 +21,7 @@ class Controller:
         NCars = n_cars
 
         PortDriver.getMapIntoFile()
-        Map.init()
+        Map.init(n_cars)
         CarDriver.init()
         LightsController.init()
 

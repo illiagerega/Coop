@@ -34,13 +34,14 @@ class SocketDriver:
 
         if data[0] == "set":
             Controller.setMap(data[1])
-            Controller.init(data[2])
+            Controller.init(int(data[2]))
             self.send("setMap")
-            time.sleep(2)
+            time.sleep(0.5)
             self.sim_thread = threading.Thread(target=self._settingCars, args=())
             self.sim_thread.daemon = True
             self.is_paused = False
             self.stop_sim = False
+            self.speed = 0.75
             self.sim_thread.start()
             print("setting is end")
 
@@ -58,6 +59,9 @@ class SocketDriver:
 
         if data[0] == "init":
             Controller.init()
+
+        if data[0] == "changeSpeed":
+            self.speed += float(data[1])
 
         self.send(data[0])
 
@@ -79,7 +83,7 @@ class SocketDriver:
 
             Controller.change()
             self.send("setCars")
-            time.sleep(2)
+            time.sleep(self.speed) # speed of simulation
 
 
 

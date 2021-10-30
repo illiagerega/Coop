@@ -17,6 +17,8 @@ class PortDriver:
         row = []
 
         for car_index, car in enumerate(CarDriver.cars_array):
+            if car == None:
+                row.append({car_index : [[-100, -150], -200]})
             if car.x != -1:
                 row.append({ car_index : car.getCoordinates()} )
 

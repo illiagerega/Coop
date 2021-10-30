@@ -90,6 +90,9 @@ class CarDriver:
 
 
         for car_index, car in enumerate(CarDriver.cars_array):
+
+
+
             if car.x == -1:
                 continue
 

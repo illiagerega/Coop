@@ -1,6 +1,6 @@
 from .RoadInstance import Road
 from .NodeInstance import Node
-from .Consts import NameMapFile, NCars
+from .Consts import NameMapFile
 import json
 
 
@@ -35,9 +35,9 @@ class Map:
         #     print(line)
 
     @staticmethod
-    def init():
+    def init(Ncars):
         Map.n_nodes = len(Map.nodes)
         Map.n_roads = len(Map.roads)
-        Map.n_cars = NCars
+        Map.n_cars = Ncars
         Map.get_distances()
 
