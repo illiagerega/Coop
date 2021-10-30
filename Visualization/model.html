@@ -22,10 +22,33 @@
             <li class="button_sim" onclick="goQuit()"> Back </li>
         </ul>
     </div>
+    <div id=rootId>
 
+    </div>
+
+
+
+    <div class="menu_body" id="speedMenu" style="display: none">
+        <ul class="menu_sim" style="position:fixed; margin-left: 80%;">    
+            <li class="name_menu" id="SpeedMenuId">      
+                Speed
+            </li>
+            <li class="button_sim"  onclick="goFaster()">
+                    +
+            </li>
+            <li class="button_sim" onclick="goSlower()">
+                    -
+                    </li>
+        </ul>
+    </div>
+    <div id=rootId>
+        
+    </div>
 	<script src="js/Socket-io/socket.io.js"></script>
     <script src="js/script.js"></script>
     <script>
+        var speed = 0.75;
+
         function goPause()
         {
             if(!is_paused)
@@ -63,6 +86,7 @@
             else {
                 document.getElementById("start").innerHTML = "Stop";
                 document.getElementById("pause").style.display = "block";
+                document.getElementById("speedMenu").style.display = "block";
                 // setTimer();
                 socket.send(["set", FileOrName, NCars].join('#'));
             }
@@ -78,6 +102,23 @@
 
             location.href = '/';
         }
+        function goFaster(){
+            if(speed + 0.1 >= 1.4){
+                alert("Max Speed Reached");
+                return;
+            }
+            speed += 0.1;
+            socket.send(["changeSpeed", -0.1].join('#'));
+        }
+        function goSlower(){
+            if(speed - 0.1 <= 0){
+                alert("Min Speed Reached");
+                return;
+            }
+            speed -= 0.1;
+            socket.send(["changeSpeed", 0.1].join('#'));
+        }
+        
     </script>
     <script src="js/settings.js"> </script>
     
