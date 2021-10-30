@@ -1,4 +1,4 @@
-const root = document.body;
+const root = document.getElementById("rootId");
 
 let dump = "";
 
@@ -100,6 +100,11 @@ socket.on("setCars", (string) => {
     
         for(let i of array['cars']){
             let index = Object.keys(i);
+
+            if(i[Object.keys(i)][0][0] == -100 && i[Object.keys(i)][0][1] == -150  && i[Object.keys(i)][1] == -200 ){ // just some special values to tell that this car has reached destination and it needs to be removed
+                document.getElementById(index).remove();
+                continue;
+            }
             let x = i[Object.keys(i)][0][0] - minX + 1.8;
             let y = i[Object.keys(i)][0][1] - minY + 2;
             let incline = i[Object.keys(i)][1] * 180 / Math.PI;
@@ -126,38 +131,38 @@ function clearScene()
 
 document.addEventListener('keypress', moveWin);
 
-// let zoom = 0;
+ let zoom = 0;
 
-// document.addEventListener('wheel', (event) => {
-//     if(event.deltaY < 0){
-//         zoom += 0.01;
-//         root.style.transform = 'scale(' + (1 + zoom) + ')';
-//     }else{
-//         zoom -= 0.01;
-//         root.style.transform = 'scale(' + (1 + zoom) + ')';
-//     } 
-// });
+ document.addEventListener('wheel', (event) => {
+     if(event.deltaY < 0){
+         zoom += 0.02;
+         root.style.transform = 'scale(' + (1 + zoom) + ')';
+     }else{
+         zoom -= 0.02;
+         root.style.transform = 'scale(' + (1 + zoom) + ')';
+     } 
+ });
 
 function moveWin(event){  
-    if(event.key == 'w'){
+    if(event.key == 'w' || event.key == 'ц' || event.key == 'Ц'|| event.key == 'W'){
         window.scroll({
             left:window.pageXOffset,
             top:window.pageYOffset - 500,
             behavior:'smooth'
         });
-    }if(event.key == 's'){
+    }if(event.key == 's' || event.key == 'ы' || event.key == 'Ы' || event.key == 'S' || event.key == 'і'|| event.key == 'І' ){
         window.scroll({
             left:window.pageXOffset,
             top:window.pageYOffset + 500,
             behavior:'smooth'
         });
-    }if(event.key == 'a'){
+    }if(event.key == 'a' || event.key == 'ф' || event.key == 'Ф' || event.key == 'A' ){
         window.scroll({
             top:window.pageYOffset,
             left:window.pageXOffset - 500,
             behavior:'smooth'
         });
-    }if(event.key == 'd'){
+    }if(event.key == 'd' || event.key == 'в' || event.key == 'В' || event.key == 'D'){
         window.scroll({
             top:window.pageYOffset,
             left:window.pageXOffset + 500,
@@ -222,6 +227,7 @@ function addNode(index, x, y){
 function addCar(index, x, y, direct){
     x *= 10;
     y *= 10;
+    document.getElementById(index).remove();
     const car = document.createElement('div');
     car.classList.add('car_red');
     car.id = index;
