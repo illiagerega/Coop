@@ -23,7 +23,7 @@ class Controller:
         PortDriver.getMapIntoFile()
         Map.init(n_cars)
         CarDriver.init()
-        LightsController.init()
+        # LightsController.init()
 
     @staticmethod
     def change():

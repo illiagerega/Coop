@@ -1,0 +1,283 @@
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_10_18_21__8_59_PM__Default_Changelist_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_21__8_59_PM__Default_Changelist_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_21__8_59_PM__Default_Changelist_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_21__8_59_PM__Default_Changelist_.xml	(revision 14d100901645779ed446e2e18c7ddef19c9a961b)
++++ /dev/null	(revision 14d100901645779ed446e2e18c7ddef19c9a961b)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_10_18_21,_8_59_PM_[Default_Changelist]" date="1634580022589" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_21,_8_59_PM_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 10/18/21, 8:59 PM [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: js/script.js
+===================================================================
+diff --git a/js/script.js b/js/script.js
+deleted file mode 100644
+--- a/js/script.js	(revision 14d100901645779ed446e2e18c7ddef19c9a961b)
++++ /dev/null	(revision 14d100901645779ed446e2e18c7ddef19c9a961b)
+@@ -1,71 +0,0 @@
+-const root = document.body;
+-
+-// addNode(0, 200, 200);
+-// addCar(1, 100, 100, 30);
+-
+-addNode(0, 150, 150);
+-addNode(1, 600, 400);
+-addNode(2, 800, 200);
+-addNode(3, 300, 500);
+-addNode(4, 800, 600);
+-roadWay([0,1], [1,2], [0,2], [0,3], [1,3], [1,4], [2,4], [3,4]);
+-
+-function addRoad(x, y, length, incline){
+-    const road = document.createElement('div');
+-    road.classList.add('road');
+-
+-    road.style.left = (x - (length / 2)) + 'px';
+-    road.style.top = (y - 25) + 'px';
+-    road.style.width = length + 'px';
+-    road.style.transform = 'rotate(' + incline + 'deg)';
+-
+-    root.prepend(road);
+-}
+-
+-function addNode(index, x, y){
+-    const mainCircle = document.createElement('div');
+-    const pavement = document.createElement('div');
+-    mainCircle.classList.add('main_circle');
+-    pavement.classList.add('main_circle_border');
+-
+-    mainCircle.style.left = (x - 30) + 'px';
+-    mainCircle.style.top = (y - 30) + 'px';
+-    pavement.style.left = (x - 35) + 'px';
+-    pavement.style.top = (y - 35) + 'px';
+-
+-    mainCircle.id = index;
+-    pavement.id = index;
+-
+-    root.prepend(mainCircle);
+-    root.prepend(pavement);
+-}
+-
+-function addCar(index, x, y, direct){
+-    const car = document.createElement('div');
+-    car.classList.add('car_red');
+-
+-    car.style.left = (x - 15) + 'px';
+-    car.style.top = (y - 8) + 'px';
+-    car.style.transform = 'rotate(' + direct + 'deg)';
+-
+-    root.prepend(car);
+-}
+-
+-function roadWay(...c){
+-    for(let i of c){
+-        const node1 = document.getElementById(i[0]); 
+-        const node2 = document.getElementById(i[1]);
+-
+-        let x1 = parseInt(node1.style.left) + 35;
+-        let y1 = parseInt(node1.style.top) + 35;
+-        let x2 = parseInt(node2.style.left) + 35;
+-        let y2 = parseInt(node2.style.top) + 35;
+-
+-        let x = (x1 + x2) / 2;
+-        let y = (y1 + y2) / 2;
+-        let length = ((Math.abs(x1 - x2) ** 2) + (Math.abs(y1 - y2) ** 2)) ** 0.5;
+-        let incline = Math.atan((y1 - y2) / (x1 - x2)) / Math.PI * 180;
+-
+-        addRoad(x, y, length, incline);
+-    };
+-}
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"70281555-69bb-4e71-b4ad-10dd59a2eff5\" name=\"Default Changelist\" comment=\"Щось та й вже є, залишилося зробити візуалізацію для виправлення багів і покращення алгоритмів, наприклад, світлофори.\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Merge.Settings\">\n    <option name=\"BRANCH\" value=\"origin/main\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitSEFilterConfiguration\">\n    <file-type-list>\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\n      <filtered-out-file-type name=\"TAG\" />\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\n    </file-type-list>\n  </component>\n  <component name=\"ProjectId\" id=\"1zMwNeCpSeZoya0phxIW1cQxqcd\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"RecentsManager\">\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/Model/\" />\n    </key>\n  </component>\n  <component name=\"RunManager\">\n    <configuration name=\"Python\" type=\"PythonConfigurationType\" factoryName=\"Python\">\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"/usr/bin/python3.9\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/Model\" />\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <module name=\"\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/Model/main.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"70281555-69bb-4e71-b4ad-10dd59a2eff5\" name=\"Default Changelist\" comment=\"\" />\n      <created>1633971227374</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1633971227374</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Продебажено до частини з дейкстри, тобто граф робиться нормально. А симуляція в процесі...\">\n      <created>1633976703059</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1633976703059</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Продебажено до частини з дейкстри, тобто граф робиться нормально. А симуляція в процесі...\">\n      <created>1634040163661</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1634040163661</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Симуляція має деякі баги, але взагалом працює, тому можна викорстовувати.\">\n      <created>1634579968983</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1634579968983</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"Симуляція є;&#10;Виведення абсолютних позицій є (машини);&#10;Буде .json виведення для Романа.\">\n      <created>1634723557658</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1634723557658</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"База для світлофорів\">\n      <created>1634756746547</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1634756746547</updated>\n    </task>\n    <task id=\"LOCAL-00006\" summary=\"Є виведення у файл\">\n      <created>1635010171607</created>\n      <option name=\"number\" value=\"00006\" />\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1635010171607</updated>\n    </task>\n    <task id=\"LOCAL-00007\" summary=\"Є виведення у файл&#10;Буде з файлу введення&#10;Якісь світлофори є (точніше якась мінімальна концепція)\">\n      <created>1635067611485</created>\n      <option name=\"number\" value=\"00007\" />\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1635067611486</updated>\n    </task>\n    <task id=\"LOCAL-00008\" summary=\"main.py - у ньому запускається програма\">\n      <created>1635075221284</created>\n      <option name=\"number\" value=\"00008\" />\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1635075221284</updated>\n    </task>\n    <task id=\"LOCAL-00009\" summary=\"main.py - у ньому запускається програма\">\n      <created>1635075613359</created>\n      <option name=\"number\" value=\"00009\" />\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1635075613359</updated>\n    </task>\n    <task id=\"LOCAL-00010\" summary=\"main.py - у ньому запускається програма\">\n      <created>1635092729426</created>\n      <option name=\"number\" value=\"00010\" />\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1635092729426</updated>\n    </task>\n    <task id=\"LOCAL-00011\" summary=\"Щось та й вже є, залишилося зробити візуалізацію для виправлення багів і покращення алгоритмів, наприклад, світлофори.\">\n      <created>1635150378671</created>\n      <option name=\"number\" value=\"00011\" />\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1635150378671</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"12\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Продебажено до частини з дейкстри, тобто граф робиться нормально. А симуляція в процесі...\" />\n    <MESSAGE value=\"Симуляція має деякі баги, але взагалом працює, тому можна викорстовувати.\" />\n    <MESSAGE value=\"Симуляція є;&#10;Виведення абсолютних позицій є (машини);&#10;Буде .json виведення для Романа.\" />\n    <MESSAGE value=\"База для світлофорів\" />\n    <MESSAGE value=\"Є виведення у файл\" />\n    <MESSAGE value=\"Є виведення у файл&#10;Буде з файлу введення&#10;Якісь світлофори є (точніше якась мінімальна концепція)\" />\n    <MESSAGE value=\"main.py - у ньому запускається програма\" />\n    <MESSAGE value=\"Щось та й вже є, залишилося зробити візуалізацію для виправлення багів і покращення алгоритмів, наприклад, світлофори.\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Щось та й вже є, залишилося зробити візуалізацію для виправлення багів і покращення алгоритмів, наприклад, світлофори.\" />\n  </component>\n  <component name=\"XDebuggerManager\">\n    <breakpoint-manager>\n      <breakpoints>\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\n          <url>file://$PROJECT_DIR$/Model/Util/SimulationShrimp.py</url>\n          <line>93</line>\n          <option name=\"timeStamp\" value=\"16\" />\n        </line-breakpoint>\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\n          <url>file://$PROJECT_DIR$/Model/Util/dijkstra.py</url>\n          <line>30</line>\n          <option name=\"timeStamp\" value=\"30\" />\n        </line-breakpoint>\n      </breakpoints>\n    </breakpoint-manager>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 14d100901645779ed446e2e18c7ddef19c9a961b)
++++ b/.idea/workspace.xml	(date 1635413074524)
+@@ -1,7 +1,17 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="70281555-69bb-4e71-b4ad-10dd59a2eff5" name="Default Changelist" comment="Щось та й вже є, залишилося зробити візуалізацію для виправлення багів і покращення алгоритмів, наприклад, світлофори." />
++    <list default="true" id="70281555-69bb-4e71-b4ad-10dd59a2eff5" name="Default Changelist" comment="Є сервак [patching]">
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_21__8_59_PM__Default_Changelist_.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Model/CarController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/CarController.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Model/PortController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/PortController.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Visualization/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/index.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Visualization/js/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/js/server.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/data/cars.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/cars.json" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/data/map.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/map.json" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/js/script.js" beforeDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -33,6 +43,18 @@
+       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+     </file-type-list>
+   </component>
++  <component name="HighlightingSettingsPerFile">
++    <setting file="file://$PROJECT_DIR$/data/map.json" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Model/CarController.py" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Model/Util/TrafficLightInstance.py" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Model/Util/RoadInstance.py" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/main.py" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Model/Util/MapController.py" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Model/Util/CarInstance.py" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Model/Util/Consts.py" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/project.py" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Visualization/js/server.js" root0="FORCE_HIGHLIGHTING" />
++  </component>
+   <component name="ProjectId" id="1zMwNeCpSeZoya0phxIW1cQxqcd" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+@@ -45,10 +67,11 @@
+   </component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
++      <recent name="$PROJECT_DIR$/" />
+       <recent name="$PROJECT_DIR$/Model/" />
+     </key>
+   </component>
+-  <component name="RunManager">
++  <component name="RunManager" selected="Python.project">
+     <configuration name="Python" type="PythonConfigurationType" factoryName="Python">
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+@@ -61,7 +84,28 @@
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+       <module name="" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Model/main.py" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
++      <option name="PARAMETERS" value="" />
++      <option name="SHOW_COMMAND_LINE" value="false" />
++      <option name="EMULATE_TERMINAL" value="false" />
++      <option name="MODULE_MODE" value="false" />
++      <option name="REDIRECT_INPUT" value="false" />
++      <option name="INPUT_FILE" value="" />
++      <method v="2" />
++    </configuration>
++    <configuration name="project" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <envs>
++        <env name="PYTHONUNBUFFERED" value="1" />
++      </envs>
++      <option name="SDK_HOME" value="/usr/bin/python3.9" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="IS_MODULE_SDK" value="false" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <module name="" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/project.py" />
+       <option name="PARAMETERS" value="" />
+       <option name="SHOW_COMMAND_LINE" value="false" />
+       <option name="EMULATE_TERMINAL" value="false" />
+@@ -70,6 +114,15 @@
+       <option name="INPUT_FILE" value="" />
+       <method v="2" />
+     </configuration>
++    <list>
++      <item itemvalue="Python.Python" />
++      <item itemvalue="Python.project" />
++    </list>
++    <recent_temporary>
++      <list>
++        <item itemvalue="Python.project" />
++      </list>
++    </recent_temporary>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+@@ -157,7 +210,49 @@
+       <option name="project" value="LOCAL" />
+       <updated>1635150378671</updated>
+     </task>
+-    <option name="localTasksCounter" value="12" />
++    <task id="LOCAL-00012" summary="Є сервак">
++      <created>1635242194763</created>
++      <option name="number" value="00012" />
++      <option name="presentableId" value="LOCAL-00012" />
++      <option name="project" value="LOCAL" />
++      <updated>1635242194763</updated>
++    </task>
++    <task id="LOCAL-00013" summary="Є сервак">
++      <created>1635244537826</created>
++      <option name="number" value="00013" />
++      <option name="presentableId" value="LOCAL-00013" />
++      <option name="project" value="LOCAL" />
++      <updated>1635244537826</updated>
++    </task>
++    <task id="LOCAL-00014" summary="Є сервак">
++      <created>1635248406860</created>
++      <option name="number" value="00014" />
++      <option name="presentableId" value="LOCAL-00014" />
++      <option name="project" value="LOCAL" />
++      <updated>1635248406860</updated>
++    </task>
++    <task id="LOCAL-00015" summary="Є сервак [patching]">
++      <created>1635248791852</created>
++      <option name="number" value="00015" />
++      <option name="presentableId" value="LOCAL-00015" />
++      <option name="project" value="LOCAL" />
++      <updated>1635248791852</updated>
++    </task>
++    <task id="LOCAL-00016" summary="Є сервак [patching]">
++      <created>1635341978120</created>
++      <option name="number" value="00016" />
++      <option name="presentableId" value="LOCAL-00016" />
++      <option name="project" value="LOCAL" />
++      <updated>1635341978121</updated>
++    </task>
++    <task id="LOCAL-00017" summary="Є сервак [patching]">
++      <created>1635344650740</created>
++      <option name="number" value="00017" />
++      <option name="presentableId" value="LOCAL-00017" />
++      <option name="project" value="LOCAL" />
++      <updated>1635344650740</updated>
++    </task>
++    <option name="localTasksCounter" value="18" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -181,7 +276,9 @@
+     <MESSAGE value="Є виведення у файл&#10;Буде з файлу введення&#10;Якісь світлофори є (точніше якась мінімальна концепція)" />
+     <MESSAGE value="main.py - у ньому запускається програма" />
+     <MESSAGE value="Щось та й вже є, залишилося зробити візуалізацію для виправлення багів і покращення алгоритмів, наприклад, світлофори." />
+-    <option name="LAST_COMMIT_MESSAGE" value="Щось та й вже є, залишилося зробити візуалізацію для виправлення багів і покращення алгоритмів, наприклад, світлофори." />
++    <MESSAGE value="Є сервак" />
++    <MESSAGE value="Є сервак [patching]" />
++    <option name="LAST_COMMIT_MESSAGE" value="Є сервак [patching]" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+@@ -192,9 +289,19 @@
+           <option name="timeStamp" value="16" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+-          <url>file://$PROJECT_DIR$/Model/Util/dijkstra.py</url>
+-          <line>30</line>
+-          <option name="timeStamp" value="30" />
++          <url>file://$PROJECT_DIR$/project.py</url>
++          <line>29</line>
++          <option name="timeStamp" value="43" />
++        </line-breakpoint>
++        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
++          <url>file://$PROJECT_DIR$/Model/PortController.py</url>
++          <line>50</line>
++          <option name="timeStamp" value="44" />
++        </line-breakpoint>
++        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
++          <url>file://$PROJECT_DIR$/Model/PortController.py</url>
++          <line>19</line>
++          <option name="timeStamp" value="47" />
+         </line-breakpoint>
+       </breakpoints>
+     </breakpoint-manager>

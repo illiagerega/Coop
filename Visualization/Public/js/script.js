@@ -96,7 +96,7 @@ socket.on("setCars", (string) => {
     if (!is_paused){
 
         let array = JSON.parse(string);
-        console.log(string);
+        // console.log(string);
     
         for(let i of array['cars']){
             let index = Object.keys(i);
@@ -109,7 +109,6 @@ socket.on("setCars", (string) => {
             let y = i[Object.keys(i)][0][1] - minY + 2;
             let incline = i[Object.keys(i)][1] * 180 / Math.PI;
     
-            // console.log(x);
             if (!cars_created) addCar(index, x, y, incline);
             else moveCar(index, x, y, incline)
         }
@@ -150,24 +149,28 @@ function moveWin(event){
             top:window.pageYOffset - 500,
             behavior:'smooth'
         });
+        document.querySelector('.set_container').style.display = 'none';
     }if(event.key == 's' || event.key == 'ы' || event.key == 'Ы' || event.key == 'S' || event.key == 'і'|| event.key == 'І' ){
         window.scroll({
             left:window.pageXOffset,
             top:window.pageYOffset + 500,
             behavior:'smooth'
         });
+        document.querySelector('.set_container').style.display = 'none';
     }if(event.key == 'a' || event.key == 'ф' || event.key == 'Ф' || event.key == 'A' ){
         window.scroll({
             top:window.pageYOffset,
             left:window.pageXOffset - 500,
             behavior:'smooth'
         });
+        document.querySelector('.set_container').style.display = 'none';
     }if(event.key == 'd' || event.key == 'в' || event.key == 'В' || event.key == 'D'){
         window.scroll({
             top:window.pageYOffset,
             left:window.pageXOffset + 500,
             behavior:'smooth'
         });
+        document.querySelector('.set_container').style.display = 'none';
     }
 }
 
@@ -240,14 +243,27 @@ function addCar(index, x, y, direct){
 }
 
 function moveCar(index, x2, y2, direction){
+    // let car = document.getElementById(index);
+    // let x1 = +car.style.left.slice(0, car.style.left.length - 2);
+    // let y1 = +car.style.top.slice(0, car.style.top.length - 2);
+    // let deltaX = (Math.abs(x1 - x2) ** 2 + Math.abs(y1 - y2) ** 2) ** 0.5;
+
+    // car.style.left = x2*10 + 'px';
+    // car.style.top = y2*10 + 'px';
+
+    // car.style.transform = 'rotate(' + direction + 'deg)';
+
     let car = document.getElementById(index);
     let x1 = +car.style.left.slice(0, car.style.left.length - 2);
     let y1 = +car.style.top.slice(0, car.style.top.length - 2);
     let deltaX = (Math.abs(x1 - x2) ** 2 + Math.abs(y1 - y2) ** 2) ** 0.5;
 
+    car.setAttribute('v', Math.round(deltaX / 100));
+    car.setAttribute('direction', direction);
+
+    console.log(direction);
     car.style.left = x2*10 + 'px';
     car.style.top = y2*10 + 'px';
-
     car.style.transform = 'rotate(' + direction + 'deg)';
 }
 
@@ -272,7 +288,7 @@ function roadWay(...c){
             let incline = Math.atan((y1 - y2) / (x1 - x2)) / Math.PI * 180;
             
             //console.log(key);
-            console.log(c);
+            // console.log(c);
             if(key in c[ekey]) addRoad(x, y, length, incline);
             else addRoad(x, y, length, incline, true)
             
@@ -281,6 +297,50 @@ function roadWay(...c){
 }
 
 // addTree(400, 100, 0);
+
+let cont = document.createElement('div');
+let h3 = document.createElement('div');
+let spanId = document.createElement('span');
+let spanDirection = document.createElement('span');
+let spanX = document.createElement('span');
+let spanY = document.createElement('span');
+
+document.addEventListener('mousedown', settings);
+
+function settings(event){
+    let x = event.clientX;
+    let y = event.clientY;
+    let car;
+
+    if(document.elementFromPoint(x, y).classList.contains('car_red') && is_paused){
+        car = document.elementFromPoint(x, y);
+
+        cont.classList.add('set_container');
+        h3.classList.add('set_h3');
+
+        cont.style.left = x + 'px';
+        cont.style.top = y + 'px';
+        cont.style.display = 'inline-flex';
+
+        h3.textContent = 'Car Red';
+        spanId.textContent = 'Id: ' + +car.id;
+        spanDirection.textContent = 'Direction: ' + Math.round(+car.getAttribute('direction'));
+        spanX.textContent = 'X: ' + +x;
+        spanY.textContent = 'Y: ' + +y;
+
+        cont.prepend(spanY);
+        cont.prepend(spanX);
+        cont.prepend(spanDirection);
+        cont.prepend(spanId);
+        cont.prepend(h3);
+        document.getElementById("carMenu").prepend(cont);
+
+    }
+    else{
+        cont.style.display = "none";
+    }
+} 
+
 
 function addTree(x, y, incline){
     const mainBranch = document.createElement('div');

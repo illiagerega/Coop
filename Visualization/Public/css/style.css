@@ -166,3 +166,27 @@ body{
     position: absolute;
     z-index: -1;
 }
+.set_container{
+    display: none;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 4;
+}
+.set_container > *{
+    margin: 5px;
+    color: #2e2e2e;
+    background: #757575;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    z-index: 4;
+    font-weight: bold;
+    font-size: 20px;
+}
+.set_h3{
+    display: inline;
+}
