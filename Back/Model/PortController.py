@@ -24,6 +24,7 @@ class PortDriver:
 
         data = json.dumps({"cars": row})
 
+        #print(data)
         publishMessage(data, 'cars')
 
     @staticmethod

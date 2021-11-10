@@ -77,19 +77,19 @@ socket.on("setMap", (string) => {
 
     roadWay(array['roads']);
 
-    for(let i = 0; i < 200; i++){
-        let x = Math.random() * ((maxX - minX) * 10);
-        let y = Math.random() * ((maxY - minY) * 10);
-        if(
-            !document.elementFromPoint(x, y) &&  
-            !document.elementFromPoint(x + 20, y) && 
-            !document.elementFromPoint(x - 20, y) &&
-            !document.elementFromPoint(x, y + 20) &&
-            !document.elementFromPoint(x, y - 20)
-        ){
-            addTree(x, y, Math.random() * 360);
-        }
-    }
+    // for(let i = 0; i < 200; i++){
+    //     let x = Math.random() * ((maxX - minX) * 10);
+    //     let y = Math.random() * ((maxY - minY) * 10);
+    //     if(
+    //         !document.elementFromPoint(x, y) &&  
+    //         !document.elementFromPoint(x + 20, y) && 
+    //         !document.elementFromPoint(x - 20, y) &&
+    //         !document.elementFromPoint(x, y + 20) &&
+    //         !document.elementFromPoint(x, y - 20)
+    //     ){
+    //         addTree(x, y, Math.random() * 360);
+    //     }
+    // }
 });
 
 socket.on("setCars", (string) => {

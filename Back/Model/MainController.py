@@ -1,3 +1,4 @@
+from Back.Model.MessageController import *
 from .CarController import CarDriver
 from .PortController import PortDriver
 from .LightsController import LightsController
@@ -9,6 +10,9 @@ class Controller:
 
     @staticmethod
     def setMap(Name):
+        # Rabbit.Init()
+        clearQueue("cars")
+
         if ',' in Name:
             PortDriver.setMapByName(Name)
         else:

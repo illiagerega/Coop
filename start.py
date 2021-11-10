@@ -5,14 +5,18 @@ from subprocess import call
 from json import load
 import threading
 import os
+import pathlib
 
-data = ['set', '/Users/a1/Desktop/turik/Back/data/user_selected.osm', '10']
+
+data = ['set', str(pathlib.Path(__file__).parent.resolve()) + '/Back/data/map_small.osm', '10']
 
 def _settingCars():
     while True:
 
         Controller.change()
         time.sleep(speed) # speed of simulation
+
+
 def main():
     global speed
     print('set')

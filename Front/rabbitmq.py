@@ -13,7 +13,7 @@ def receive(type):
     rmq_channel.queue_declare(queue=type, durable=True)
 
     method_frame, header_frame, body = rmq_channel.basic_get(queue = type)        
-          
+    
     rmq_channel.basic_ack(method_frame.delivery_tag)
     rmq_connection.close() 
     return body
