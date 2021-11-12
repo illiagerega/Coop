@@ -6,9 +6,10 @@ from json import load
 import threading
 import os
 import pathlib
+import Back.Model.DbController as db
 
 
-data = ['set', str(pathlib.Path(__file__).parent.resolve()) + '/Back/data/map_small.osm', '10']
+data = db.getParams()
 
 def _settingCars():
     while True:

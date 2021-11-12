@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/menu_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+    <title>Traffic Model</title>
+
+    <style type="text/css" media="screen, print">
+
+     </style>
+
+
+</head>
+<body>
+    <div id='cars'>
+        {{ data | safe }}
+        {{ map | safe }}
+    </div>
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="{{ url_for('static', filename= 'js/js.js') }}"></script>
+
+</body>
+</html>
