@@ -5,7 +5,7 @@ from .Util.NodeInstance import Node
 from .Util.RoadInstance import Road
 from .Util.Consts import *
 from .config import *
-from .MessageController import *
+from .MessageController import ServerRabbit
 
 import json
 import osmnx
@@ -22,10 +22,11 @@ class PortDriver:
             if car.x != -1:
                 row.append({ car_index : car.getCoordinates()} )
 
-        data = json.dumps({"cars": row})
-
+        # data = json.dumps({"cars": row})
+        
+        return {"cars": row}
         #print(data)
-        publishMessage(data, 'cars')
+        # ServerRabbit.sendData(data, 'cars')
 
     @staticmethod
     def getMapIntoFile():  # all graph into file.json for simulation
@@ -40,9 +41,11 @@ class PortDriver:
 
             row_roads[node.index] = temp
 
-        data = json.dumps({"nodes": row_nodes, "roads": row_roads})
+        # data = json.dumps({"nodes": row_nodes, "roads": row_roads})
 
-        publishMessage(data, 'map')
+
+        return {"nodes": row_nodes, "roads": row_roads}
+        # ServerRabbit.sendData(data, 'cars') 
 
 
     @staticmethod

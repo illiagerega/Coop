@@ -1,28 +1,43 @@
-var button_ajax_state_sending = false;
+var map_ajax_state_sending = false;
 
-if(!button_ajax_state_sending){ 
-    function mode() {
-        $.ajax({
-        url: "/2d",
-        type: "get",
-        cache: false,
-        success: function(response) {
+function setCars() {
+    $.ajax({
+    url: "/2d",
+    type: "GET",
+    data: {operation: "setCars"},
+    cache: false,
+    success: function(response) {
 
-            $('#cars').html(response);
-            button_ajax_state_sending = true; // SET TRUE
-            console.log('I fucking got that!');
-            },
-
-            success: function(data){
-                
-                $("#cars").html(response);
-                button_ajax_state_sending = false; // SET TRUE
-            }
-        
-      });
-      return false;
-    };
+        $('#cars').html(response);
+        button_ajax_state_sending = true; // SET TRUE
+        console.log('I tf got that!');
+        },
     
+    });
+    return false;
+};
+    
+
+if (!map_ajax_state_sending)
+{
+    function setMap()
+    {
+        $.ajax({
+            url: "/2d",
+            type: "get",
+            data: {operation: "setMap"},
+            cache: false,
+            success: function(response) {
+                $('#map').html(response);
+                console.log("setMap completed");
+
+                map_ajax_state_sending = true;
+            },
+        });
+    }
+
 }
 
-setInterval(mode, 2000);
+setMap(); // when press button start
+
+// setInterval(mode, 2000);

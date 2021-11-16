@@ -1,9 +1,20 @@
 from flask import *
-import parser
-import db
+from .parser import *
+from .db import *
+from .rabbitmq import *
 import os
 from werkzeug import *
 
+# Presets' content below
+
+received_status = False
+
+Rabbit = ClientRabbit()
+
+Map_html = None
+Cars_html = None
+
+# Flask's content below
 app = Flask(__name__)
 
 UPLOAD_FOLDER = os.path.abspath('uploads')
@@ -42,18 +53,67 @@ def settings():
         return render_template('settings.html')
 
 @app.route('/choose')
-def chooose():
+def choose():
     return render_template('choose.html')
 
-@app.route('/2d')
+@app.route('/2d', methods=['GET', 'POST'])
 def type1():
-    map = parser.datamap()
-    data = parser.data()
-    return render_template('2d.html', data=data, map=map)
+    # map = parser.datamap()
+    # data = parser.data()
+
+    global received_status
+
+    received_status = False
+    html = ''
+
+    if request.method == 'GET':
+        operation = request.json['operation']
+        if operation == "setMap":
+            Rabbit.sendData('setMap', 'control')
+            while not received_status:
+                pass
+
+            html = Map_html
+
+
+        if operation == "setCars":
+            Rabbit.sendData('setCars', 'control')
+            while not received_status:
+                pass
+
+            html = Cars_html
+            
+            
+    
+    received_status = False
+
+    return render_template('2d.html', data = html)
 
 @app.route('/3d')
 def type2():
     return render_template('3d.html')
 
-if __name__ == "__main__":
+def setCars(channel, method_frame, header_frame, body):
+    global received_status, Cars_html
+
+    if not received_status:
+        # Rabbit.sendData('setCars', 'control')
+        
+        Cars_html = parser.decodeCars(body)
+        received_status = True
+
+def setMap(channel, method_frame, header_frame, body):
+    global received_status, Map_html
+
+
+    if not received_status:
+        
+        Map_html = parser.decodeMap(body)
+        received_status = True
+
+def runServer():
     app.run(debug=True)
+    Rabbit.declareFunc('map', setMap)
+    Rabbit.declareFunc('cars', setCars)
+    Rabbit.startConsuming()
+
