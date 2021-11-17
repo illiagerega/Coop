@@ -3,7 +3,7 @@ from .PortController import PortDriver
 from .LightsController import LightsController
 from .Util.MapController import Map
 from .Util.Consts import *
-from .MessageController import ServerRabbit
+# from .MessageController import ServerRabbit
 from base64 import b64decode
 from json import loads
 
@@ -32,11 +32,11 @@ class Controller:
         Controller.setMap(NameMap)
         # ServerRabbit.declareFunc('control', callback=Controller.callback_set)
         Controller.Map = PortDriver.getMapIntoFile()
-       #  Map.init(n_cars)
-       #  CarDriver.init()
+        Map.init(n_cars)
+        CarDriver.init()
         # LightsController.init()
 
-        ServerRabbit.startConsuming()
+        # ServerRabbit.startConsuming()
 
     @staticmethod
     def change():

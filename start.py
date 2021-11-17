@@ -4,6 +4,7 @@ from Back.Model.MainController import Controller
 from Front.parser import *
 from Front.db import *
 from Back.Model.DbController import getParams
+from Back.Model.PortController import PortDriver
 import os
 import pathlib
 from werkzeug import *
@@ -25,6 +26,8 @@ ALLOWED_EXTENSIONS = set(['osm'])
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+global html
+html = ''
 
 from flask_restful import reqparse
 
@@ -70,7 +73,10 @@ def choose():
 
 @app.route('/2d', methods=['GET', 'POST'])
 def type1():
-    html = ''
+    return render_template('2d.html', map = html)
+
+@app.route('/map', methods=['GET', 'POST'])
+def info():
 
     if request.method == 'GET':
         operation = parse_arg_from_requests('operation')
@@ -80,24 +86,31 @@ def type1():
             return render_template('2d.html', data=html)
 
         
+
         if operation == "setMap":
+            
+
             data = getParams()
             Controller.init(str(pathlib.Path(__file__).parent.resolve()) + data[1], data[2])
 
+            
+
             html = decodeMap(Controller.Map)
 
+            return html
 
 
         elif operation == "setCars":
+            html_ = decodeCars(PortDriver.getCarsIntoFile())
+            print('12312312312312312312',html_)
+            
+            
 
-            html = Cars_html
+            return html
+
 
         else:
             pass
-            
-            
-
-    return render_template('2d.html', map = html)
 
 @app.route('/3d')
 def type2():

@@ -2,12 +2,11 @@ var map_ajax_state_sending = false;
 
 function setCars() {
     $.ajax({
-    url: "/2d",
+    url: "/map",
     type: "GET",
     data: {operation: "setCars"},
     cache: false,
     success: function(response) {
-
         $('#cars').html(response);
         button_ajax_state_sending = true; // SET TRUE
         console.log('I tf got that!');
@@ -23,7 +22,7 @@ if (!map_ajax_state_sending)
     function setMap()
     {
         $.ajax({
-            url: "/2d",
+            url: "/map",
             type: "get",
             data: {operation: "setMap"},
             cache: false,
@@ -44,6 +43,7 @@ const changeValue = () => {
     bool = !bool
     if (bool == false)
         setMap();
+        setCars();
         
     if (bool == true)
         console.log('program has been stopped')

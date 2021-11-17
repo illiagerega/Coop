@@ -22,9 +22,9 @@ class PortDriver:
             if car.x != -1:
                 row.append({ car_index : car.getCoordinates()} )
 
-        # data = json.dumps({"cars": row})
+        data = json.dumps({"cars": row})
         
-        return {"cars": row}
+        return data
         #print(data)
         # ServerRabbit.sendData(data, 'cars')
 
