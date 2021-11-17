@@ -29,7 +29,7 @@ if (!map_ajax_state_sending)
             cache: false,
             success: function(response) {
                 $('#map').html(response);
-                console.log("setMap completed");
+                console.log(response);
 
                 map_ajax_state_sending = true;
             },
@@ -38,6 +38,18 @@ if (!map_ajax_state_sending)
 
 }
 
-setMap(); // when press button start
+let bool = true
+
+const changeValue = () => {
+    bool = !bool
+    if (bool == false)
+        setMap();
+        
+    if (bool == true)
+        console.log('program has been stopped')
+    console.log(bool)
+}
+
+//setMap(); // when press button start
 
 // setInterval(mode, 2000);

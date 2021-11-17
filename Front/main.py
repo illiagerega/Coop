@@ -93,27 +93,7 @@ def type1():
 def type2():
     return render_template('3d.html')
 
-def setCars(channel, method_frame, header_frame, body):
-    global received_status, Cars_html
-
-    if not received_status:
-        # Rabbit.sendData('setCars', 'control')
-        
-        Cars_html = parser.decodeCars(body)
-        received_status = True
-
-def setMap(channel, method_frame, header_frame, body):
-    global received_status, Map_html
-
-
-    if not received_status:
-        
-        Map_html = parser.decodeMap(body)
-        received_status = True
-
 def runServer():
     app.run(debug=True)
-    Rabbit.declareFunc('map', setMap)
-    Rabbit.declareFunc('cars', setCars)
     Rabbit.startConsuming()
 

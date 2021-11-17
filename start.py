@@ -70,12 +70,6 @@ def choose():
 
 @app.route('/2d', methods=['GET', 'POST'])
 def type1():
-    # map = parser.datamap()
-    # data = parser.data()
-
-    global received_status
-
-    received_status = False
     html = ''
 
     if request.method == 'GET':
@@ -102,8 +96,6 @@ def type1():
             pass
             
             
-    
-    received_status = False
 
     return render_template('2d.html', map = html)
 
@@ -111,74 +103,6 @@ def type1():
 def type2():
     return render_template('3d.html')
 
-def setCars(channel, method_frame, header_frame, body):
-    global received_status, Cars_html
-
-    if not received_status:
-        # Rabbit.sendData('setCars', 'control')
-        
-        Cars_html = parser.decodeCars(body)
-        received_status = True
-
-def setMap(channel, method_frame, header_frame, body):
-    global received_status, Map_html
-
-
-    if not received_status:
-        
-        Map_html = parser.decodeMap(body)
-        received_status = True
-
 if __name__ == "__main__":
     app.run(debug=True)
-    
-    # Rabbit.declareFunc('map', setMap)
-    # Rabbit.declareFunc('cars', setCars)
-    # Rabbit.startConsuming()
-
-
-
-
-# from Back.Model.MainController import Controller
-# import Back.Model.MessageController
-# import socket, time
-# from subprocess import call
-# from json import load
-# import threading
-# import os
-# import pathlib
-# import Back.Model.DbController as db
-# from Front.main import runServer
-
-
-# data = db.getParams()
-
-# paused = False
-
-# # def _settingCars():
-# #     global paused
-
-# #     while True:
-# #         if paused == False:
-# #             Controller.change()
-# #         # time.sleep(speed) # speed of simulation
-
-
-# def main():
-#     print('set')
-
-#     # Controller.setMap(str(pathlib.Path(__file__).parent.resolve()) + data[1])
-#     Controller.init(int(data[2]))
-
-#     time.sleep(0.5)
-#     sim_thread = threading.Thread(target=runServer, args=())
-#     sim_thread.daemon = False
-#     is_paused = False
-#     stop_sim = False
-
-#     sim_thread.start()
-
-#     print("setting is end")
-
-# if __name__ == "__main__":
-#     main()
+ 
