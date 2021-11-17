@@ -38,6 +38,17 @@ if (!map_ajax_state_sending)
 
 }
 
+let bool = true
+
+const changeValue = () => {
+    bool = !bool
+    if (bool == false)
+        setMap();
+    if (bool == true)
+        console.log('program has been stopped')
+    console.log(bool)
+}
+
 setMap(); // when press button start
 
 // setInterval(mode, 2000);
