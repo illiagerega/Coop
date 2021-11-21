@@ -4,8 +4,8 @@ from .LightsController import LightsController
 from .Util.NodeInstance import Node
 from .Util.RoadInstance import Road
 from .Util.Consts import *
+from .Util.Algorithms import excludeOSMGraph
 from .config import *
-from .MessageController import ServerRabbit
 
 import json
 import osmnx
@@ -52,74 +52,7 @@ class PortDriver:
     def setMapByName(Name):
         graph = osmnx.graph_from_place(Name, simplify=True)
 
-        Map.nodes = []
-        Map.roads = []
-        Map.spawn_nodes = []
-        nodes_indexes = {}
-        roads_to_delete = []
-
-        # print(graph.roads(0))
-        offset_x = graph.nodes[next(iter(graph.nodes))]['x']
-        offset_y = graph.nodes[next(iter(graph.nodes))]['y']
-
-        for node_index, node in enumerate(graph.nodes):
-            attributes = graph.nodes[node]
-            Map.nodes.append(
-                Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
-            Map.nodes[-1].attributes = attributes
-            if Map.nodes[-1].type == "spawn":
-                Map.spawn_nodes.append(node)
-
-            nodes_indexes[node] = node_index
-            pass
-
-        nodes_n_roads = [0] * len(Map.nodes)
-        for edge in graph.edges:
-            attributes = graph.edges[edge]
-            if 'highway' in attributes:
-                if attributes['highway'] in ForbiddenHighways:
-                    roads_to_delete.append(edge)
-                    print(Map.nodes[nodes_indexes[edge[0]]])
-                    print(Map.nodes[nodes_indexes[edge[1]]])
-                    continue
-            else:
-                roads_to_delete.append(edge)
-                continue
-
-            nodes_n_roads[nodes_indexes[edge[0]]] += 1
-            nodes_n_roads[nodes_indexes[edge[1]]] += 1
-
-        for edge in roads_to_delete:
-            graph.remove_edge(edge[0], edge[1], edge[2])
-
-        Map.nodes = [Map.nodes[i] for i in range(len(Map.nodes)) if nodes_n_roads[i] != 0]
-        nodes_indexes = {i: nodes_indexes[i] for i in nodes_indexes if nodes_n_roads[nodes_indexes[i]] != 0}
-        for node_index, node in enumerate(Map.nodes):
-            node.index = node_index
-
-        for index, node_index in enumerate(nodes_indexes.keys()):
-            nodes_indexes[node_index] = index
-
-        Map.spawn_nodes = range(len(Map.nodes))
-
-        roads_to_delete = None
-        for edge in graph.edges:
-            attributes = graph.edges[edge]
-            s_n = nodes_indexes[edge[0]]
-            e_n = nodes_indexes[edge[1]]
-            lanes = (int(attributes['lanes']) if not isinstance(attributes['lanes'], list) else int(
-                attributes['lanes'][0])) if 'lanes' in attributes.keys() else 1
-            Map.roads.append(Road(Map.nodes, s_n, e_n, 1))#(lanes + 1) // 2))
-            Map.nodes[s_n].addRoad(Map.roads[-1])
-            Map.nodes[e_n].addRoad(Map.roads[-1], 'end')
-
-            # if roads[-1].n_lines > 1:
-            #     nodes[e_n].addRoad(roads[-1])
-            #     nodes[s_n].addRoad(roads[-1], 'end')
-
-        graph = None
-        # Map.init(nodes, spawn_nodes, roads)
-        return [Map.nodes, Map.spawn_nodes, Map.roads]
+        Map.nodes, Map.spawn_nodes, Map.roads = excludeOSMGraph(graph)
 
     @staticmethod
     def setMapFromFile(fileName):
@@ -157,73 +90,7 @@ class PortDriver:
         elif '.osm' in fileName: # from .osm
             graph = osmnx.graph_from_xml(fileName, simplify=True)
 
-            Map.nodes = []
-            Map.roads = []
-            Map.spawn_nodes = []
-            nodes_indexes = {}
-            roads_to_delete = []
-
-            #print(graph.roads(0))
-            offset_x = graph.nodes[next(iter(graph.nodes))]['x']
-            offset_y = graph.nodes[next(iter(graph.nodes))]['y']
-
-            for node_index, node in enumerate(graph.nodes):
-                attributes = graph.nodes[node]
-                Map.nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
-                Map.nodes[-1].attributes = attributes
-                if Map.nodes[-1].type == "spawn":
-                    Map.spawn_nodes.append(node)
-
-                nodes_indexes[node] = node_index
-                pass
-
-            nodes_n_roads = [0] * len(Map.nodes)
-            for edge in graph.edges:
-                attributes = graph.edges[edge]
-                if 'highway' in attributes:
-                    if attributes['highway'] in ForbiddenHighways:
-                        roads_to_delete.append(edge)
-                        print(Map.nodes[nodes_indexes[edge[0]]])
-                        print(Map.nodes[nodes_indexes[edge[1]]])
-                        continue
-                else:
-                    roads_to_delete.append(edge)
-                    continue
-
-                nodes_n_roads[nodes_indexes[edge[0]]] += 1
-                nodes_n_roads[nodes_indexes[edge[1]]] += 1
-
-            for edge in roads_to_delete:
-                graph.remove_edge(edge[0], edge[1], edge[2])
-
-            Map.nodes = [Map.nodes[i] for i in range(len(Map.nodes)) if nodes_n_roads[i] != 0]
-            nodes_indexes = { i : nodes_indexes[i] for i in nodes_indexes if nodes_n_roads[nodes_indexes[i]] != 0}
-            for node_index, node in enumerate(Map.nodes):
-                node.index = node_index
-
-            for index, node_index in enumerate(nodes_indexes.keys()):
-                nodes_indexes[node_index] = index
-
-            Map.spawn_nodes = range(len(Map.nodes))
-
-            roads_to_delete = None
-            for edge in graph.edges:
-                attributes = graph.edges[edge]
-                s_n = nodes_indexes[edge[0]]
-                e_n = nodes_indexes[edge[1]]
-                lanes = (int(attributes['lanes']) if not isinstance(attributes['lanes'], list) else int(attributes['lanes'][0])) if 'lanes' in attributes.keys() else 1
-                Map.roads.append(Road(Map.nodes, s_n, e_n, 1) )# (lanes + 1) // 2 ))
-                Map.nodes[s_n].addRoad(Map.roads[-1])
-                Map.nodes[e_n].addRoad(Map.roads[-1], 'end')
-
-
-                # if roads[-1].n_lines > 1:
-                #     nodes[e_n].addRoad(roads[-1])
-                #     nodes[s_n].addRoad(roads[-1], 'end')
-
-            graph = None
-            #Map.init(nodes, spawn_nodes, roads)
-            return [Map.nodes, Map.spawn_nodes, Map.roads]
+            Map.nodes, Map.spawn_nodes, Map.roads = excludeOSMGraph(graph)
 
         else: # from .txt
             graph = open(fileName, 'r')

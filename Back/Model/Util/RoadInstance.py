@@ -3,7 +3,7 @@ from .LineInstance import Line
 from math import pi
 
 class Road:
-    def __init__(self, nodes, start_node, end_node, number_of_lines):
+    def __init__(self, nodes, start_node, end_node, number_of_lines, index):
         self.n_lines = number_of_lines
         self.start_node = start_node
         self.end_node = end_node
@@ -12,6 +12,7 @@ class Road:
         self.length = int(hypot(dx, dy))
         self.angle = atan((dy / dx)) if dx != 0 else copysign(pi / 2, dy)
         self.lines = {start_node: [], end_node: []}
+        self.index = index
 
         if number_of_lines == 1:
             self.lines[start_node] = [(Line(start_node, end_node, self))]

@@ -1,8 +1,9 @@
 import time
 from flask import Flask, request, render_template
+from Back.Model.CarController import CarDriver
 from Back.Model.MainController import Controller
 from Front.parser import *
-from Front.db import *
+from Front.db import Settings
 from Back.Model.DbController import getParams
 from Back.Model.PortController import PortDriver
 import os
@@ -26,7 +27,6 @@ ALLOWED_EXTENSIONS = set(['osm'])
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-global html
 html = ''
 
 from flask_restful import reqparse
@@ -60,7 +60,7 @@ def settings():
 
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
-            db.changeParams(file_path, value)
+            Settings.changeParams(file_path, value)
             return render_template('settings.html')
     
     else:
@@ -78,6 +78,8 @@ def type1():
 @app.route('/map', methods=['GET', 'POST'])
 def info():
 
+    global html
+
     if request.method == 'GET':
         operation = parse_arg_from_requests('operation')
 
@@ -91,22 +93,18 @@ def info():
             
 
             data = getParams()
-            Controller.init(str(pathlib.Path(__file__).parent.resolve()) + data[1], data[2])
+            Controller.init(data[1], data[2])
 
-            
-
+        
             html = decodeMap(Controller.Map)
-
+            print(html)
             return html
 
 
         elif operation == "setCars":
-            html_ = decodeCars(PortDriver.getCarsIntoFile())
-            print('12312312312312312312',html_)
-            
-            
-
-            return html
+            Controller.change()
+            html_ = decodeCars(PortDriver.getCarsIntoFile())            
+            return html_
 
 
         else:
