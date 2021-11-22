@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/menu_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
     <title>Traffic Model</title>
@@ -19,35 +19,39 @@
 
     <script src="{{ url_for('static', filename= 'js/js.js') }}"></script>
 
-    <div class="menu_body">
-        <ul class="menu_sim">    
-            <li class="name_menu">      
-                Menu
-            </li>
-            <li class="button_sim" id="pause" style="display: block;" onclick="changeValue()">Resume</li>
-            <li class="button_sim" onclick="document.location='/'"> Back </li>
-        </ul>
-    </div>
-    <div id='cars'>
-        {{ cars | safe }}
+    <div>
+        <div class="menu_body">
+            <ul class="menu_sim">    
+                <li class="name_menu">      
+                    Menu
+                </li>
+                <li class="button_sim" id="pause" style="display: block;" onclick="changeValue()">Resume</li>
+                <li class="button_sim" onclick="document.location='/'"> Back </li>
+            </ul>
+        </div>
+        <div id='cars'>
+            {{ cars | safe }}
+        </div>
+    
+        <div id='map'>
+            {{map | safe}}
+        </div>
+    
+        <menu id="ctxMenu">
+            <menu title="File">
+                <menu title="Save"></menu>
+                <menu title="Save As"></menu>
+                <menu title="Open"></menu>
+            </menu>
+            <menu title="Edit">
+                <menu title="Cut"></menu>
+                <menu title="Copy"></menu>
+                <menu title="Paste"></menu>
+            </menu>
+        </menu>
     </div>
 
-    <div id='map'>
-        {{map | safe}}
-    </div>
-
-    <menu id="ctxMenu">
-        <menu title="File">
-            <menu title="Save"></menu>
-            <menu title="Save As"></menu>
-            <menu title="Open"></menu>
-        </menu>
-        <menu title="Edit">
-            <menu title="Cut"></menu>
-            <menu title="Copy"></menu>
-            <menu title="Paste"></menu>
-        </menu>
-    </menu>
+    
     
 
 
