@@ -56,7 +56,7 @@ class Car:
         else:
             return []
 
-    def getCoordinates(self) -> [[int, int], int]: # apos, angle
+    def getCoordinates(self) -> list[list[int], int]: # apos, angle
 
         from .MapController import Map
 

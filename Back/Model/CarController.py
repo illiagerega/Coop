@@ -1,4 +1,4 @@
-from .Util.dijkstra import find_shortest_path
+from .Util.Algorithms import GraphAlgorithms
 from .Util.CarInstance import Car
 from .Util.MapController import Map
 from .Util.RoadInstance import Road
@@ -19,11 +19,7 @@ class CarDriver:
         print(Map.n_cars)
         for i in range(Map.n_cars):
             node = random.choice(Map.spawn_nodes)
-            way = find_shortest_path(Map.distance_matrix, node, random.choice([i for i in Map.spawn_nodes if i != node]))
-            #way = find_shortest_path(Map.distance_matrix, 0, 4)
-
-            # print(way)
-            # print("DKJFDSLKFJDSKLFJDSKLFJDSKL")
+            way = GraphAlgorithms.dijkstra(Map.distance_matrix, node, random.choice([i for i in Map.spawn_nodes if i != node]))
 
             pos = (0, None)
 
@@ -39,22 +35,6 @@ class CarDriver:
 
     @staticmethod
     def assignCars():
-        # for spawn_node in Map.spawn_nodes:
-        #     for car in Map.nodes[spawn_node].queue:
-        #         car.wayProgress = 0
-        #         assigned = False
-        #         for i in range(0, len(car.getLines()[0].cells), 2):
-        #             for index, line in enumerate(car.getLines()):
-        #                 if line.cells[i] == 0:
-        #                     line.cells[i] = 1
-        #                     print("Assign " + str(i))
-        #                     car.x = i
-        #                     car.currentLine = index
-        #                     assigned = True
-        #             if assigned:
-        #                 break
-        # Map.nodes[spawn_node].queue.clear()
-
         for spawn_node in Map.spawn_nodes:
             queue_del = []
             for car in Map.nodes[spawn_node].queue:
@@ -112,4 +92,4 @@ class CarDriver:
             car.getLines()[car.currentLine].cells[car.x] = 1
 
     def __get_path(u, v):
-        return find_shortest_path(Map.distance_matrix, u, v)
+        return GraphAlgorithms.dijkstra(Map.distance_matrix, u, v)

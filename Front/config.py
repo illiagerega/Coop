@@ -4,4 +4,4 @@ rmq_host = 'localhost'
 rmq_port = 5672
 
 
-db = 'db.db'
+db = 'Front/db.db'

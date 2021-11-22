@@ -27,17 +27,13 @@ class Controller:
 
     @staticmethod
     def init(NameMap, n_cars):
-        #PortDriver.setMapFromFile(NameOsmFile)  # ("test.txt")
         NCars = n_cars
         Controller.setMap(NameMap)
-        # ServerRabbit.declareFunc('control', callback=Controller.callback_set)
         Controller.Map = PortDriver.getMapIntoFile()
         Map.init(n_cars)
+
         CarDriver.init()
         # LightsController.init()
-
-        # ServerRabbit.startConsuming()
-
 
     @staticmethod
     def change():

@@ -8,7 +8,7 @@
 .menu_name{
     font-family: "TitleFont", Fallback, sans-serif;
     
-    font-size: 5rem;
+    font-size: 2vw;
     text-align: center;
     letter-spacing: 2px;
     -webkit-text-stroke: 5px #4a4a4a;
@@ -28,6 +28,7 @@
     color: rgb(150, 150, 150);
     margin: 20px;
     padding-right: 20px;
+    width: 10vh;
     display: table;
     z-index: 6;
 
@@ -58,8 +59,8 @@
     align-items: center;
     text-align: center;
     margin-left: 0px;
-    width: 300px;
-    height: 75px;
+    width: 20vw;
+    height: 5vw;
     background-color: rgb(150, 150, 150);
     border: none;
     border-radius: 15px;

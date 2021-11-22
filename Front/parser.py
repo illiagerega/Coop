@@ -37,8 +37,8 @@ def decodeCars(message):
         # print(cars)        
         for car in cars:
             car_key = next(iter(car))
-            x = ((car[car_key][0][0]) - offset_x + 1.8) * scale  #x
-            y = ((car[car_key][0][1]) - offset_y + 2) * scale #y
+            x = ((car[car_key][0][0]) - offset_x + 1.8)  #x
+            y = ((car[car_key][0][1]) - offset_y + 2) #y
             rotate = (car[car_key][1]) * 180 / math.pi #rotate
 
             html += f'<div class="car_red" id="{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
