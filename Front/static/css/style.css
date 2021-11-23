@@ -3,6 +3,11 @@
     src: url("fonts/FredokaOne-Regular.ttf");
 }
 
+.menu_body{
+    z-index: 7;
+    position: relative;
+}
+
 .menu_sim{
     border-radius: 10px;
     position: fixed;

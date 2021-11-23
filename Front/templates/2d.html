@@ -41,24 +41,24 @@
 
     </div>
 
-    <div id="speed_menu" class="menu_body" style="font-size: 0.8em; visibility: hidden;">
+    <div id="speed_menu" class="menu_body" style="font-size: 0.8em;">
         <ul class="menu_sim" style="position: relative; float: right; ">
             <li class="name_menu" style="width: 30vw;">      
                 Speed changer
             </li>
 
-            <div>
-                <input type="range" id="speed_changer" name="speed_changer" style="width: 25vw;"
+            <li>
+                <input type="range" id="speed_changer" name="speed_changer" style="width: 25vw; "
                 min="300" max="4000" step ="100" value="2000" onchange="setSpeed(this.value)" >
-            </div>
-            <div>
+            </li>
+            <li>
                 <label id="speed_display" for="speed_changer"> Speed in ms: 2000 </label>
-            </div>
+            </li>
             
         </ul>
     </div>
 
-    <div id="movable_scene" style="position: absolute; left: 0px; top: 0px;">
+    <div id="movable_scene" style="position: absolute; left: 0px; top: 0px; transform-origin: 100% 100%;">
         <div id='cars'>
             {{ cars | safe }}
         </div>
@@ -71,7 +71,7 @@
 
     </div>
 
-    <menu id="ctxMenu">
+    <!-- <menu id="ctxMenu">
         <menu title="File">
             <menu title="Save"></menu>
             <menu title="Save As"></menu>
@@ -82,7 +82,7 @@
             <menu title="Copy"></menu>
             <menu title="Paste"></menu>
         </menu>
-    </menu>
+    </menu> -->
 
 
     
