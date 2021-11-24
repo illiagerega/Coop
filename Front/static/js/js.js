@@ -75,20 +75,45 @@ const onStart = () => {
         eventCars = setInterval(setCars, speed);
         $("#pause").text("Pause");
         $("#pause").css("visibility", "visible");
+        $("#speed_menu").css("visibility", "visible");
     }
     else
     {
-        
+        $("#pause").css("visibility", "hidden");
+        $("#speed_menu").css("visibility", "visible");
+        clearInterval(eventCars);
     }
-}
-
-const onEditor = () => {
-    
 }
 
 const setSpeed = (value) => {
     $("#speed_display").text("Speed in ms: " + value.toString())
 }
+
+
+// get attributes && editor
+
+const onEditor = () => {
+    
+}
+
+// var notepad = document.getElementById("car_red");
+
+// notepad.addEventListener("contextmenu", function(event){
+//     event.preventDefault();
+//     var ctxMenu = document.getElementById("ctxMenu");
+//     ctxMenu.style.display = "block";
+//     ctxMenu.style.left = (event.pageX - 10)+"px";
+//     ctxMenu.style.top = (event.pageY - 10)+"px";
+// },false);
+
+// notepad.addEventListener("click",function(event){
+//     var ctxMenu = document.getElementById("ctxMenu");
+//     ctxMenu.style.display = "";
+//     ctxMenu.style.left = "";
+//     ctxMenu.style.top = "";
+// },false);
+
+
 
 // movement of main window
 
@@ -220,7 +245,7 @@ function mainMovement(){
 window.requestAnimationFrame(mainMovement)
 
 
-//setMap(); // when press button start
+// setMap(); // when press button start
 
 // setInterval(mode, 2000);
 

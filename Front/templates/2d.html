@@ -33,15 +33,15 @@
             
         </ul>
 
-        <ul class="menu_sim" style="bottom: 0%;">
-            <li class="name_menu" style="">      
-                Menu
+        <ul id="navigator" class="menu_sim" style="bottom: 0%;">
+            <li class="name_menu">      
+                Attribute navigator
             </li>
         </ul>
 
     </div>
 
-    <div id="speed_menu" class="menu_body" style="font-size: 0.8em;">
+    <div id="speed_menu" class="menu_body" style="font-size: 0.8em; visibility: hidden;">
         <ul class="menu_sim" style="position: relative; float: right; ">
             <li class="name_menu" style="width: 30vw;">      
                 Speed changer
@@ -58,7 +58,7 @@
         </ul>
     </div>
 
-    <div id="movable_scene" style="position: absolute; left: 0px; top: 0px; transform-origin: 100% 100%;">
+    <div id="movable_scene" style="position: absolute; left: 0px; top: 0px;">
         <div id='cars'>
             {{ cars | safe }}
         </div>

@@ -1,53 +1,24 @@
 import json
 import math
-from ast import literal_eval
-
-offset_x = 0 
-offset_y = 0
-scale = 10
-
-
-def min_map(data, index):
-    off_min = math.inf
-
-    for struct in data:
-        off_min = min(struct[0][index], off_min)
-
-    return off_min
+from .constructor import Constructor
 
 def decodeCars(message):
-    global offset_x, offset_y
-    # message = rabbitmq.receive('cars')
 
-    if str(message):
-        
-        abc = str(message)
+    data = json.loads(str(message))
 
-        data = json.loads(abc)
-        # print(abc)
+    html = ''
 
-        html = ''
+    # offset_x = min_cars(data['cars'], 0)
+    # offset_y = min_cars(data['cars'], 1)
 
-        # offset_x = min_cars(data['cars'], 0)
-        # offset_y = min_cars(data['cars'], 1)
+    # print(offset_x)
+    #print(data['cars'])
+    cars = data["cars"]
+    # print(cars)        
 
-        # print(offset_x)
-        #print(data['cars'])
-        cars = data["cars"]
-        # print(cars)        
-        for car in cars:
-            car_key = next(iter(car))
-            x = ((car[car_key][0][0]) - offset_x + 1.8)  #x
-            y = ((car[car_key][0][1]) - offset_y + 2) #y
-            rotate = (car[car_key][1]) * 180 / math.pi #rotate
+    html += Constructor.constructCars(cars)
 
-            html += f'<div class="car_red" id="{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
-
-        
-
-        return html
-    else:
-        return ''
+    return html
 
 def decodeMap(data):
     #message = rabbitmq.receive('map')
@@ -61,41 +32,8 @@ def decodeMap(data):
     nodes = data['nodes']
     roads = data['roads']
 
-    offset_x = min_map(nodes, 0)
-    offset_y = min_map(nodes, 1)
-
-    for index, node in enumerate(nodes):
-        x = (node[0][0] - offset_x) * scale
-        y = (node[0][1] - offset_y) * scale
-        node[0][0] = x
-        node[0][1] = y
-
-        html += f'<div class="main_circle" id="{index}" style="left: {x}px; top: {y}px;"></div>'
-    
-    #  print(roads)
-
-    for iroad1 in roads.keys():
-        for iroad2 in roads[iroad1].keys():
-            if len(roads[iroad1][iroad2]) == 0: 
-                continue
-            
-            x1 = nodes[int(iroad1)][0][0] + 18
-            y1 = nodes[int(iroad1)][0][1] + 18
-            x2 = nodes[int(iroad2)][0][0] + 18
-            y2 = nodes[int(iroad2)][0][1] + 18
-
-            x = (x1 + x2) / 2
-            y = (y1 + y2) / 2
-
-            length = ((abs(x1 - x2) ** 2) + (abs(y1 - y2) ** 2)) ** 0.5
-
-            if iroad1 in roads[iroad2]:
-                html += f'<div class="road" style="left: {(x - (length / 2))}px; top: {(y - 12)}px; width: {length}px; transform: rotate({roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
-            else:
-                html += f'<div class="road_one_line" style="left: {(x - (length / 2))}px; top: {(y - 6)}px; width: {length}px; transform: rotate({roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
-
-
-
-
+    Constructor.setSystem(nodes, roads)
+    html += Constructor.constructNodes()
+    html += Constructor.constructRoads()
 
     return html

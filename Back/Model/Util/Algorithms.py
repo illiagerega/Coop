@@ -253,13 +253,14 @@ def excludeOSMGraph(graph):
 
     roads = [roads[index] for index in used_roads.keys()]
 
-    for road in roads:
+    for road_index, road in enumerate(roads):
         road.lines[nodes_indexes[road.start_node]] = road.lines[road.start_node]
         road.lines[road.start_node] = []
         road.lines[nodes_indexes[road.end_node]] = road.lines[road.end_node]        
         road.lines[road.end_node] = []
         road.end_node = nodes_indexes[road.end_node]
         road.start_node = nodes_indexes[road.start_node]
+        road.index = road_index
         
     
     for node in nodes:
