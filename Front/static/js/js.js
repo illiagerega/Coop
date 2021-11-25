@@ -51,15 +51,16 @@ let eventLights = null;
 
 const onPause = () => {
     paused = !paused;
+
     if (started && !paused)
     {
-        eventCars = setInterval(setCars, speed);
+        setIntervals();
         $("#pause").text("Pause");
     }
         
     if (paused)
     {
-        clearInterval(eventCars);
+        clearIntervals();
         $("#pause").text("Resume");
 
     }
@@ -72,7 +73,7 @@ const onStart = () => {
     if (started)
     {
         setMap();
-        eventCars = setInterval(setCars, speed);
+        setIntervals();
         $("#pause").text("Pause");
         $("#pause").css("visibility", "visible");
         $("#speed_menu").css("visibility", "visible");
@@ -80,13 +81,24 @@ const onStart = () => {
     else
     {
         $("#pause").css("visibility", "hidden");
+        $("#pause").text("Pause");
         $("#speed_menu").css("visibility", "visible");
-        clearInterval(eventCars);
+        clearIntervals();
+        paused = false;
     }
 }
 
+function setIntervals(){
+    eventCars = setInterval(setCars, speed);
+}
+
+function clearIntervals(){
+    clearInterval(eventCars);
+}
+
 const setSpeed = (value) => {
-    $("#speed_display").text("Speed in ms: " + value.toString())
+    $("#speed_display").text("Speed in ms: " + value.toString());
+    speed = parseInt(value);
 }
 
 

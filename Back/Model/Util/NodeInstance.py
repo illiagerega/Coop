@@ -14,6 +14,8 @@ class Node:
         self.apos = list(map(int, apos))  # absolute position (x, y)
         self.start_roads: list[Road] = []
         self.end_roads: list[Road] = []
+
+        self.adj_nodes: list[int] = []
         self.queue: list[Car] = []
         self.attributes = []
         self.index: int = index
@@ -24,3 +26,6 @@ class Node:
             self.start_roads.append(road)
         else:
             self.end_roads.append(road)
+
+    def addRoadAdj(self, start_node, end_node):
+        self.adj_nodes.append([start_node, end_node])

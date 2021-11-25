@@ -89,7 +89,11 @@ class CarDriver:
 
             car.currentLine = random.randrange(len(car.getLines()))
             car.x = car.next_x
-            car.getLines()[car.currentLine].cells[car.x] = 1
+            try:
+                car.getLines()[car.currentLine].cells[car.x] = 1
+            except:
+                del CarDriver.cars_array[car_index]
+                del car
 
     def __get_path(u, v):
         return GraphAlgorithms.dijkstra(Map.distance_matrix, u, v)

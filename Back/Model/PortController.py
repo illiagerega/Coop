@@ -18,7 +18,7 @@ class PortDriver:
 
         for car_index, car in enumerate(CarDriver.cars_array):
             if car.x != -1:
-                row.append({ car_index : [car.getCoordinates(), car]} )
+                row.append({ car_index : [car.getCoordinates(), [car.getRoad().start_node, car.getRoad().end_node]]} )
 
         data = json.dumps({"cars": row})
         
@@ -48,7 +48,7 @@ class PortDriver:
 
     @staticmethod
     def setMapByName(Name):
-        graph = osmnx.graph_from_place(Name, simplify=True)
+        graph = osmnx.graph_from_place(Name, simplify=True, network_type='drive')
 
         Map.nodes, Map.spawn_nodes, Map.roads = excludeOSMGraph(graph)
 
@@ -88,7 +88,7 @@ class PortDriver:
         elif '.osm' in fileName: # from .osm
             graph = osmnx.graph_from_xml(fileName, simplify=True)
 
-            Map.nodes, Map.spawn_nodes, Map.roads = excludeOSMGraph(graph)
+            Map.nodes, Map.spawn_nodes, Map.roads = excludeOSMGraph(graph, use_custom_algorithm=True)
 
         else: # from .txt
             graph = open(fileName, 'r')

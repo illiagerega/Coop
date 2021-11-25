@@ -1,5 +1,6 @@
 from numpy.lib.function_base import delete
 import osmnx
+import networkx as nx
 from queue import LifoQueue
 from itertools import compress
 from numpy import invert
@@ -19,7 +20,7 @@ class GraphAlgorithms:
     """
 
     @staticmethod
-    def dfs(adjusting_matrix, nodes, edges, visited, first_node = 0):
+    def dfs(adjusting_matrix, nodes, visited, first_node = 0):
         """Deepth-first search
 
 
@@ -73,7 +74,7 @@ class GraphAlgorithms:
         
 
     @staticmethod
-    def getBiggestComponent(adjusting_matrix, nodes, edges):
+    def getBiggestComponent(adjusting_matrix, nodes):
         """getting the Biggest linked component
 
         Args:
@@ -90,7 +91,7 @@ class GraphAlgorithms:
         visited_list = [False] * len(nodes)
 
         while visited_number < len(nodes) - 1:
-            number, visited_nodes, first_node, visited_list = GraphAlgorithms.dfs(adjusting_matrix, nodes, edges, visited_list, first_node)
+            number, visited_nodes, first_node, visited_list = GraphAlgorithms.dfs(adjusting_matrix, nodes, visited_list, first_node)
             visited_number += number
             components.append([number, visited_nodes])
             if number >= len(nodes) // 2:
@@ -101,14 +102,14 @@ class GraphAlgorithms:
 
 
     @staticmethod
-    def getAdjustingMatrix(nodes, edges):
+    def getAdjustingMatrix(nodes):
 
         matrix = {index : set() for index in range(len(nodes))}
 
         for node in nodes:
-            for road in node.start_roads:
-                matrix[node.index].add(road.end_node)
-                matrix[road.end_node].add(node.index)
+            for road in node.adj_nodes:
+                matrix[node.index].add(road[1])
+                matrix[road[1]].add(node.index)
         
         return matrix
 
@@ -140,7 +141,7 @@ class GraphAlgorithms:
 
 
 
-def excludeOSMGraph(graph):
+def excludeOSMGraph(graph, use_custom_algorithm = False):
     """Excluding the nodes and edges which doesn't seem to be usefull for our purposes
 
     Args:
@@ -152,121 +153,117 @@ def excludeOSMGraph(graph):
     nodes = []
     roads = []
     spawn_nodes = []
-    nodes_indexes = {}
-    roads_to_delete = []
-
-    offset_x = graph.nodes[next(iter(graph.nodes))]['x']
-    offset_y = graph.nodes[next(iter(graph.nodes))]['y']
-
-    # first part of excluding useless nodes & roads include:
-    # creating the nodes from .osm graph (networkx model)    
-    for node_index, node in enumerate(graph.nodes):
-        attributes = graph.nodes[node]
-        nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
-        nodes[-1].attributes = attributes
-        # if nodes[-1].type == "spawn":
-        #     spawn_nodes.append(node)
-
-        nodes_indexes[node] = node_index
-        pass
 
     
+    if use_custom_algorithm:
 
-    nodes_n_roads = [0] * len(nodes)
+        nodes_indexes = {}
+        roads_to_delete = []
 
-    # exclude from graph the forbidden attributes such as 'pedestrian', and so on.
-    for edge in graph.edges:
-        attributes = graph.edges[edge]
-        if 'highway' in attributes:
-            if attributes['highway'] in ForbiddenHighways:
+        # offset_x = graph.nodes[next(iter(graph.nodes))]['x']
+        # offset_y = graph.nodes[next(iter(graph.nodes))]['y']
+
+        # first part of excluding useless nodes & roads include:
+        # creating the nodes from .osm graph (networkx model)    
+        for node_index, node in enumerate(graph.nodes):
+            # attributes = graph.nodes[node]
+            # nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
+            # nodes[-1].attributes = attributes
+            # if nodes[-1].type == "spawn":
+            #     spawn_nodes.append(node)
+
+            nodes_indexes[node] = node_index
+            pass
+
+        # nodes_n_roads = [0] * len(nodes)
+
+        # exclude from graph the forbidden attributes such as 'pedestrian', and so on.
+        for edge in graph.edges:
+            attributes = graph.edges[edge]
+            if 'highway' in attributes:
+                if attributes['highway'] in ForbiddenHighways:
+                    roads_to_delete.append(edge)
+                    # print(nodes[nodes_indexes[edge[0]]])
+                    # print(nodes[nodes_indexes[edge[1]]])
+                    continue
+            else:
                 roads_to_delete.append(edge)
-                print(nodes[nodes_indexes[edge[0]]])
-                print(nodes[nodes_indexes[edge[1]]])
                 continue
-        else:
-            roads_to_delete.append(edge)
-            continue
 
-        nodes_n_roads[nodes_indexes[edge[0]]] += 1
-        nodes_n_roads[nodes_indexes[edge[1]]] += 1
+        
+        # removing edges from .osm graph
+        for edge in roads_to_delete:
+            graph.remove_edge(edge[0], edge[1], edge[2])
+
+        list_subgraphs = list(graph.subgraph(c) for c in nx.weakly_connected_components(graph))
+        graph = max(list_subgraphs, key=len)
+
+
+        offset_x = graph.nodes[next(iter(graph.nodes))]['x']
+        offset_y = graph.nodes[next(iter(graph.nodes))]['y']
+        nodes_indexes = {}
+
+        for node_index, node in enumerate(graph.nodes):
+            attributes = graph.nodes[node]
+            nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
+            nodes[-1].attributes = attributes
+            # if nodes[-1].type == "spawn":
+            #     spawn_nodes.append(node)
+
+            nodes_indexes[node] = node_index
+            pass
+
+        # removing the unnecessary nodes from .osm graph
+        # nodes = [nodes[i] for i in range(len(nodes)) if nodes_n_roads[i] != 0]
+        nodes_indexes = { i : nodes_indexes[i] for i in nodes_indexes}
+        
+        # for node_index, node in enumerate(nodes):
+        #     node.index = node_index
+
+        # creating nodes indexes for getting them on the next step
+        for index, node_index in enumerate(nodes_indexes.keys()):
+            nodes_indexes[node_index] = index
+
+
+    else:
+        list_subgraphs = list(graph.subgraph(c) for c in nx.weakly_connected_components(graph))
+        graph = max(list_subgraphs, key=len)
+
+        nodes_indexes = {}
+        roads_to_delete = []
+
+        offset_x = graph.nodes[next(iter(graph.nodes))]['x']
+        offset_y = graph.nodes[next(iter(graph.nodes))]['y']
+
+        # first part of excluding useless nodes & roads include:
+        # creating the nodes from .osm graph (networkx model)    
+        for node_index, node in enumerate(graph.nodes):
+            attributes = graph.nodes[node]
+            nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
+            nodes[-1].attributes = attributes
+            # if nodes[-1].type == "spawn":
+            #     spawn_nodes.append(node)
+
+            nodes_indexes[node] = node_index
+            pass
+
 
     
-    # removing edges from .osm graph
-    for edge in roads_to_delete:
-        graph.remove_edge(edge[0], edge[1], edge[2])
-
-    # removing the unnecessary nodes from .osm graph
-    nodes = [nodes[i] for i in range(len(nodes)) if nodes_n_roads[i] != 0]
-    nodes_indexes = { i : nodes_indexes[i] for i in nodes_indexes if nodes_n_roads[nodes_indexes[i]] != 0}
-    for node_index, node in enumerate(nodes):
-        node.index = node_index
-
-    # creating nodes indexes for getting them on the next step
-    for index, node_index in enumerate(nodes_indexes.keys()):
-        nodes_indexes[node_index] = index
+    spawn_nodes = range(len(nodes))
 
     # creating roads for our formed graph
-    roads_to_delete = None
     for index, edge in enumerate(graph.edges):
         attributes = graph.edges[edge]
         s_n = nodes_indexes[edge[0]]
         e_n = nodes_indexes[edge[1]]
         lanes = (int(attributes['lanes']) if not isinstance(attributes['lanes'], list) else int(attributes['lanes'][0])) if 'lanes' in attributes.keys() else 1
-        roads.append(Road(nodes, s_n, e_n, 1, index) )# (lanes + 1) // 2 ))
+        roads.append(Road(nodes, s_n, e_n, 1, index))# (lanes + 1) // 2 ))
         nodes[s_n].addRoad(roads[-1])
         nodes[e_n].addRoad(roads[-1], 'end')
 
 
 
     graph = None
-
-    # the second part of excluding include:
-    # finding the biggest linked component in entire graph
-    adjusting_matrix = GraphAlgorithms.getAdjustingMatrix(nodes, roads)
-    nodes = GraphAlgorithms.getBiggestComponent(adjusting_matrix, nodes, roads)
-    used_nodes =  {node.index : 1 for node in nodes}
-    nodes_indexes = {node.index : i for i, node in enumerate(nodes)}
-
-    used_roads = {}
-
-    # excluding (yep again) roads
-    for node in nodes:
-        roads_to_save = []
-
-        for road in node.start_roads:
-            if road.end_node in used_nodes:
-                roads_to_save.append(road)
-                if not road.index in used_roads:
-                    used_roads[road.index] = 1
-
-
-        node.start_roads = roads_to_save
-        roads_to_save = []
-        for road in node.end_roads:
-            if road.start_node in used_nodes:
-                roads_to_save.append(road)
-                if not road.index in used_roads:
-                    used_roads[road.index] = 1
-
-        node.end_roads = roads_to_save
-
-
-    roads = [roads[index] for index in used_roads.keys()]
-
-    for road_index, road in enumerate(roads):
-        road.lines[nodes_indexes[road.start_node]] = road.lines[road.start_node]
-        road.lines[road.start_node] = []
-        road.lines[nodes_indexes[road.end_node]] = road.lines[road.end_node]        
-        road.lines[road.end_node] = []
-        road.end_node = nodes_indexes[road.end_node]
-        road.start_node = nodes_indexes[road.start_node]
-        road.index = road_index
-        
-    
-    for node in nodes:
-        node.index = nodes_indexes[node.index]
-        if node.type == "spawn":
-            spawn_nodes.append(node.index)
 
     return [nodes, spawn_nodes, roads]
 
