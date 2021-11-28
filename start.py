@@ -97,7 +97,7 @@ def info():
 
         
             html = decodeMap(Controller.Map)
-            print(html)
+            # print(html)
             return html
 
 

@@ -55,14 +55,16 @@ const onPause = () => {
     if (started && !paused)
     {
         setIntervals();
-        $("#pause").text("Pause");
+        // $("#button_pause").text("Pause");
+        $("#button_start").text("Stop");
+        
     }
         
     if (paused)
     {
         clearIntervals();
-        $("#pause").text("Resume");
-
+        // $("#button_start").text("Start");
+        $("#button_pause").text("Pause");  
     }
     
 }
@@ -74,15 +76,19 @@ const onStart = () => {
     {
         setMap();
         setIntervals();
-        $("#pause").text("Pause");
-        $("#pause").css("visibility", "visible");
+        $("#button_pause").text("Pause");
+        $("#button_start").text("Stop");
+        $("#button_pause").css("visibility", "visible");
         $("#speed_menu").css("visibility", "visible");
     }
     else
     {
-        $("#pause").css("visibility", "hidden");
-        $("#pause").text("Pause");
+        $("#button_pause").css("visibility", "hidden");
+        $("#button_pause").text("Pause");
+        $("#button_start").text("Start");
         $("#speed_menu").css("visibility", "visible");
+        $("#map").html("");
+        $("#cars").html("");        
         clearIntervals();
         paused = false;
     }
@@ -99,6 +105,8 @@ function clearIntervals(){
 const setSpeed = (value) => {
     $("#speed_display").text("Speed in ms: " + value.toString());
     speed = parseInt(value);
+    clearIntervals();
+    setIntervals();
 }
 
 

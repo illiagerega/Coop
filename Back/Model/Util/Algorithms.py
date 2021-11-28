@@ -257,7 +257,8 @@ def excludeOSMGraph(graph, use_custom_algorithm = False):
         s_n = nodes_indexes[edge[0]]
         e_n = nodes_indexes[edge[1]]
         lanes = (int(attributes['lanes']) if not isinstance(attributes['lanes'], list) else int(attributes['lanes'][0])) if 'lanes' in attributes.keys() else 1
-        roads.append(Road(nodes, s_n, e_n, 1, index))# (lanes + 1) // 2 ))
+        # print(lanes)
+        roads.append(Road(nodes, s_n, e_n, lanes, index))# (lanes + 1) // 2 ))
         nodes[s_n].addRoad(roads[-1])
         nodes[e_n].addRoad(roads[-1], 'end')
 

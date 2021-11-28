@@ -36,20 +36,26 @@ class Constructor:
         for car in cars:
             car_key = next(iter(car))
             position = car[car_key][0]
-            x = (position[0][0]) + (-1410 + 691.8) - Constructor.offset_x  #x
-            y = (position[0][1]) + (-510 + 472) - Constructor.offset_y #y
-            rotate = (position[1]) * 180 / math.pi #rotate
-
+            x = (position[0][0]) + (-1410 + 691.8 + 1) - Constructor.offset_x  #x
+            y = (position[0][1]) + (-510 + 472 + 27) - Constructor.offset_y #y
+            rotate = (position[1]) #rotate
             road = car[car_key][1]
             iroad1 = road[0]  # === car.getRoad().index
             iroad2 = road[1]
             if iroad1 in Constructor.roads[iroad2]:
-                x += 6 * math.cos(rotate * 180 / math.pi)
-                y -= 6 * math.sin(rotate * 180 / math.pi)
+                x -= 6 * math.sin(rotate)
+                y += 6 * math.cos(rotate)
 
+                rotate *= 180 / math.pi
                 html += f'<div class="car_red" id="{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
             else:
                 html += f'<div class="car_red" id="{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
+
+        return html
+
+    @staticmethod
+    def constructLights():
+        html = ''
 
         return html
 
@@ -87,7 +93,7 @@ class Constructor:
                 length = ((abs(x1 - x2) ** 2) + (abs(y1 - y2) ** 2)) ** 0.5
 
                 if iroad1 in Constructor.roads[iroad2]:
-                    html += f'<div class="road" style="left: {(x - (length / 2))}px; top: {(y - 12)}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
+                    html += f'<div class="road" style="left: {(x - (length / 2))}px; top: {(y - 12) - 2}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
                 else:
                     html += f'<div class="road_one_line" style="left: {(x - (length / 2))}px; top: {(y - 6)}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
 

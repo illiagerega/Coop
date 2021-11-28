@@ -28,6 +28,8 @@ class Controller:
     @staticmethod
     def init(NameMap, n_cars):
         NCars = n_cars
+        Controller.Map = {}
+        Controller.Cars = {}
         Controller.setMap(NameMap)
         Controller.Map = PortDriver.getMapIntoFile()
         Map.init(n_cars)
