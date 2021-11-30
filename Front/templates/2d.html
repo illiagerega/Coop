@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/menu_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+    <title>Traffic Model</title>
+
+    <style type="text/css" media="screen, print">
+
+     </style>
+
+
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="{{ url_for('static', filename= 'js/js.js') }}"></script>
+
+    
+    <div class="menu_body" style="font-size: 0.8em;">
+        <ul class="menu_sim" style="top: 0%; left: 0%;">    
+            <li class="name_menu">      
+                Menu
+            </li>
+            <li class="button_sim" id="button_start" onclick="onStart()"> Start</li>
+            <li class="button_sim" id="button_pause" style="display: block; visibility: hidden;" onclick="onPause()">
+            </li>
+            <li class="button_sim" id="button_editor" style="display: block; visibility: hidden;" onclick="onEditor()"> </li>
+            <li class="button_sim" onclick="document.location='/'"> Back </li>
+            
+        </ul>
+
+        <ul id="navigator" class="menu_sim" style="bottom: 0%; visibility: hidden;">
+            <li class="name_menu">      
+                Attribute navigator
+            </li>
+        </ul>
+
+    </div>
+
+    <div id="speed_menu" class="menu_body" style="font-size: 0.8em; visibility: hidden;">
+        <ul class="menu_sim" style="position: relative; float: right; ">
+            <li class="name_menu" style="width: 30vw;">      
+                Speed changer
+            </li>
+
+            <li>
+                <input type="range" id="speed_changer" name="speed_changer" style="width: 25vw; "
+                min="300" max="4000" step ="100" value="2000" onchange="setSpeed(this.value)" >
+            </li>
+            <li>
+                <label id="speed_display" for="speed_changer"> Speed in ms: 2000 </label>
+            </li>
+            
+        </ul>
+    </div>
+
+    <menu id="ctxMenu">
+        <menu title="File">
+            <menu title="Save"></menu>
+            <menu title="Save As"></menu>
+            <menu title="Open"></menu>
+        </menu>
+        <menu title="Edit">
+            <menu title="Cut"></menu>
+            <menu title="Copy"></menu>
+            <menu title="Paste"></menu>
+        </menu>
+    </menu>
+
+    <div id="movable_scene" style="position: absolute; left: 0px; top: 0px;">
+        
+        <div id='map'>
+            {{map | safe}}
+        </div>
+
+        <div id='cars'>
+            {{ cars | safe }}
+        </div>
+
+    </div>
+
+</body>
+</html>
