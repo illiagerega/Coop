@@ -5,4 +5,4 @@ rmq_password = 'guest'
 rmq_host = 'localhost'
 rmq_port = 5672
 
-db = 'Front/db.db'
+db = os.path.abspath('db.db')
