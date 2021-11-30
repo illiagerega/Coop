@@ -12,7 +12,7 @@ class LightsController:
 
 
         for node_index, node in enumerate(Map.nodes):
-            if node.type != 'intersect' or len(node.end_roads) < 2:
+            if node.type != 'intersect' or len(node.end_roads) < 3:
                 continue
 
 
@@ -26,3 +26,10 @@ class LightsController:
         for light in LightsController.traffic_lights:
             light.Change()
 
+
+    @staticmethod
+    def getLigths():
+        data = []
+
+        for ligth in LightsController.traffic_lights:
+            pass

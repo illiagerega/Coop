@@ -2,7 +2,7 @@ from .NodeInstance import Node
 from .MapController import Map
 from.LineInstance import Line
 from .RoadInstance import Road
-from math import pi
+from math import pi, cos, sin
 
 class TrafficLight:
     # Lines, which connected to node, separated into two arrays:
@@ -64,6 +64,7 @@ class TrafficLight:
 
         self.periods = init_periods
         self.node : Node = Map.nodes[index]
+        self.center : int = Map.nodes[index].apos
 
     def ChangeLine(self):
         if self._is_first_open:
@@ -92,5 +93,21 @@ class TrafficLight:
             self.ChangeLine()
 
 
+    def getAttributes(self):
+        
+        sublights = []
 
+        for array_road in enumerate(self.array_roads):
+            for road in array_road:
+                sublight = []
+                color = ['green', 'yellow', 'red']
+
+                R = 15
+                offset = 7
+                x = self.center[0] + R*cos(road.angle + pi) 
+                y = self.center[1] - R*sin(road.angle + pi)
+
+
+
+        return [self.array_roads, self.periods, self._is_first_open, self.counter]
 

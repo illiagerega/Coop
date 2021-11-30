@@ -10,7 +10,7 @@ class Road:
         dx = nodes[start_node].apos[0] - nodes[end_node].apos[0]
         dy = nodes[start_node].apos[1] - nodes[end_node].apos[1]
         self.length = int(hypot(dx, dy))
-        self.angle = atan((dy / dx)) if dx != 0 else copysign(pi / 2, dy)
+        self.angle = (atan(dy / dx) + pi * (dx < 0)) if dx != 0.00 else copysign(pi / 2, dy)
         self.lines = {start_node: [], end_node: []}
         self.index = index
 

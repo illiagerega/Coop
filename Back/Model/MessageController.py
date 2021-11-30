@@ -3,6 +3,11 @@ from pika import exchange_type
 from .config import *
 
 
+
+# unused 
+
+# Maybe, for Future
+
 class ServerRabbit:
     
     exchange_ : str = 'direct_faces'

@@ -26,8 +26,8 @@ class Constructor:
         if(Constructor.roads == None or reload):
             Constructor.roads = roads
         
-        Constructor.offset_x = Constructor.min_map(Constructor.nodes, 0) * Constructor.scale
-        Constructor.offset_y = Constructor.min_map(Constructor.nodes, 1) * Constructor.scale   
+        Constructor.offset_x = Constructor.min_map(Constructor.nodes, 0)
+        Constructor.offset_y = Constructor.min_map(Constructor.nodes, 1)
 
     @staticmethod
     def constructCars(cars):
@@ -47,9 +47,9 @@ class Constructor:
                 y += 7 * math.cos(rotate)
 
                 rotate *= 180 / math.pi
-                html += f'<div class="car_red" id="{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
+                html += f'<div class="car_red" id="car_{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
             else:
-                html += f'<div class="car_red" id="{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
+                html += f'<div class="car_red" id="car_{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
 
         return html
 
@@ -63,22 +63,20 @@ class Constructor:
     def constructNodes():
         html = ''
 
-        Constructor.offset_x = Constructor.min_map(Constructor.nodes, 0) 
-        Constructor.offset_y = Constructor.min_map(Constructor.nodes, 1)   
-
         for index, node in enumerate(Constructor.nodes):
             x = (node[0][0] - Constructor.offset_x) * Constructor.scale
             y = (node[0][1] - Constructor.offset_y) * Constructor.scale
             node[0][0] = x
             node[0][1] = y
 
-            html += f'<div class="main_circle" id="{index}" style="left: {x}px; top: {y}px;"></div>'
+            html += f'<div class="main_circle" id="node_{index}" style="left: {x}px; top: {y}px;"></div>'
 
         return html
 
     @staticmethod
     def constructRoads():
         html = ''
+        road_index = 0
 
         for iroad1 in Constructor.roads.keys():
             for iroad2 in Constructor.roads[iroad1].keys():
@@ -96,8 +94,10 @@ class Constructor:
                 length = ((abs(x1 - x2) ** 2) + (abs(y1 - y2) ** 2)) ** 0.5
 
                 if iroad1 in Constructor.roads[iroad2]:
-                    html += f'<div class="road" style="left: {(x - (length / 2))}px; top: {(y - 12) - 2}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
+                    html += f'<div class="road" id="road_{iroad1}" style="left: {(x - (length / 2))}px; top: {(y - 12) - 2}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
                 else:
-                    html += f'<div class="road_one_line" style="left: {(x - (length / 2))}px; top: {(y - 6)}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
+                    html += f'<div class="road_one_line" id="road_{iroad1}" style="left: {(x - (length / 2))}px; top: {(y - 6)}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
+
+                road_index += 1
 
         return html
