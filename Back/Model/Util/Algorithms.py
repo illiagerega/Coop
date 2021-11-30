@@ -205,11 +205,13 @@ def excludeOSMGraph(graph, use_custom_algorithm = False):
 
         for node_index, node in enumerate(graph.nodes):
             attributes = graph.nodes[node]
-            nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
-            nodes[-1].attributes = attributes
-            # if nodes[-1].type == "spawn":
-            #     spawn_nodes.append(node)
+            if len(graph.edges(node)) <= 1:
+                spawn_nodes.append(node_index)
+                nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
+            else:
+                nodes.append(Node(1, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
 
+            nodes[-1].attributes = attributes
             nodes_indexes[node] = node_index
             pass
 
@@ -239,17 +241,19 @@ def excludeOSMGraph(graph, use_custom_algorithm = False):
         # creating the nodes from .osm graph (networkx model)    
         for node_index, node in enumerate(graph.nodes):
             attributes = graph.nodes[node]
-            nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
+            # nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
+            if len(graph.edges(node)) <= 1:
+                spawn_nodes.append(node_index)
+                nodes.append(Node(0, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
+            else:
+                nodes.append(Node(1, [(attributes['x'] - offset_x) * Scale, (attributes['y'] - offset_y) * Scale], node_index))
+
             nodes[-1].attributes = attributes
-            # if nodes[-1].type == "spawn":
-            #     spawn_nodes.append(node)
 
             nodes_indexes[node] = node_index
             pass
 
 
-    
-    spawn_nodes = range(len(nodes))
 
     # creating roads for our formed graph
     for index, edge in enumerate(graph.edges):
@@ -258,7 +262,7 @@ def excludeOSMGraph(graph, use_custom_algorithm = False):
         e_n = nodes_indexes[edge[1]]
         lanes = (int(attributes['lanes']) if not isinstance(attributes['lanes'], list) else int(attributes['lanes'][0])) if 'lanes' in attributes.keys() else 1
         # print(lanes)
-        roads.append(Road(nodes, s_n, e_n, lanes, index))# (lanes + 1) // 2 ))
+        roads.append(Road(nodes, s_n, e_n, 1, index))# (lanes + 1) // 2 ))
         nodes[s_n].addRoad(roads[-1])
         nodes[e_n].addRoad(roads[-1], 'end')
 

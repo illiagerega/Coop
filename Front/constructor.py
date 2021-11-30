@@ -18,7 +18,7 @@ class Constructor:
         return off_min
 
     @staticmethod
-    def setSystem(nodes, roads, reload=False):
+    def setSystem(nodes, roads, reload=True):
 
         if(Constructor.nodes == None or reload):
             Constructor.nodes = nodes
@@ -26,8 +26,8 @@ class Constructor:
         if(Constructor.roads == None or reload):
             Constructor.roads = roads
         
-        Constructor.offset_x = Constructor.min_map(nodes, 0)
-        Constructor.offset_y = Constructor.min_map(nodes, 1)   
+        Constructor.offset_x = Constructor.min_map(Constructor.nodes, 0) * Constructor.scale
+        Constructor.offset_y = Constructor.min_map(Constructor.nodes, 1) * Constructor.scale   
 
     @staticmethod
     def constructCars(cars):
@@ -43,8 +43,8 @@ class Constructor:
             iroad1 = road[0]  # === car.getRoad().index
             iroad2 = road[1]
             if iroad1 in Constructor.roads[iroad2]:
-                x -= 6 * math.sin(rotate)
-                y += 6 * math.cos(rotate)
+                x -= 7 * math.sin(rotate)
+                y += 7 * math.cos(rotate)
 
                 rotate *= 180 / math.pi
                 html += f'<div class="car_red" id="{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
@@ -62,6 +62,9 @@ class Constructor:
     @staticmethod
     def constructNodes():
         html = ''
+
+        Constructor.offset_x = Constructor.min_map(Constructor.nodes, 0) 
+        Constructor.offset_y = Constructor.min_map(Constructor.nodes, 1)   
 
         for index, node in enumerate(Constructor.nodes):
             x = (node[0][0] - Constructor.offset_x) * Constructor.scale
