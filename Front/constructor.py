@@ -36,8 +36,8 @@ class Constructor:
         for car in cars:
             car_key = next(iter(car))
             position = car[car_key][0]
-            x = (position[0][0]) + (-1410 + 691.8 + 1) - Constructor.offset_x  #x
-            y = (position[0][1]) + (-510 + 472 + 27) - Constructor.offset_y #y
+            x = (position[0][0]) #+ (-1410 + 691.8 + 1)  #x
+            y = (position[0][1]) #+ (-510 + 472 + 27) #y
             rotate = (position[1]) #rotate
             road = car[car_key][1]
             iroad1 = road[0]  # === car.getRoad().index
