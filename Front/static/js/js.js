@@ -272,3 +272,46 @@ function showRoads(event){
     }
     
 }
+
+function showMenu(event){
+    var status = true;
+    if (status) {
+        $("#menu_param").css("visibility", "visible");
+    }
+    
+}
+
+function closeButton(event){
+    var status = true;
+    if (status) {
+        $("#menu_param").css("visibility", "hidden");
+        $("#roads").css("visibility", "hidden");
+        $("#lights").css("visibility", "hidden");
+        $("#car").css("visibility", "hidden");
+    }
+    
+}
+
+function closeCars(event){
+    var status = true;
+    if (status) {
+        $("#car").css("visibility", "hidden");
+    }
+    
+}
+
+function closeLights(event){
+    var status = true;
+    if (status) {
+        $("#lights").css("visibility", "hidden");
+    }
+    
+}
+
+function closeRoads(event){
+    var status = true;
+    if (status) {
+        $("#roads").css("visibility", "hidden");
+    }
+    
+}

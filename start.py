@@ -80,11 +80,14 @@ def type1():
     data = getParams()
     Controller.init(data[1], data[2])
     map_ = Controller.Map
-    cars_ = Controller.change()
-    print(cars_)
+
+    data = PortDriver.getCarsIntoFile()
+    cars_ = json.loads(data)
+
+    lights = PortDriver.getLightsIntoFile()
     
 
-    return render_template('2d.html', map = html, map_ = map_, cars_ = cars_)
+    return render_template('2d.html', map = html, map_ = map_, cars_ = cars_, lights = lights)
 
 @app.route('/map', methods=['GET', 'POST'])
 def info():

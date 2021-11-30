@@ -34,36 +34,50 @@
         </ul>
 
         <ul id="navigator" class="menu_sim" style="bottom: 0%; visibility: hidden;">
-            <li class="name_menu">      
+            <li class="name_menu" onclick="showMenu(event)">      
                 Attribute navigator
             </li>
         </ul>
 
-        <div style="background-color: rgb(224, 196, 196); margin-left: 700px; margin-top: 250px;">
+        <div style="background-color: rgb(224, 196, 196); margin-left: 700px; margin-top: 250px; visibility: hidden;" id="menu_param">
             <ul class="edit_menu">
                 <li class="edit_menu_li" id="car_button" onclick="showCars(event)"><a>Car</a></li>
                 <li class="edit_menu_li" id="lishts_button" onclick="showLights(event)"><a>Traffic lights</a></li>
                 <li class="edit_menu_li" id="roads_button" onclick="showRoads(event)"><a>Roads</a></li>
+                <li class="edit_menu_li" id="close_button" onclick="closeButton(event)"><a>X</a></li>
             </ul>
             <div style="background-color: white; visibility: hidden;" class="menu_settings" id="car">
-                <p>Car</p>
-                <table>
+                <ul class="edit_menu">
+                    <li class="edit_menu_li" onclick="closeCars(event)"><a>Close</a></li>
+                </ul>
+                <table class="info">
                     <tr>
-                        {% for value in car_ %}
-                        <th>{{ car_[value] }}</th>
+                        {% for i in cars_['cars'] %}
+                        <th>{{ i }}</th>
                         {% endfor %}
                     </tr>
                 </table>
             </div>
             <div style="background-color: white; visibility: hidden;" class="menu_settings" id="lights">
-                <p>Traffic lights</p>
+                <ul class="edit_menu">
+                    <li class="edit_menu_li" onclick="closeLights(event)"><a>Close</a></li>
+                </ul>
+                <table>
+                    <tr>
+                        {% for i in lights %}
+                        <th>{{ i }}</th>
+                        {% endfor %}
+                    </tr>
+                </table>
             </div>
             <div style="background-color: white; visibility: hidden;" class="menu_settings" id="roads">
-                <p>Roads</p>
+                <ul class="edit_menu">
+                    <li class="edit_menu_li" onclick="closeRoads(event)"><a>Close</a></li>
+                </ul>
                 <table>
                     <tr>
                         {% for value in map_ %}
-                        <th>{{ map_[value] }}</th>
+                        <th>{{ map_[value] }}</th><br>
                         {% endfor %}
                     </tr>
                 </table>
