@@ -35,14 +35,17 @@ class Controller:
         Map.init(n_cars)
 
         CarDriver.init()
-        # LightsController.init()
+        LightsController.init()
 
     @staticmethod
     def change():
 
         CarDriver.comp()
-
+        LightsController.comp()
         # PortDriver.getCarsIntoFile()
+
+
+
 
     @staticmethod
     def setMapJson():

@@ -34,7 +34,9 @@ from flask_restful import reqparse
 def parse_arg_from_requests(arg, **kwargs):
     parse = reqparse.RequestParser()
     parse.add_argument(arg, **kwargs)
+
     args = parse.parse_args()
+
     return args[arg]
 
 def allowed_file(filename):
@@ -83,6 +85,8 @@ def info():
     if request.method == 'GET':
         operation = parse_arg_from_requests('operation')
 
+        # Controller.Map
+
         if operation == None:
             # print(request.form)
             return render_template('2d.html', data=html)
@@ -94,8 +98,6 @@ def info():
 
             data = getParams()
             Controller.init(data[1], data[2])
-
-        
             html = decodeMap(Controller.Map)
             # print(html)
             return html
@@ -103,7 +105,8 @@ def info():
 
         elif operation == "setCars":
             Controller.change()
-            html_ = decodeCars(PortDriver.getCarsIntoFile())            
+            html_ = decodeCars(PortDriver.getCarsIntoFile())
+            html_ += decodeLights(PortDriver.getLightsIntoFile())            
             return html_
 
 

@@ -26,6 +26,11 @@ class PortDriver:
         #print(data)
         # ServerRabbit.sendData(data, 'cars')
 
+
+    def getLightsIntoFile():
+
+        return LightsController.getLigths()
+
     @staticmethod
     def getMapIntoFile():  # all graph into file.json for simulation
         row_nodes = []
