@@ -9,6 +9,7 @@ from Back.Model.PortController import PortDriver
 import os
 import pathlib
 from werkzeug import *
+import json
 
 # Presets' content below
 
@@ -75,7 +76,15 @@ def choose():
 
 @app.route('/2d', methods=['GET', 'POST'])
 def type1():
-    return render_template('2d.html', map = html)
+
+    data = getParams()
+    Controller.init(data[1], data[2])
+    map_ = Controller.Map
+    cars_ = Controller.change()
+    print(cars_)
+    
+
+    return render_template('2d.html', map = html, map_ = map_, cars_ = cars_)
 
 @app.route('/map', methods=['GET', 'POST'])
 def info():

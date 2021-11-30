@@ -39,6 +39,37 @@
             </li>
         </ul>
 
+        <div style="background-color: rgb(224, 196, 196); margin-left: 700px; margin-top: 250px;">
+            <ul class="edit_menu">
+                <li class="edit_menu_li" id="car_button" onclick="showCars(event)"><a>Car</a></li>
+                <li class="edit_menu_li" id="lishts_button" onclick="showLights(event)"><a>Traffic lights</a></li>
+                <li class="edit_menu_li" id="roads_button" onclick="showRoads(event)"><a>Roads</a></li>
+            </ul>
+            <div style="background-color: white; visibility: hidden;" class="menu_settings" id="car">
+                <p>Car</p>
+                <table>
+                    <tr>
+                        {% for value in car_ %}
+                        <th>{{ car_[value] }}</th>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <div style="background-color: white; visibility: hidden;" class="menu_settings" id="lights">
+                <p>Traffic lights</p>
+            </div>
+            <div style="background-color: white; visibility: hidden;" class="menu_settings" id="roads">
+                <p>Roads</p>
+                <table>
+                    <tr>
+                        {% for value in map_ %}
+                        <th>{{ map_[value] }}</th>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+        </div>
+
     </div>
 
     <div id="speed_menu" class="menu_body" style="font-size: 0.8em; visibility: hidden;">
@@ -57,19 +88,6 @@
             
         </ul>
     </div>
-
-    <menu id="ctxMenu">
-        <menu title="File">
-            <menu title="Save"></menu>
-            <menu title="Save As"></menu>
-            <menu title="Open"></menu>
-        </menu>
-        <menu title="Edit">
-            <menu title="Cut"></menu>
-            <menu title="Copy"></menu>
-            <menu title="Paste"></menu>
-        </menu>
-    </menu>
 
     <div id="movable_scene" style="position: absolute; left: 0px; top: 0px;">
         

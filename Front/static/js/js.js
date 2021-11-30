@@ -118,25 +118,6 @@ const onEditor = () => {
     
 }
 
-// var notepad = document.getElementById("car_red");
-
-// notepad.addEventListener("contextmenu", function(event){
-//     event.preventDefault();
-//     var ctxMenu = document.getElementById("ctxMenu");
-//     ctxMenu.style.display = "block";
-//     ctxMenu.style.left = (event.pageX - 10)+"px";
-//     ctxMenu.style.top = (event.pageY - 10)+"px";
-// },false);
-
-// notepad.addEventListener("click",function(event){
-//     var ctxMenu = document.getElementById("ctxMenu");
-//     ctxMenu.style.display = "";
-//     ctxMenu.style.left = "";
-//     ctxMenu.style.top = "";
-// },false);
-
-
-
 // movement of main window
 
 var up = false,
@@ -267,37 +248,27 @@ function mainMovement(){
 window.requestAnimationFrame(mainMovement)
 
 
-// setMap(); // when press button start
+function showCars(event){
+    var status = true;
+    if (status) {
+        $("#car").css("visibility", "visible");
+    }
+    
+    
+}
 
-// setInterval(mode, 2000);
+function showLights(event){
+    var status = true;
+    if (status) {
+        $("#lights").css("visibility", "visible");
+    }
+    
+}
 
-// var notepad = document.getElementById("car_red");
-// notepad.addEventListener("contextmenu",function(event){
-//     event.preventDefault();
-//     var ctxMenu = document.getElementById("ctxMenu");
-//     ctxMenu.style.display = "block";
-//     ctxMenu.style.left = (event.pageX - 10)+"px";
-//     ctxMenu.style.top = (event.pageY - 10)+"px";
-// },false);
-// notepad.addEventListener("click",function(event){
-//     var ctxMenu = document.getElementById("ctxMenu");
-//     ctxMenu.style.display = "";
-//     ctxMenu.style.left = "";
-//     ctxMenu.style.top = "";
-// },false);
-
-// var notepad = document.getElementById("car_red");
-// notepad.addEventListener("contextmenu",function(event){
-//     event.preventDefault();
-//     var ctxMenu = document.getElementById("ctxMenu");
-//     ctxMenu.style.display = "block";
-//     ctxMenu.style.left = (event.pageX - 10)+"px";
-//     ctxMenu.style.top = (event.pageY - 10)+"px";
-// },false);
-
-// notepad.addEventListener("click",function(event){
-//     var ctxMenu = document.getElementById("ctxMenu");
-//     ctxMenu.style.display = "";
-//     ctxMenu.style.left = "";
-//     ctxMenu.style.top = "";
-// },false);
+function showRoads(event){
+    var status = true;
+    if (status) {
+        $("#roads").css("visibility", "visible");
+    }
+    
+}
