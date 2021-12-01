@@ -39,7 +39,7 @@
             </li>
         </ul>
 
-        <div style="background-color: rgb(224, 196, 196); margin-left: 700px; margin-top: 250px; visibility: hidden;" id="menu_param">
+        <div class="editor_menu" style="background-color: rgb(224, 196, 196); margin-left: 700px; margin-top: 250px; visibility: hidden;" id="menu_param">
             <ul class="edit_menu">
                 <li class="edit_menu_li" id="car_button" onclick="showCars(event)"><a>Car</a></li>
                 <li class="edit_menu_li" id="lishts_button" onclick="showLights(event)"><a>Traffic lights</a></li>
@@ -51,22 +51,24 @@
                     <li class="edit_menu_li" onclick="closeCars(event)"><a>Close</a></li>
                 </ul>
                 <table class="info">
-                    <tr>
-                        {% for i in cars_['cars'] %}
-                        <th>{{ i }}</th>
-                        {% endfor %}
-                    </tr>
+                    <form method="post" id="cars_form" action="/editior" enctype="multipart/form-data">
+                        <tr>
+                            <textarea name="data">{{ cars_['cars'] }}</textarea><br>
+                            <input type="submit" value="Save">
+                        </tr>
+                    </form>
                 </table>
             </div>
             <div style="background-color: white; visibility: hidden;" class="menu_settings" id="lights">
                 <ul class="edit_menu">
                     <li class="edit_menu_li" onclick="closeLights(event)"><a>Close</a></li>
                 </ul>
-                <table>
+                <table class="info">
                     <tr>
-                        {% for i in lights %}
-                        <th>{{ i }}</th>
-                        {% endfor %}
+                        <form method="post" id="cars_form" action="/editior" enctype="multipart/form-data"></form>
+                            <textarea name="data">{{ lights }}</textarea><br>
+                            <input type="submit" value="Save">
+                        </form>
                     </tr>
                 </table>
             </div>
@@ -74,11 +76,9 @@
                 <ul class="edit_menu">
                     <li class="edit_menu_li" onclick="closeRoads(event)"><a>Close</a></li>
                 </ul>
-                <table>
+                <table class="info">
                     <tr>
-                        {% for value in map_ %}
-                        <th>{{ map_[value] }}</th><br>
-                        {% endfor %}
+                        <textarea>{{ map_ }}</textarea>
                     </tr>
                 </table>
             </div>

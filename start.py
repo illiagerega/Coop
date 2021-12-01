@@ -129,6 +129,14 @@ def info():
 def type2():
     return render_template('3d.html')
 
+@app.route('/editior', methods=['GET', 'POST'])
+def editior():
+    if request.method == 'POST':
+        value = request.form.get('data')
+        print(value)
+        return '123'
+
 if __name__ == "__main__":
     app.run(debug=True)
+ 
  
