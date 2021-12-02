@@ -40,13 +40,10 @@ class CarDriver:
             for car in Map.nodes[spawn_node].queue:
                 car.wayProgress = 0
                 for line in car.getLines():
-                    try:
-                        if line.cells[0] == 0:
-                            car.x = 0
-                            line.cells[0] = 1
-                            queue_del.append(car)
-                    except:
-                        pass
+                    if line.cells[0] == 0:
+                        car.x = 0
+                        line.cells[0] = 1
+                        queue_del.append(car)
 
                 Map.nodes[spawn_node].queue = [temp for temp in Map.nodes[spawn_node].queue if not (temp in queue_del) ]
 

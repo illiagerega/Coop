@@ -60,19 +60,15 @@ class Car:
 
         from .MapController import Map
 
-        def shrink(x, in_min, in_max, out_min, out_max):
-            return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
-
         current_node = self.__getNode()
         start_node = Map.nodes[current_node.start_node]
         end_node = Map.nodes[current_node.end_node]
 
         x = end_node.apos[0] - start_node.apos[0]
         y = end_node.apos[1] - start_node.apos[1]
-        length = len(self.getLines()[0].cells)
 
-        self.apos[0] = shrink(self.x / length, 0, 1, 1 / length, 1) * (x) + start_node.apos[0]
-        self.apos[1] = shrink(self.x / length, 0, 1, 1 / length, 1) * (y) + start_node.apos[1]
+        self.apos[0] = (self.x / len(self.getLines()[0].cells)) * (x) + start_node.apos[0]
+        self.apos[1] = (self.x / len(self.getLines()[0].cells)) * (y) + start_node.apos[1]
 
 
         return [self.apos, (atan(y / x) + pi * (x < 0)) if x != 0.00 else copysign(pi / 2, y), self._v]

@@ -54,23 +54,8 @@ class Constructor:
         return html
 
     @staticmethod
-    def constructLights(lights):
+    def constructLights():
         html = ''
-        light_index = 0
-
-        # list[list[sublights, self.array_roads, self.periods, self._is_first_open, self.counter] <- one light
-        # sublights -> list[sublight] -> list[list[[x, y], angle, color]]
-
-        for light in lights:
-            for sublight in light[0]:
-                x = sublight[0][0] + 11
-                y = sublight[0][1] + 14
-                angle = sublight[1] * 180 / math.pi
-                color = sublight[2]
-
-                html += f'<div class="sublight" id="sublight_{light_index}" style="left: {x}px; top: {y}px; transform: rotate({angle}deg); background-color: {color}"> </div>'
-                
-                light_index += 1
 
         return html
 
@@ -84,7 +69,7 @@ class Constructor:
             node[0][0] = x
             node[0][1] = y
 
-            html += f'<div class="main_circle" id="node_{index}" style="left: {x}px; top: {y}px; "></div>'
+            html += f'<div class="main_circle" id="node_{index}" style="left: {x}px; top: {y}px;"></div>'
 
         return html
 
@@ -109,9 +94,9 @@ class Constructor:
                 length = ((abs(x1 - x2) ** 2) + (abs(y1 - y2) ** 2)) ** 0.5
 
                 if iroad1 in Constructor.roads[iroad2]:
-                    html += f'<div class="road" id="road_{road_index}" style="left: {(x - (length / 2))}px; top: {(y - 12) - 2}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
+                    html += f'<div class="road" id="road_{iroad1}" style="left: {(x - (length / 2))}px; top: {(y - 12) - 2}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
                 else:
-                    html += f'<div class="road_one_line" id="road_{road_index}" style="left: {(x - (length / 2))}px; top: {(y - 6)}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
+                    html += f'<div class="road_one_line" id="road_{iroad1}" style="left: {(x - (length / 2))}px; top: {(y - 6)}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
 
                 road_index += 1
 
