@@ -12,6 +12,7 @@ import os
 import pathlib
 from werkzeug import *
 import json
+# Hell
 
 # Presets' content below
 
@@ -117,7 +118,8 @@ def info():
 
         elif operation == "setCars":
             Controller.change()
-            html_ = decodeCars(PortDriver.getCarsIntoFile())            
+            html_ = decodeCars(PortDriver.getCarsIntoFile())
+            html_ += decodeLights(PortDriver.getLightsIntoFile())            
             return html_
 
 

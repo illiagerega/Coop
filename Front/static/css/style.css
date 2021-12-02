@@ -129,8 +129,8 @@ body{
     position: absolute;
     z-index: 3;
 }
-.light{
-    width: 14px;
+.sublight{
+    width: 12px;
     height: 3px;
     background-color: green; /* when is closed then red*/
 }
