@@ -67,20 +67,19 @@ class TrafficLight:
         self.center : int = Map.nodes[index].apos
 
     def ChangeLine(self):
-        
         if self._is_first_open:
             for road in self.array_roads[0]:
-                for line in road.lines[road.start_node]:
+                for line in road.lines[road.end_node]:
                     line.cells[-1] = 0
             for road in self.array_roads[1]:
-                for line in road.lines[road.start_node]:
+                for line in road.lines[road.end_node]:
                     line.cells[-1] = 1
         else:
             for road in self.array_roads[1]:
-                for line in road.lines[road.start_node]:
+                for line in road.lines[road.end_node]:
                     line.cells[-1] = 0
             for road in self.array_roads[0]:
-                for line in road.lines[road.start_node]:
+                for line in road.lines[road.end_node]:
                     line.cells[-1] = 1
 
 
@@ -98,35 +97,17 @@ class TrafficLight:
         
         sublights = []
 
-        for index, array_road in enumerate(self.array_roads):
+        for array_road in enumerate(self.array_roads):
             for road in array_road:
                 sublight = []
-                colorset = ['green', 'yellow', 'red']
-                color = None
+                color = ['green', 'yellow', 'red']
 
                 R = 15
                 offset = 7
-                x = self.center[0] - R*cos(road.angle + pi) + offset * sin(road.angle)
-                y = self.center[1] - R*sin(road.angle + pi) - offset * cos(road.angle)
-                angle = road.angle - pi / 2
-                sublight.append([x, y])
-                sublight.append(angle)
+                x = self.center[0] + R*cos(road.angle + pi) 
+                y = self.center[1] - R*sin(road.angle + pi)
 
-                if index == 0:
-                    if not self._is_first_open:
-                        color = colorset[1] if self.counter >= self.periods[index] - 1 else colorset[0]
-                    else:
-                        color = colorset[2]
-                else:
-                    if self._is_first_open:
-                        color = colorset[1] if self.counter >= self.periods[index] - 1 else colorset[0]
-                    else:
-                        color = colorset[2]
 
-                sublight.append(color)
 
-                sublights.append(sublight)
-
-        # sublight -> list[[x, y], angle, color]
-        return [sublights, self.array_roads, self.periods, self._is_first_open, self.counter]
+        return [self.array_roads, self.periods, self._is_first_open, self.counter]
 

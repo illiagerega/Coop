@@ -29,11 +29,7 @@ class LightsController:
 
     @staticmethod
     def getLigths():
-        lights = []
+        data = []
 
-        for light in LightsController.traffic_lights:
-            lights.append(light.getAttributes())
-
-
-        return lights
-            
+        for ligth in LightsController.traffic_lights:
+            pass

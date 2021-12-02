@@ -1,133 +1,59 @@
-const main = new function(){
-    const main = this;
+const canvas = document.getElementById('map');
+const mapView = new harp.MapView({
+   canvas,
+   theme: "https://unpkg.com/@here/harp-map-theme@latest/resources/berlin_tilezen_night_reduced.json"
+});
 
-    const MOUSE_BUTTON = ['left', 'middle', 'right'];
+// center the camera to New York
+mapView.lookAt({
+  target: new harp.GeoCoordinates(48.92312, 24.71248),
+  zoomLevel: 17,
+  tilt: 40,
+});
 
-    let scene, renderer, camera,
-    config = {
-        'mouse_lock' : false
-    },
-    keys = {}, 
-    mouse = {
-        'position' : {'x' : 0, 'y' : 0},
-        'speed' : {'x' : 0, 'y' : 0},
-        'locked' : false,
-        'keys' : {
-            'left' : false,
-            'right' : false,
-            'middle' : false,
-            'wheel' : 0
-        }
-    },
-    events = {
-        'keydown' : null,
-        'keypress' : null,
-        'keyup' : null,
-        'mousedown' : null,
-        'mouseup' : null
-    };
+const mapControls = new harp.MapControls(mapView);
+const ui = new harp.MapControlsUI(mapControls);
+canvas.parentElement.appendChild(ui.domElement);
 
-    const v = this.v = (x, y, z) => {
-        return new THREE.Vector3(x, y, z);
-    }
+mapView.resize(window.innerWidth, window.innerHeight);
+window.onresize = () => mapView.resize(window.innerWidth, window.innerHeight);
 
-    main.on = (event_name, processor) => {
-        events[event_name] = processor;
-    }
+const vectorTileDataSource = new harp.VectorTileDataSource({
+   authenticationCode: 'R_eJy1bCsrX_R4hoD2d5lSV0Doiqgs4kHMtFKJ8KAKs',
+});
+mapView.addDataSource(vectorTileDataSource);
 
-    const call_event = (evt, args) => {
-        if (events[evt])
-            events[evt](args);
-    };
+//window.addEventListener("click", (evt) => {
+//   //Create the three.js cube
+//   const geometry = new THREE.BoxGeometry(100, 100, 100);
+//   const material = new THREE.MeshStandardMaterial({ color: 0x00ff00fe });
+//   const cube = new THREE.Mesh(geometry, material);
+//   cube.renderOrder = 100000;
+//
+//   //Get the position of the click
+//   const geoPosition = mapView.getGeoCoordinatesAt(48.92312, 24.71248);
+//   cube.anchor = geoPosition;
+//
+//   //Add object to the map
+//   mapView.mapAnchors.add(cube);
+//   mapView.update();
+//});
 
-    const addCube = this.addCube = (conf) => {
-        let cube = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshBasicMaterial({
-            color : conf.color
-            }
-        ));
-        cube.position.copy(conf.position);
-        scene.add(cube);
-        return cube;
-    };
+function addCar(){
+        //Create the three.js cube
+        const geometry = new THREE.BoxGeometry(100, 100, 100);
+        const material = new THREE.MeshStandardMaterial({ color: 0x00ff00fe });
+        const cube = new THREE.Mesh(geometry, material);
+        cube.renderOrder = 100000;
 
-    main.getCamera = () => {
-        return camera;
-    };
+        //Get the position of the click
+        const geoPosition = mapView.getGeoCoordinatesAt(48.92312, 24.71248);
+        cube.anchor = geoPosition;
 
-    const animate = this.animate = () => {
-        call_event('keydown', keys);
-
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-    };
-
-    this.init = (settings) => {
-		scene = new THREE.Scene();
-		camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
-		renderer = new THREE.WebGLRenderer();
-		renderer.setSize(window.innerWidth, window.innerHeight);
-
-        if (settings.keys_capture){
-            window.addEventListener('keydown', (e) => {
-                e.preventDefault();
-                if (!keys[e.code]) {
-                    keys[e.code] = true;
-                    call_event('keypress', keys);
-                }
-            });
-    
-            window.addEventListener('keyup', (e) => {
-                e.preventDefault();
-                keys[e.code] = false;
-                call_event('keyup', keys);
-            });
-        }
-
-        if (settings.mouse_capture){
-
-            if(settings.mouse_capture){
-                if(settings.mouse_lock){
-                    config.mouse_lock = true;
-                    document.addEventListener('pointerlockchange', (e) => {
-                        mouse.locked = !!document.pointerLockElement
-                    })
-                }
-            }
-
-            window.addEventListener('contextmenu', (e) => {
-                e.preventDefault();
-            });
-
-            window.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                mouse.keys[MOUSE_BUTTON[e.button]] = true;
-                call_event('mousedown', mouse);
-
-                if(config.mouse_lock && !mouse.locked){
-                    console.log('locked')
-                    document.body.requestPointerLock();
-                }
-            });
-
-            window.addEventListener('mouseup', (e) => {
-                e.preventDefault();
-                mouse.keys[MOUSE_BUTTON[e.button]] = false;
-                call_event('mouseup', mouse);
-            });
-
-            window.addEventListener('mousemove', (e) => {
-                e.preventDefault();
-                mouse.position.x = e.screenX;
-                mouse.position.y = e.screenY;
-                mouse.speed.x = e.movementX;
-                mouse.speed.y = e.movementY;
-                call_event('mousemove', mouse);
-            });
-        }
-		
-
-		document.body.appendChild(renderer.domElement);
-		animate();
-	};
+        //Add object to the map
+        mapView.mapAnchors.add(cube);
+        mapView.update();
 
 }
+
+addCar()
