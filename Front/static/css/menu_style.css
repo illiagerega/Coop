@@ -90,6 +90,7 @@ body{
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    border-radius: 10px;
 }
 
 .edit_menu_li {
@@ -102,6 +103,16 @@ body{
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    cursor: pointer;
+}
+
+input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
 }
 
 .edit_menu_li a:hover {
@@ -111,6 +122,9 @@ body{
 .menu_settings {
     width: 100%;
     position: absolute;
+    border-radius: 10px;
+    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 .info {
@@ -118,4 +132,16 @@ body{
 	margin-bottom: 20px;
 	border: 1px solid #dddddd;
 	border-collapse: collapse;
+    height: 150px;
+}
+
+.editor_menu {
+    border-radius: 10px;
+    font-family: "TitleFont", Fallback, sans-serif;
+    list-style-type: none;
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 2em;
+    color: rgb(150, 150, 150);
+
 }

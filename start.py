@@ -1,5 +1,7 @@
 import time
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
+from flask.helpers import url_for
+from werkzeug.utils import redirect
 from Back.Model.CarController import CarDriver
 from Back.Model.MainController import Controller
 from Front.parser import *
@@ -129,6 +131,14 @@ def info():
 def type2():
     return render_template('3d.html')
 
+@app.route('/editior', methods=['GET', 'POST'])
+def editior():
+    if request.method == 'POST':
+        value = request.form.get('data')
+        print(value)
+        return redirect('/2d')
+
 if __name__ == "__main__":
     app.run(debug=True)
+ 
  
