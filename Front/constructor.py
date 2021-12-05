@@ -1,4 +1,5 @@
 import math
+import json 
 
 class Constructor:
     
@@ -32,13 +33,15 @@ class Constructor:
     @staticmethod
     def constructCars(cars):
         html = ''
-
+        cars_array = dict()
         for car in cars:
+            
             car_key = next(iter(car))
             position = car[car_key][0]
             x = (position[0][0]) + 11#+ (-1410 + 691.8 + 1)  #x
             y = (position[0][1]) + 14#+ (-510 + 472 + 27) #y
             rotate = (position[1]) #rotate
+            speed = (position[2])
             road = car[car_key][1]
             iroad1 = road[0]  # === car.getRoad().index
             iroad2 = road[1]
@@ -47,32 +50,38 @@ class Constructor:
                 y += 7 * math.cos(rotate)
 
                 rotate *= 180 / math.pi
-                html += f'<div class="car_red" id="car_{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
-            else:
-                html += f'<div class="car_red" id="car_{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
+            cars_array[car_key] = [x, y, rotate, speed, iroad1, iroad2]
+            #html += f'<div class="car_red" id="car_{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
 
-        return html
+        return cars_array
 
     @staticmethod
     def constructLights(lights):
         html = ''
-        light_index = 0
 
-        # list[list[sublights, self.array_roads, self.periods, self._is_first_open, self.counter] <- one light
+        # list[list[id, sublights, self.array_roads, self.periods, self._is_first_open, self.counter] <- one light
         # sublights -> list[sublight] -> list[list[[x, y], angle, color]]
-
+        
+        
+        #This implementation should be probable changed in the future to return json
+        lights_array = dict()
         for light in lights:
-            for sublight in light[0]:
+            #html += f'<div class="light" id="light_{light[0]}">'
+            lights_array[light[0]] = [light[0], "temp", light[3][0], light[3][1]] # di, sublights, periods
+            sublights_array = []
+            for sublight in light[1]:
                 x = sublight[0][0] + 11
                 y = sublight[0][1] + 14
                 angle = sublight[1] * 180 / math.pi
                 color = sublight[2]
 
-                html += f'<div class="sublight" id="sublight_{light_index}" style="left: {x}px; top: {y}px; transform: rotate({angle}deg); background-color: {color}"> </div>'
+                sublights_array.append([x, y, angle, color])
+                #html += f'<div class="sublight" id="sublight_{light_index}" style="left: {x}px; top: {y}px; transform: rotate({angle}deg); background-color: {color}"> </div>'
+            lights_array[light[0]][1] = sublights_array
                 
-                light_index += 1
-
-        return html
+            
+            #html += '</div>'
+        return lights_array
 
     @staticmethod
     def constructNodes():
@@ -84,7 +93,7 @@ class Constructor:
             node[0][0] = x
             node[0][1] = y
 
-            html += f'<div class="main_circle" id="node_{index}" style="left: {x}px; top: {y}px; "></div>'
+            html += f'<div class="main_circle" id="node_{index}"  onclick="get_light_editor({index})" style="left: {x}px; top: {y}px; "></div>'
 
         return html
 
