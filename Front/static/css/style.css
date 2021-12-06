@@ -248,6 +248,20 @@ menu:not([title]):before{
     content:"\2630";
 }
 
+.harp-gl_controls {
+    position: absolute !important;
+    margin-right: 50px;
+    margin-top: 100px;
+}
+
 div {
     position: fixed;
 }
+
+.speed_configurator {
+    top: 0%;
+    right: 0%;
+    /*margin-left: 592px;*/
+    
+}
+
