@@ -19,7 +19,7 @@ function setCars() {
         });
         return false;
     }
-};
+};  
 
 function setMap()
 {

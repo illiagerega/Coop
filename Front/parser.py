@@ -6,7 +6,7 @@ def decodeCars(message):
 
     data = json.loads(str(message))
 
-    html = ''
+    #html = ''
 
     # offset_x = min_cars(data['cars'], 0)
     # offset_y = min_cars(data['cars'], 1)
@@ -16,15 +16,16 @@ def decodeCars(message):
     cars = data["cars"]
     # print(cars)        
 
-    html += Constructor.constructCars(cars)
-
-    return html
+    #html += Constructor.constructCars(cars)
+    cars_array = json.dumps(Constructor.constructCars(cars))
+    
+    return cars_array
 
 def decodeLights(data):
     
-    html = Constructor.constructLights(data)
+    lights_array = json.dumps(Constructor.constructLights(data))
 
-    return html
+    return lights_array
 
 def decodeMap(data):
     html = ''

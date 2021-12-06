@@ -17,7 +17,12 @@
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-    <script src="{{ url_for('static', filename= 'js/js.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/anime.min.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/util.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/menu.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/movement.js') }}"></script>
+    
+    <script src="{{ url_for('static', filename= 'js/js_logic.js') }}"></script>
 
     
     <div class="menu_body" style="font-size: 0.8em;">
@@ -53,7 +58,20 @@
                 <table class="info">
                     <form method="post" id="cars_form" action="/editior" enctype="multipart/form-data">
                         <tr>
-                            <textarea name="data">{{ cars_['cars'] }}</textarea><br>
+                            <table>
+                                <th>Id</th>
+                                <th>X</th>
+                                <th>Y</th>
+                                <th>Angle</th>
+                                <th>Speed</th>
+                                <th>Start Node</th>
+                                <th>End Node</th>
+                            <div id="cars_table">
+
+
+                            </div>
+                                
+                            </table>
                             <input type="submit" value="Save">
                         </tr>
                     </form>
@@ -66,7 +84,25 @@
                 <table class="info">
                     <tr>
                         <form method="post" id="cars_form" action="/editior" enctype="multipart/form-data"></form>
-                            <textarea name="data">{{ lights }}</textarea><br>
+                        <table>
+                            <th>Id</th>
+                            <th>Period 1</th>
+                            <th>Period 2</th>
+                            <th>State</th>
+                            <th>Counter</th>
+                        {% for id, light in lights_table.items() %}
+                        <tr>
+                            <td>{{id}}</td>
+                            <td>{{light["periods"][0]}}</td>
+                            <td>{{light["periods"][1]}}</td>
+                            <td>{{light["state"]}}</td>
+                            <td>{{light["counter"]}}</td>
+
+                            
+                  
+                        </tr>
+                        {% endfor %}
+                        </table>
                             <input type="submit" value="Save">
                         </form>
                     </tr>
@@ -103,17 +139,50 @@
         </ul>
     </div>
 
-    <div id="movable_scene" style="position: absolute; left: 0px; top: 0px;">
-        
-        <div id='map'>
-            {{map | safe}}
-        </div>
+    <div id="lights_editor" style="position:absolute; z-index: 999; visibility: hidden;">
+        <form method="post" id="lights_editor_form" action="/lights_editor" enctype="multipart/form-data">
+        <ul class="menu_sim"  style="top:50px; left:30%; padding-top:15px;padding-bottom: 30px;">
+        <li class="name_menu"></li>Traffic light 1</li>
+        <li><div class="form_box" style="position:relative;">
+            <div class="color" style="position:relative;">
+                <div class="blank" style="position:relative;"></div>
+                Periods:
+            </div>
+        </li>
+        <li><div class="form_box" style="position:relative;">
+            <div class="color" style="position:relative;">
+                <div class="red" style="position:relative;"></div>
+                <input  name="red_period"  id="red_period_input" type="text" onkeypress="return event.charCode>=48 && event.charCode<=57">
+            </div>
+        </li>
+        <li>
+            <div class="color" style="position:relative;">
+                <div class="green" style="position:relative;"></div>
+                <input  name="green_period" id="green_period_input" type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" >
+            </div>
+        </li>
+            <input type="hidden" id="light_id" name="light_id">
+            <li class="button_sim" onclick="submit_lights_editor_form()" style="margin:auto">Send</li>
+        </ul>
+    </form>
+    </div>
+</div>
+    
+    
+    <div id="movable_scene"  style="position: absolute; left: 0px; top: 0px;">
+        <div id="carMenu"></div>
+        <div id='map'></div>
 
-        <div id='cars'>
-            {{ cars | safe }}
-        </div>
+        <div id='cars'></div>
+
+        <div id='lights_movable'></div>
+
+
+
+        
 
     </div>
+
 
 </body>
 </html>

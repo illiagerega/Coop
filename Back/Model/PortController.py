@@ -131,3 +131,44 @@ class PortDriver:
             graph = None
             #Map.init(nodes, spawn_nodes, roads)
             return [Map.nodes, Map.spawn_nodes, Map.roads]
+    @staticmethod
+    def parse_cars(cars):
+        # input {"cars" {{car_id : [[[ax, ay], angle, speed], [start_node, end_node]]}}
+        # output {"car_id" : "x" : ax, "y" : ay, "angle" : angle, "speed" : speed, "start node" : s_node, "end node" : e_node}
+        parsed_cars = dict()
+        for car in cars["cars"]:
+            car_index = list(car.keys())[0]
+            car_instance = car[car_index]
+
+            parsed_cars[car_index] = {
+                "x" : car_instance[0][0][0],
+                "y" : car_instance[0][0][1],
+                "angle": car_instance[0][1],
+                "speed" : car_instance[0][2],
+                "start node" : car_instance[1][0],
+                "end node" : car_instance[1][1] 
+            }
+        return parsed_cars
+        
+    @staticmethod
+    def parse_lights(lights):
+        #This is parsing data for making a table out of it so I don't care about sublights and roads? Idk, anyway this can be easily changed to get it too
+        # input -> [[id, sublights, periods, is_first_open, counter]]
+        # output -> {id : {"periods": periods, "state" : is_first_open, "counter" : counter}
+        
+        parsed_lights = dict()
+        for light in lights:
+            light_id = light[0]
+            parsed_lights[light_id] = {
+                "periods" : light[3],
+                "state" : light[4], 
+                "counter" : light[5]
+            }
+
+
+        return parsed_lights
+        
+        
+        
+        # sublight -> list[[x, y], angle, color]
+        return [self.id, sublights, self.array_roads, self.periods, self._is_first_open, self.counter]

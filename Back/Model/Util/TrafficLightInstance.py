@@ -31,7 +31,7 @@ class TrafficLight:
     # (for instance, line = [0, 0, 0, 1, 0, 0] -> [0, 0, 0, 1, 0, 1])
 
 
-    def __init__(self, array_of_roads,  init_periods, index):
+    def __init__(self, light_id, array_of_roads,  init_periods, node_id):
         # In the beginning, we used random function for distribution of lines
 
         # sample_roads1 = sample(array_of_roads, len(array_of_roads) // 2)
@@ -45,6 +45,9 @@ class TrafficLight:
         # we will insert those roads into the first group
         # (for example, the first road has angle equals 1 radian and the second road has angle 4 radians,
         # their delta angle equals 3 radians which satisfied our condition)
+
+
+        self.id = light_id
 
         group1 = []
         group2 = []
@@ -63,8 +66,8 @@ class TrafficLight:
         # initializing the periods
 
         self.periods = init_periods
-        self.node : Node = Map.nodes[index]
-        self.center : int = Map.nodes[index].apos
+        self.node : Node = Map.nodes[node_id]
+        self.center : int = Map.nodes[node_id].apos
 
     def ChangeLine(self):
         
@@ -128,5 +131,5 @@ class TrafficLight:
                 sublights.append(sublight)
 
         # sublight -> list[[x, y], angle, color]
-        return [sublights, self.array_roads, self.periods, self._is_first_open, self.counter]
+        return [self.id, sublights, self.array_roads, self.periods, self._is_first_open, self.counter, self.node]
 
