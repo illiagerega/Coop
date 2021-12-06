@@ -253,6 +253,20 @@ div {
     position: fixed;
 }
 
+.harp-gl_controls {
+    position: absolute !important;
+    margin-right: 50px;
+    margin-top: 100px;
+}
+
+
+.speed_configurator {
+    top: 0%;
+    right: 0%;
+    /*margin-left: 592px;*/
+    
+}
+
 /* lights editor */
 
 .form_box{

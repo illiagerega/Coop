@@ -138,9 +138,21 @@ def info():
         else:
             pass
 
+
+
 @app.route('/3d')
 def type2():
-    return render_template('3d.html')
+
+    data = getParams()
+    Controller.init(data[1], data[2])
+    map_ = Controller.Map
+
+    data = PortDriver.getCarsIntoFile()
+    cars_ = json.loads(data)
+
+    lights = PortDriver.getLightsIntoFile()
+
+    return render_template('3d.html', map = html, map_ = map_, cars_ = cars_, lights = lights)
 
 @app.route('/editior', methods=['GET', 'POST'])
 def editior():
@@ -149,6 +161,31 @@ def editior():
         print(value)
         return redirect('/2d')
 
+@app.route('/car_3d', methods=['GET', 'POST'])
+def cars():
+    if request.method == 'GET':
+        data = getParams()
+        Controller.init(data[1], data[2])
+        Controller.change()
+
+        cars = PortDriver.getCarsIntoFile()
+        cars_ = json.loads(cars)
+
+        n = 0
+        func_string = ''
+
+        for i in cars_['cars']:
+            for a in i.values():
+                for b in a:
+                    n += 1
+                    if n % 2 != 0:
+                        #string += f'createCar({b[0][0]}, {b[0][1]}, {b[1]});'
+                        func_string += f'createCar({b[0][0]}, {b[0][1]});'
+
+                    if n % 2 == 0:
+                        continue
+                
+        return func_string
 @app.route('/lights_editor', methods=['POST'])
 def lights_editor():
     light_id = int(request.form.get("light_id"))
