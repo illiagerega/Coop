@@ -88,6 +88,7 @@ class CarDriver:
                     del car
                     continue
                 else:
+                    
                     car.next_x -= len(line.cells)
                     car.wayProgress += 1
 

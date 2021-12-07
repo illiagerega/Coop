@@ -43,7 +43,7 @@ class Constructor:
             rotate = (position[1]) #rotate
             speed = (position[2])
             road = car[car_key][1]
-
+            color = car[car_key][2]
             iroad1 = road[0]  # === car.getRoad().index
             iroad2 = road[1]
             if iroad1 in Constructor.roads[iroad2]:
@@ -51,7 +51,7 @@ class Constructor:
                 y += 7 * math.cos(rotate)
 
                 rotate *= 180 / math.pi
-            cars_array[car_key] = [x, y, rotate, speed, iroad1, iroad2]
+            cars_array[car_key] = [x, y, rotate, speed, iroad1, iroad2, color]
             #html += f'<div class="car_red" id="car_{car_key}" style="left: {x}px; top: {y}px; transform: rotate({rotate}deg);"> </div>'
 
         return cars_array

@@ -1,7 +1,7 @@
 
 
 class Car {        
-    constructor(id, x, y, rotation, speed, startNode, endNode){
+    constructor(id, x, y, rotation, speed, startNode, endNode, color){
     this.id = id;
     this.x = x;
     this.y = y;
@@ -9,10 +9,11 @@ class Car {
     this.speed = speed;
     this.endNode =endNode;
     this.startNode = startNode;
+    this.color = color;
 }
 
     draw_car(){
-       return  `<div class="car_red" id="${this.id}" onclick ="show_car(${this.id})" style="left: ${this.x}px; top: ${this.y}px; transform: rotate(${this.rotation}deg);"> </div>`;
+       return  `<div class="car ${this.color}" id="${this.id}" onclick ="show_car(${this.id})" style="left: ${this.x}px; top: ${this.y}px; transform: rotate(${this.rotation}deg);"> </div>`;
     }
 
 }
@@ -62,7 +63,7 @@ function form_car_array(python_car_array_str){
         let python_car_array = JSON.parse(python_car_array_str);
         for(const [skey, value] of Object.entries(python_car_array)){
             let key = parseInt(skey);
-            current_cars.set(key, new Car(key,parseFloat(value[0]), parseFloat(value[1]), parseFloat(value[2]), parseFloat(value[3]), parseInt(value[4]), parseInt(value[5])));
+            current_cars.set(key, new Car(key,parseFloat(value[0]), parseFloat(value[1]), parseFloat(value[2]), parseFloat(value[3]), parseInt(value[4]), parseInt(value[5]), value[6]));
 
         }
         /*
@@ -188,7 +189,7 @@ function show_car(car_id){
     if(!paused) return;
     hide_all();
     let car = current_cars.get(car_id);
-    
+    showCarsEditor();
     //alert(`Id: ${car.id}, x: ${car.x}, y:${car.y}, Someone make this menu pretty`);
     highlight_path(car_id);
 }
@@ -219,6 +220,7 @@ function construct_lights(){
 
 function get_light_editor(light_index){
     if(!current_lights.has(light_index) || !paused) return;
+    hide_all();
 
     showLightsEditor();
     let curr_light = current_lights.get(light_index);

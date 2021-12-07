@@ -80,10 +80,25 @@ function closeLightsEditor(event){
     }
 }
 
+
+function showCarsEditor(event){
+    var status = true;
+    if(status){
+        $("#cars_editor").css("visibility", "visible");
+    }
+}
+function closeCarsEditor(event){
+    var status = true;
+    if(status){
+        $("#cars_editor").css("visibility", "hidden");
+    }
+}
+
 function hide_all(event){
     var status = true;
     if(status){
         closeLightsEditor();
+        closeCarsEditor();
         document.querySelectorAll('.road_highlight').forEach(e => e.remove());
         // todo everything else as well
     }
