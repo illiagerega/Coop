@@ -84,6 +84,7 @@ function hide_all(event){
     var status = true;
     if(status){
         closeLightsEditor();
+        document.querySelectorAll('.road_highlight').forEach(e => e.remove());
         // todo everything else as well
     }
 }

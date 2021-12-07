@@ -95,6 +95,14 @@ body{
     background-position: center;
     background-color: black;
 }
+.road_highlight{
+    height: 7px;
+    position: absolute;
+    z-index: 2;
+    background-position: center;
+    background-color: red;
+    pointer-events: none
+}
 .road_one_line{
     height: 14px;
     position: absolute;
