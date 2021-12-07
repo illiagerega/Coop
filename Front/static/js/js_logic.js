@@ -295,7 +295,7 @@ function highlight_path(car_id)
                     var highlighted_road = original_road.cloneNode(true);
                     highlighted_road.id = `#highlighted_road_${road_id}`;
                     if(current_cars.get(parseInt(car_id)).rotation < 90){
-                        highlighted_road.style.marginTop = `14px`;
+                        highlighted_road.style.marginTop = `17.5px`;
                     }
 
                     highlighted_road.classList = ('road_highlight');
