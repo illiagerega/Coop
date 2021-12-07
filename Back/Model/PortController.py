@@ -18,6 +18,7 @@ class PortDriver:
 
         for car_index, car in enumerate(CarDriver.cars_array):
             if car.x != -1:
+                # REMOVE THAT CYCLE
                 row.append({ car_index : [car.getCoordinates(), [car.getRoad().start_node, car.getRoad().end_node]]} )
 
         data = json.dumps({"cars": row})

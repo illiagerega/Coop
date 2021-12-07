@@ -185,8 +185,12 @@ function construct_cars(){
     */
 }
 function show_car(car_id){
+    if(!paused) return;
+    hide_all();
     let car = current_cars.get(car_id);
-    alert(`Id: ${car.id}, x: ${car.x}, y:${car.y}, Someone make this menu pretty`);
+    
+    //alert(`Id: ${car.id}, x: ${car.x}, y:${car.y}, Someone make this menu pretty`);
+    highlight_path(car_id);
 }
 
 function form_lights_array(lights_str){ // [id, sublights[], green_period, red_period]
@@ -259,6 +263,46 @@ function setMap()
             success: function(response) {
                 $('#map').html(response);
                 console.log(response);
+                map_ajax_state_sending = false;
+            },
+        });
+    }
+}
+
+function highlight_path(car_id)
+{
+    if(!map_ajax_state_sending){
+        map_ajax_state_sending = true
+        $.ajax({
+            url: "/util_ajax",
+            type: "post",
+            data: {operation: "getCarPath", car_index: car_id},
+            cache: false,
+            success: function(response) {
+                //$('#map').html(response);
+                //console.log(response);
+                let roads = JSON.parse(response)["way"];
+                console.log(roads);
+                let i = 0;
+                let delta_height = 0;
+                for(road_id of roads){
+                    
+                    var original_road = document.querySelector(`#road_${road_id}`)
+                    if(i == 0){
+                        delta_height = parseFloat($(`#${car_id}`).css('top'), 10) - parseFloat($(`#road_${road_id}`).css('top'), 10); 
+                    }
+                    console.log(delta_height, original_road.style.posTop);
+                    var highlighted_road = original_road.cloneNode(true);
+                    highlighted_road.id = `#highlighted_road_${road_id}`;
+                    if(current_cars.get(parseInt(car_id)).rotation < 90){
+                        highlighted_road.style.marginTop = `14px`;
+                    }
+
+                    highlighted_road.classList = ('road_highlight');
+
+                    original_road.after(highlighted_road);
+                    i++;
+                }
                 map_ajax_state_sending = false;
             },
         });

@@ -24,6 +24,7 @@ class CarDriver:
             pos = (0, None)
 
             car = Car(-1)
+
             for x in way:
                 car.addWayNode(x[0], x[1], x[2])
             car.pos = pos

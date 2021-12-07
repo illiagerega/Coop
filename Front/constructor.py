@@ -43,6 +43,7 @@ class Constructor:
             rotate = (position[1]) #rotate
             speed = (position[2])
             road = car[car_key][1]
+
             iroad1 = road[0]  # === car.getRoad().index
             iroad2 = road[1]
             if iroad1 in Constructor.roads[iroad2]:

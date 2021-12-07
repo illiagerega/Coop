@@ -131,14 +131,22 @@ def info():
             cars_json = decodeCars(PortDriver.getCarsIntoFile())
             lights_json = decodeLights(PortDriver.getLightsIntoFile())    
             end_time = time.perf_counter ()
-            print(end_time - start_time, "seconds")        
+            print(end_time - start_time, "seconds")    
             return json.dumps({"cars" : cars_json, "lights" : lights_json})
 
 
         else:
             pass
 
+@app.route('/util_ajax', methods=['POST'])
+def util_ajax():
+    operation = parse_arg_from_requests('operation')
+    if operation == None:
+        pass
+    elif operation == "getCarPath":
+        car_index = int(parse_arg_from_requests("car_index"))
 
+        return json.dumps({"way":[i.road.index for i in CarDriver.cars_array[car_index].way]})
 
 @app.route('/3d')
 def type2():
