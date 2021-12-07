@@ -62,9 +62,10 @@ function addCar(){
 }
 
 const Speed = (value) => {
+    $("#speed_display").text("Speed in ms: " + value.toString());
     car_speed = parseInt(value);
-    //clearIntervals();
-    //setIntervals();
+    clearIntervals_3d();
+    setIntervals_3d();
 }
 
 function createCar(x, y){
@@ -128,7 +129,7 @@ const onStart_3d = () => {
         $("#speed_menu").css("visibility", "hidden");
         $("#map").html("");
         $("#cars").html("");        
-        clearIntervals();
+        clearIntervals_3d();
         paused_3d = false;
     }
 }
