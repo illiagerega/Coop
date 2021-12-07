@@ -6,6 +6,7 @@ from .Util.RoadInstance import Road
 from .Util.Consts import *
 from .Util.Algorithms import excludeOSMGraph
 from .config import *
+import time
 
 import json
 import osmnx
@@ -59,6 +60,8 @@ class PortDriver:
 
     @staticmethod
     def setMapFromFile(fileName):
+        
+        start = time.time()
 
         if '.json' in fileName:
             import_file = open(fileName, 'r')
@@ -131,6 +134,9 @@ class PortDriver:
             graph = None
             #Map.init(nodes, spawn_nodes, roads)
             return [Map.nodes, Map.spawn_nodes, Map.roads]
+
+        print("The time for graph creating: ", abs(time.time() - start))
+
     @staticmethod
     def parse_cars(cars):
         # input {"cars" {{car_id : [[[ax, ay], angle, speed], [start_node, end_node]]}}

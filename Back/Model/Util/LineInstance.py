@@ -5,6 +5,8 @@ from numpy import sum
 class Line:
     def __init__(self, start_node, end_node, road):
         self.cells = [0]*(10 * road.length // Separation)
+        if len(self.cells) == 0:
+            self.cells = [0]
         self.road = road
         self.start_node = start_node
         self.end_node = end_node
@@ -14,7 +16,7 @@ class Line:
         #self.cars = []
 
     def comp(self): # comp density, flow and another things
-        self.K = sum(self.cells) / len(self.cells)
+        # self.K = sum(self.cells) / len(self.cells)
 
         if self.K <= self.critical_K:
             self.Q = (MaxVelocity - 1 + Probability) * self.K

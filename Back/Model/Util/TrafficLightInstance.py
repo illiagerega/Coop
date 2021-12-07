@@ -71,21 +71,24 @@ class TrafficLight:
 
     def ChangeLine(self):
         
-        if self._is_first_open:
-            for road in self.array_roads[0]:
-                for line in road.lines[road.start_node]:
-                    line.cells[-1] = 0
-            for road in self.array_roads[1]:
-                for line in road.lines[road.start_node]:
-                    line.cells[-1] = 1
-        else:
-            for road in self.array_roads[1]:
-                for line in road.lines[road.start_node]:
-                    line.cells[-1] = 0
-            for road in self.array_roads[0]:
-                for line in road.lines[road.start_node]:
-                    line.cells[-1] = 1
+        try:
+            if self._is_first_open:
+                for road in self.array_roads[0]:
+                    for line in road.lines[road.start_node]:
+                        line.cells[-1] = 0
+                for road in self.array_roads[1]:
+                    for line in road.lines[road.start_node]:
+                        line.cells[-1] = 1
+            else:
+                for road in self.array_roads[1]:
+                    for line in road.lines[road.start_node]:
+                        line.cells[-1] = 0
+                for road in self.array_roads[0]:
+                    for line in road.lines[road.start_node]:
+                        line.cells[-1] = 1
 
+        except:
+            print("fsf")
 
         self._is_first_open = not self._is_first_open
 

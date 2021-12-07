@@ -17,7 +17,7 @@ class LightsController:
             if node.type != 'intersect' or len(node.end_roads) < 3:
                 continue
 
-            print(node_index, node)
+            
             LightsController.traffic_lights[node_index] = (TrafficLight(node_index, node.end_roads,
                                                     [randrange(StartPeriodLow, StartPeriodHigh),
                                                      randrange(StartPeriodLow, StartPeriodHigh)],
@@ -35,7 +35,6 @@ class LightsController:
         lights = []
 
         for light in LightsController.traffic_lights.values():
-            print(light)
             lights.append(light.getAttributes())
 
 

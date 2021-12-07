@@ -8,7 +8,7 @@ import os
 import random
 import json
 from math import inf
-
+import time
 
 class CarDriver:
     cars_array: list[Car] = []
@@ -16,10 +16,15 @@ class CarDriver:
     @staticmethod
     def init():
         CarDriver.cars_array = []
-        print(Map.n_cars)
+        print(Map.n_cars, "cars in that simulation")
+        start = time.perf_counter()
+        way_counter = 0
         for i in range(Map.n_cars):
             node = random.choice(Map.spawn_nodes)
-            way = GraphAlgorithms.dijkstra(Map.distance_matrix, node, random.choice([i for i in Map.spawn_nodes if i != node]))
+            start_counter = time.perf_counter()
+            way = GraphAlgorithms.IDA(Map.nodes, node, random.choice([i for i in Map.spawn_nodes if i != node]))
+            way_counter += time.perf_counter() - start_counter
+            # print(way, "way")
 
             pos = (0, None)
 
@@ -33,6 +38,9 @@ class CarDriver:
 
             CarDriver.assignCars()
 
+        print(time.perf_counter() - start, "seconds for creating cars")
+        print(way_counter, "seconds for creating ways for cars")
+
     @staticmethod
     def assignCars():
         for spawn_node in Map.spawn_nodes:
@@ -44,6 +52,7 @@ class CarDriver:
                         if line.cells[0] == 0:
                             car.x = 0
                             line.cells[0] = 1
+                            line.K += 1 / len(line.cells)
                             queue_del.append(car)
                     except:
                         pass
@@ -81,19 +90,26 @@ class CarDriver:
 
             line = car.getLines()[car.currentLine]
             line.cells[car.x] = 0
+            line.K -= 1 / len(line.cells)
             if car.next_x >= len(line.cells):
                 if car.wayProgress + 1 >= len(car.way):
                     del CarDriver.cars_array[car_index]
                     del car
+                    line.K -= 1 / len(line.cells)
                     continue
                 else:
                     car.next_x -= len(line.cells)
                     car.wayProgress += 1
+                    line.K -= 1 / len(line.cells)
+                    car.currentLine = random.randrange(len(car.getLines()))
+                    line = car.getLines()[car.currentLine]
+                    line.K += 1 / len(line.cells)
 
-            car.currentLine = random.randrange(len(car.getLines()))
+            
             car.x = car.next_x
             try:
                 car.getLines()[car.currentLine].cells[car.x] = 1
+                line.K += 1 / len(line.cells)
             except:
                 del CarDriver.cars_array[car_index]
                 del car

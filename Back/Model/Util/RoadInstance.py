@@ -27,3 +27,11 @@ class Road:
 
     def __str__(self):
         return "Road: " + str(self.start_node) + ' ' + str(self.end_node)
+
+    def Flow(self):
+        flow = 0
+        for node in self.lines.keys():
+            for line in self.lines[node]:
+                flow += line.comp() / len(self.lines[node])
+
+        return flow

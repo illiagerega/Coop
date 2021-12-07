@@ -87,7 +87,7 @@ def type1():
     cars_ = json.loads(data)
 
 
-    #in order to make a table of cars, I will parse it in here first
+    #in order to make a table of cars, I will parse it here first
     #I will still provide cars_ to the html just in case
     #The same is true for lights
     cars_table = PortDriver.parse_cars(cars_)
@@ -126,12 +126,12 @@ def info():
 
 
         elif operation == "setCars":
-            start_time = time.perf_counter ()
+            start_time = time.perf_counter()
             Controller.change()
             cars_json = decodeCars(PortDriver.getCarsIntoFile())
             lights_json = decodeLights(PortDriver.getLightsIntoFile())    
             end_time = time.perf_counter ()
-            print(end_time - start_time, "seconds")        
+            print(end_time - start_time, "seconds for loop of getting cars and lights")        
             return json.dumps({"cars" : cars_json, "lights" : lights_json})
 
 

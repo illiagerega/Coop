@@ -9,6 +9,8 @@ from .NodeInstance import Node
 from .RoadInstance import Road
 from .dijkstra import find_shortest_path
 from .Consts import *
+import math
+import time
 
 # class SegmentedTree:
 #     class Node:
@@ -100,6 +102,78 @@ class GraphAlgorithms:
         biggest_component = max(components, key=itemgetter(0))
         return biggest_component[1]
 
+    @staticmethod
+    # heuristic function 
+    # in plans: just h(n1, n2) = |n1.x - n2.x| + |n1.y - n2.y| 
+    def heuristic(node1: Node, node2: Node, mode = 0):
+        if mode == 0:
+            return 2 * (abs(node1.apos[0] - node2.apos[0]) + abs(node1.apos[1] - node2.apos[1]))
+            # return math.hypot(abs(node1.apos[0] - node2.apos[0]), abs(node1.apos[1] - node2.apos[1]))
+        else:
+            return "L0L"
+
+    @staticmethod
+    # cost func
+    # g1(road) = road.lenght;
+    # g2(road) = road.lenght + Q(road)
+    # Q(road) is flow of road
+    def cost(road: Road, mode = 0):
+        if mode == 0:
+            return road.length
+        elif mode == 1:
+            return road.length + road.Flow()
+        else:
+            return "L0L"
+
+    @staticmethod
+    # nodes, current_node, destination, current_cost, path, threshold
+    def IDDFS(nodes, current_node, destination, current_cost, path, color_nodes, threshold):
+
+        if current_node == destination:
+            return [-1, path]
+
+        f = GraphAlgorithms.heuristic(nodes[current_node], nodes[destination]) + current_cost
+        if f > threshold:
+            return [f, path]
+        
+        min = math.inf
+        color_nodes[current_node] = 1
+
+        for adj_road in nodes[current_node].adj_nodes:
+            if color_nodes[adj_road[0]] == 0:
+                path.append([adj_road[1], current_node, adj_road[0]])
+                ret = GraphAlgorithms.IDDFS(nodes, adj_road[0], destination, 
+                current_cost + GraphAlgorithms.cost(adj_road[1]), path, color_nodes, threshold)
+                if ret[0] == -1:
+                    return [-1, path]
+                elif ret[0] < min:  
+                    min = ret[0]
+                else:
+                    pass
+
+                path.pop()
+
+        return [min, path]
+
+
+    def IDA(nodes, start_node, destination):
+        # start = time.time()
+        threshold = GraphAlgorithms.heuristic(nodes[start_node], nodes[destination]) * 7
+        
+
+        while True:
+            color_nodes = [0] * len(nodes)
+            ret = GraphAlgorithms.IDDFS(nodes, start_node, destination, 0, [], color_nodes, threshold)
+            if ret[0] == math.inf:
+                return []
+            elif ret[0] == -1:
+                # print("The time for one cycle: ", abs(time.time() - start))
+                return ret[1]
+            else:
+                threshold = ret[0]
+        
+        
+        
 
     @staticmethod
     def getAdjustingMatrix(nodes):
@@ -114,6 +188,7 @@ class GraphAlgorithms:
         return matrix
 
     @staticmethod
+    # Old method of getting matrix for Dijkstra, which is unused now
     def getMatrix(vertixes, edges):
         """getting the distances matrix
 
@@ -154,6 +229,7 @@ def excludeOSMGraph(graph, use_custom_algorithm = False):
     roads = []
     spawn_nodes = []
 
+    start = time.time()
     
     if use_custom_algorithm:
 
@@ -265,11 +341,13 @@ def excludeOSMGraph(graph, use_custom_algorithm = False):
         roads.append(Road(nodes, s_n, e_n, 1, index))# (lanes + 1) // 2 ))
         nodes[s_n].addRoad(roads[-1])
         nodes[e_n].addRoad(roads[-1], 'end')
+        nodes[s_n].addRoadAdj(e_n, roads[-1])
 
 
 
     graph = None
 
+    print("The time for graph exluding: ", abs(time.time() - start))
     return [nodes, spawn_nodes, roads]
 
 

@@ -12,10 +12,10 @@ class Node:
     def __init__(self, type, apos, index):
         self.type = types[type]  # 'spawn', 'intersect'
         self.apos = list(map(int, apos))  # absolute position (x, y)
-        self.start_roads: list[Road] = []
-        self.end_roads: list[Road] = []
+        self.start_roads: list[Road] = [] # connected from: ->
+        self.end_roads: list[Road] = [] # connected to: <-
 
-        self.adj_nodes: list[int] = []
+        self.adj_nodes: list[list[int, Road]] = []
         self.queue: list[Car] = []
         self.attributes = []
         self.index: int = index
@@ -27,5 +27,5 @@ class Node:
         else:
             self.end_roads.append(road)
 
-    def addRoadAdj(self, start_node, end_node):
-        self.adj_nodes.append([start_node, end_node])
+    def addRoadAdj(self, end_node, road):
+        self.adj_nodes.append([end_node, road])

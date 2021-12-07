@@ -20,4 +20,4 @@ class Map:
         Map.n_nodes = len(Map.nodes)
         Map.n_roads = len(Map.roads)
         Map.n_cars = Ncars
-        Map.distance_matrix = GraphAlgorithms.getMatrix(Map.nodes, Map.roads)
+        #Map.distance_matrix = GraphAlgorithms.getMatrix(Map.nodes, Map.roads)
