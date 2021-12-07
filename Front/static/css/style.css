@@ -95,6 +95,14 @@ body{
     background-position: center;
     background-color: black;
 }
+.road_highlight{
+    height: 7px;
+    position: absolute;
+    z-index: 2;
+    background-position: center;
+    background-color: red;
+    pointer-events: none
+}
 .road_one_line{
     height: 14px;
     position: absolute;
@@ -120,16 +128,35 @@ body{
     background: var(--pavement_color);
     border-radius: 50%;
 }
-.car_red{
-    width: 15px;
-    height: 8.5px;
-    background: url(../img/car_red.png);
+
+.car.red{
+    background: url(../img/cars/car_red_.png);
     background-size: 100%;  
     background-color: var(--road_color);
+}
+.car.blue{
+    background: url(../img/cars/car_blue.png);
+    background-size: 100%;  
+    background-color: var(--road_color);
+}
+.car.green{
+    background: url(../img/cars/car_green.png);
+    background-size: 100%;  
+    background-color: var(--road_color);
+}
+.car.magenta{
+    background: url(../img/cars/car_magenta.png);
+    background-size: 100%;  
+    background-color: var(--road_color);
+}
+.car{
+    width: 15px;
+    height: 8.5px;
     position: absolute;
     z-index: 3;
 
 }
+
 .sublight{
     width: 12px;
     height: 3px;

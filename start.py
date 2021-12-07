@@ -138,7 +138,15 @@ def info():
         else:
             pass
 
+@app.route('/util_ajax', methods=['POST'])
+def util_ajax():
+    operation = parse_arg_from_requests('operation')
+    if operation == None:
+        pass
+    elif operation == "getCarPath":
+        car_index = int(parse_arg_from_requests("car_index"))
 
+        return json.dumps({"way":[i.road.index for i in CarDriver.cars_array[car_index].way]})
 
 @app.route('/3d')
 def type2():

@@ -29,6 +29,7 @@ class CarDriver:
             pos = (0, None)
 
             car = Car(-1)
+
             for x in way:
                 car.addWayNode(x[0], x[1], x[2])
             car.pos = pos
@@ -98,6 +99,7 @@ class CarDriver:
                     line.K -= 1 / len(line.cells)
                     continue
                 else:
+                    
                     car.next_x -= len(line.cells)
                     car.wayProgress += 1
                     line.K -= 1 / len(line.cells)

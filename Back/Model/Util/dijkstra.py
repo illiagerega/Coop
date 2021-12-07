@@ -63,7 +63,6 @@ def find_all(wmat, start, end=-1):
 
     path[i] = dp
 
-
     return (dist[end], path[end]) if end >= 0 else (dist, path)
 
 

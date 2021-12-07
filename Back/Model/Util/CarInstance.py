@@ -26,6 +26,7 @@ class Car:
         self.wayProgress = -1
         self.currentLine = -1
         self.next_x = -1
+        self.color = random.choice(["red", "green", "magenta", "blue"])
 
     def CompV(self, gap) -> int:
         self._v = min(self._v + self._a, MaxVelocity)

@@ -1,7 +1,7 @@
 
 
 class Car {        
-    constructor(id, x, y, rotation, speed, startNode, endNode){
+    constructor(id, x, y, rotation, speed, startNode, endNode, color){
     this.id = id;
     this.x = x;
     this.y = y;
@@ -9,10 +9,11 @@ class Car {
     this.speed = speed;
     this.endNode =endNode;
     this.startNode = startNode;
+    this.color = color;
 }
 
     draw_car(){
-       return  `<div class="car_red" id="${this.id}" onclick ="show_car(${this.id})" style="left: ${this.x}px; top: ${this.y}px; transform: rotate(${this.rotation}deg);"> </div>`;
+       return  `<div class="car ${this.color}" id="${this.id}" onclick ="show_car(${this.id})" style="left: ${this.x}px; top: ${this.y}px; transform: rotate(${this.rotation}deg);"> </div>`;
     }
 
 }
@@ -62,7 +63,7 @@ function form_car_array(python_car_array_str){
         let python_car_array = JSON.parse(python_car_array_str);
         for(const [skey, value] of Object.entries(python_car_array)){
             let key = parseInt(skey);
-            current_cars.set(key, new Car(key,parseFloat(value[0]), parseFloat(value[1]), parseFloat(value[2]), parseFloat(value[3]), parseInt(value[4]), parseInt(value[5])));
+            current_cars.set(key, new Car(key,parseFloat(value[0]), parseFloat(value[1]), parseFloat(value[2]), parseFloat(value[3]), parseInt(value[4]), parseInt(value[5]), value[6]));
 
         }
         /*
@@ -185,8 +186,12 @@ function construct_cars(){
     */
 }
 function show_car(car_id){
+    if(!paused) return;
+    hide_all();
     let car = current_cars.get(car_id);
-    alert(`Id: ${car.id}, x: ${car.x}, y:${car.y}, Someone make this menu pretty`);
+    showCarsEditor();
+    //alert(`Id: ${car.id}, x: ${car.x}, y:${car.y}, Someone make this menu pretty`);
+    highlight_path(car_id);
 }
 
 function form_lights_array(lights_str){ // [id, sublights[], green_period, red_period]
@@ -215,6 +220,7 @@ function construct_lights(){
 
 function get_light_editor(light_index){
     if(!current_lights.has(light_index) || !paused) return;
+    hide_all();
 
     showLightsEditor();
     let curr_light = current_lights.get(light_index);
@@ -259,6 +265,46 @@ function setMap()
             success: function(response) {
                 $('#map').html(response);
                 console.log(response);
+                map_ajax_state_sending = false;
+            },
+        });
+    }
+}
+
+function highlight_path(car_id)
+{
+    if(!map_ajax_state_sending){
+        map_ajax_state_sending = true
+        $.ajax({
+            url: "/util_ajax",
+            type: "post",
+            data: {operation: "getCarPath", car_index: car_id},
+            cache: false,
+            success: function(response) {
+                //$('#map').html(response);
+                //console.log(response);
+                let roads = JSON.parse(response)["way"];
+                console.log(roads);
+                let i = 0;
+                let delta_height = 0;
+                for(road_id of roads){
+                    
+                    var original_road = document.querySelector(`#road_${road_id}`)
+                    if(i == 0){
+                        delta_height = parseFloat($(`#${car_id}`).css('top'), 10) - parseFloat($(`#road_${road_id}`).css('top'), 10); 
+                    }
+                    console.log(delta_height, original_road.style.posTop);
+                    var highlighted_road = original_road.cloneNode(true);
+                    highlighted_road.id = `#highlighted_road_${road_id}`;
+                    if(current_cars.get(parseInt(car_id)).rotation < 90){
+                        highlighted_road.style.marginTop = `17.5px`;
+                    }
+
+                    highlighted_road.classList = ('road_highlight');
+
+                    original_road.after(highlighted_road);
+                    i++;
+                }
                 map_ajax_state_sending = false;
             },
         });
