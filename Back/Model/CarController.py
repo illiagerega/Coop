@@ -4,6 +4,7 @@ from .Util.MapController import Map
 from .Util.RoadInstance import Road
 from .Util.LineInstance import Line
 from .Util.Consts import NameCarsFile
+from numba import jit, cuda
 import os
 import random
 import json
@@ -15,32 +16,55 @@ class CarDriver:
 
     @staticmethod
     def init():
+        
+        @cuda.jit
+        def cars_gen():
+            for i in range(Map.n_cars):
+                node = random.choice(Map.spawn_nodes)
+                way = GraphAlgorithms.IDA(Map.nodes, node, random.choice([i for i in Map.spawn_nodes if i != node]))
+                # way_counter += time.perf_counter() - start_counter
+                # print(way, "way")
+
+                pos = (0, None)
+
+                car = Car(-1)
+
+                for x in way:
+                    car.addWayNode(x[0], x[1], x[2])
+                car.pos = pos
+
+                Map.nodes[node].queue.append(car)
+                CarDriver.cars_array.append(car)
+
+                CarDriver.assignCars()
+
         CarDriver.cars_array = []
         print(Map.n_cars, "cars in that simulation")
         start = time.perf_counter()
         way_counter = 0
         for i in range(Map.n_cars):
-            node = random.choice(Map.spawn_nodes)
-            start_counter = time.perf_counter()
-            way = GraphAlgorithms.IDA(Map.nodes, node, random.choice([i for i in Map.spawn_nodes if i != node]))
-            way_counter += time.perf_counter() - start_counter
-            # print(way, "way")
+                node = random.choice(Map.spawn_nodes)
+                way = GraphAlgorithms.IDA(Map.nodes, node, random.choice([i for i in Map.spawn_nodes if i != node]))
+                # way_counter += time.perf_counter() - start_counter
+                # print(way, "way")
 
-            pos = (0, None)
+                pos = (0, None)
 
-            car = Car(-1)
+                car = Car(-1)
 
-            for x in way:
-                car.addWayNode(x[0], x[1], x[2])
-            car.pos = pos
+                for x in way:
+                    car.addWayNode(x[0], x[1], x[2])
+                car.pos = pos
 
-            Map.nodes[node].queue.append(car)
-            CarDriver.cars_array.append(car)
+                Map.nodes[node].queue.append(car)
+                CarDriver.cars_array.append(car)
 
-            CarDriver.assignCars()
+                CarDriver.assignCars()
 
         print(time.perf_counter() - start, "seconds for creating cars")
         print(way_counter, "seconds for creating ways for cars")
+
+    
 
     @staticmethod
     def assignCars():

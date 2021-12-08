@@ -144,6 +144,8 @@ function form_car_array(python_car_array_str){
         console.log(`${3} time taken ${(endTime - startTime)/1000} seconds`);
 */
 }
+
+
 function construct_cars(){
         let draw_cars = "";
         let draw_table = "";
