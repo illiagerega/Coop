@@ -176,24 +176,22 @@ def cars():
         Controller.init(data[1], data[2])
         Controller.change()
 
-        cars = PortDriver.getCarsIntoFile()
+        cars = PortDriver.getCarsIntoFile3D()
         cars_ = json.loads(cars)
 
-        n = 0
         func_string = ''
 
-        for i in cars_['cars']:
-            for a in i.values():
-                for b in a:
-                    n += 1
-                    if n % 2 != 0:
-                        #string += f'createCar({b[0][0]}, {b[0][1]}, {b[1]});'
-                        func_string += f'createCar({b[0][0]}, {b[0][1]});'
+        for car in cars_['cars']:
+            for key in car.keys():
+                x = car[key][0][0][0]    
+                y = car[key][0][0][1]
 
-                    if n % 2 == 0:
-                        continue
+                #string += f'createCar({b[0][0]}, {b[0][1]}, {b[1]});'
+                func_string += f'createCar({x}, {y});' # car longitude and latitude 
                 
         return func_string
+
+
 @app.route('/lights_editor', methods=['POST'])
 def lights_editor():
     light_id = int(request.form.get("light_id"))

@@ -348,6 +348,6 @@ def excludeOSMGraph(graph, use_custom_algorithm = False):
     graph = None
 
     print("The time for graph exluding: ", abs(time.time() - start))
-    return [nodes, spawn_nodes, roads]
+    return [nodes, spawn_nodes, roads, offset_x, offset_y]
 
 

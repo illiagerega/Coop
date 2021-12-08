@@ -13,7 +13,9 @@ class Map:
     nodes: list[Node] = []
     spawn_nodes: list[int] = []
     roads: list[Road] = []
-    distance_matrix = []
+    offset_x: float = 0.0
+    offset_y: float = 0.0
+    # distance_matrix = []
 
     @staticmethod
     def init(Ncars):
