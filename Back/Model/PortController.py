@@ -19,7 +19,6 @@ class PortDriver:
 
         for car_index, car in enumerate(CarDriver.cars_array):
             if car.x != -1:
-                # REMOVE THAT CYCLE
                 row.append({ car_index : [car.getCoordinates(), [car.getRoad().start_node, car.getRoad().end_node], car.color]} )
 
         data = json.dumps({"cars": row})
@@ -28,6 +27,17 @@ class PortDriver:
         #print(data)
         # ServerRabbit.sendData(data, 'cars')
 
+    @staticmethod
+    def getCarsIntoFile3D(): # cars into file.json for simulation 3d
+        row = []
+
+        for car_index, car in enumerate(CarDriver.cars_array):
+            if car.x != -1:
+                row.append({ car_index : [car.getCoordinatesReal(), [car.getRoad().start_node, car.getRoad().end_node], car.color]} )
+
+        data = json.dumps({"cars": row})
+        
+        return data
 
     def getLightsIntoFile():
 
@@ -56,7 +66,7 @@ class PortDriver:
     def setMapByName(Name):
         graph = osmnx.graph_from_place(Name, simplify=True, network_type='drive')
 
-        Map.nodes, Map.spawn_nodes, Map.roads = excludeOSMGraph(graph)
+        Map.nodes, Map.spawn_nodes, Map.roads, Map.offset_x, Map.offset_y = excludeOSMGraph(graph)
 
     @staticmethod
     def setMapFromFile(fileName):
@@ -96,7 +106,7 @@ class PortDriver:
         elif '.osm' in fileName: # from .osm
             graph = osmnx.graph_from_xml(fileName, simplify=True)
 
-            Map.nodes, Map.spawn_nodes, Map.roads = excludeOSMGraph(graph, use_custom_algorithm=True)
+            Map.nodes, Map.spawn_nodes, Map.roads, Map.offset_x, Map.offset_y  = excludeOSMGraph(graph, use_custom_algorithm=True)
 
         else: # from .txt
             graph = open(fileName, 'r')

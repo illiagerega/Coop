@@ -76,7 +76,7 @@ function createCar(x, y){
         cylinder.renderOrder = 100000;
 
         //Get the position of the click
-        const geoPosition = mapView.getGeoCoordinatesAt(y, x);
+        const geoPosition = mapView.getGeoCoordinatesAt(x, y);
         cylinder.anchor = geoPosition;
 
         //Add object to the map
@@ -86,7 +86,9 @@ function createCar(x, y){
         setTimeout(() => {
             mapView.mapAnchors.remove(cylinder)
         }, car_speed);
+
         console.log('car was created')
+        console.log(x, y)
 
 }
 

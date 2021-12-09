@@ -107,7 +107,7 @@ class GraphAlgorithms:
     # in plans: just h(n1, n2) = |n1.x - n2.x| + |n1.y - n2.y| 
     def heuristic(node1: Node, node2: Node, mode = 0):
         if mode == 0:
-            return 2 * (abs(node1.apos[0] - node2.apos[0]) + abs(node1.apos[1] - node2.apos[1]))
+            return 1 * (abs(node1.apos[0] - node2.apos[0]) + abs(node1.apos[1] - node2.apos[1]))
             # return math.hypot(abs(node1.apos[0] - node2.apos[0]), abs(node1.apos[1] - node2.apos[1]))
         else:
             return "L0L"
@@ -158,7 +158,7 @@ class GraphAlgorithms:
 
     def IDA(nodes, start_node, destination):
         # start = time.time()
-        threshold = GraphAlgorithms.heuristic(nodes[start_node], nodes[destination]) * 7
+        threshold = GraphAlgorithms.heuristic(nodes[start_node], nodes[destination]) 
         
 
         while True:
@@ -348,6 +348,6 @@ def excludeOSMGraph(graph, use_custom_algorithm = False):
     graph = None
 
     print("The time for graph exluding: ", abs(time.time() - start))
-    return [nodes, spawn_nodes, roads]
+    return [nodes, spawn_nodes, roads, offset_x, offset_y]
 
 

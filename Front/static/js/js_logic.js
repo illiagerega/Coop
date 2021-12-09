@@ -84,6 +84,8 @@ function form_car_array(python_car_array_str){
         construct_cars();
         endTime = new Date().getTime();
 }
+
+
 function construct_cars(){
         let draw_cars = "";
         Array.from(current_cars.entries()).map(([key, value]) => {
