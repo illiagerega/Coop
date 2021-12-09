@@ -1,7 +1,7 @@
 Separation = 18
 Acceleration = 1
 StartVelocity = 0
-MaxVelocity = 3
+MaxVelocity = 4
 Probability = 0.8  # for city - 0.5; for highway - 0.8
 StartPeriodLow = 1
 StartPeriodHigh = 10

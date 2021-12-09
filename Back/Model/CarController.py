@@ -3,7 +3,7 @@ from .Util.CarInstance import Car
 from .Util.MapController import Map
 from .Util.RoadInstance import Road
 from .Util.LineInstance import Line
-from .Util.Consts import NameCarsFile
+from .Util.Consts import MaxVelocity, NameCarsFile
 from numba import jit, cuda
 import os
 import random
@@ -100,11 +100,11 @@ class CarDriver:
             try:
                 gap = line.cells.index(1, car.x + 1) - car.x
                 if gap == -1:
-                    car.next_x = car.CompV(max(3, len(line.cells) - car.x))
+                    car.next_x = car.CompV(max(MaxVelocity, len(line.cells) - car.x))
                 else:
                     car.next_x = car.CompV(gap)
             except ValueError:
-                car.next_x = car.CompV(max(3, len(line.cells) - car.x))
+                car.next_x = car.CompV(max(MaxVelocity, len(line.cells) - car.x))
 
 
         for car_index, car in enumerate(CarDriver.cars_array):

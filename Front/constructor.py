@@ -119,9 +119,9 @@ class Constructor:
                 length = ((abs(x1 - x2) ** 2) + (abs(y1 - y2) ** 2)) ** 0.5
 
                 if iroad1 in Constructor.roads[iroad2]:
-                    html += f'<div class="road" id="road_{road_index}" style="left: {(x - (length / 2))}px; top: {(y - 12) - 2}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
+                    html += f'<div class="road" id="road_{Constructor.roads[iroad1][iroad2][2]}" style="left: {(x - (length / 2))}px; top: {(y - 12) - 2}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
                 else:
-                    html += f'<div class="road_one_line" id="road_{road_index}" style="left: {(x - (length / 2))}px; top: {(y - 6)}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
+                    html += f'<div class="road_one_line" id="road_{Constructor.roads[iroad1][iroad2][2]}" style="left: {(x - (length / 2))}px; top: {(y - 6)}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
 
                 road_index += 1
 
