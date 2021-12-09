@@ -24,7 +24,7 @@ class CarDriver:
             start_counter = time.perf_counter()
             way = GraphAlgorithms.IDA(Map.nodes, node, random.choice([i for i in Map.spawn_nodes if i != node]))
             way_counter += time.perf_counter() - start_counter
-            print(way, "way")
+            #print(way, "way")
 
             pos = (0, None)
 

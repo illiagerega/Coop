@@ -145,7 +145,7 @@ def util_ajax():
         pass
     elif operation == "getCarPath":
         car_index = int(parse_arg_from_requests("car_index"))
-
+        print({"way":[i.road.index for i in CarDriver.cars_array[car_index].way]})
         return json.dumps({"way":[i.road.index for i in CarDriver.cars_array[car_index].way]})
 
 @app.route('/3d')

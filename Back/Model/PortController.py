@@ -42,12 +42,11 @@ class PortDriver:
             row_nodes.append([node.apos, node.type])
             temp = {}
             for road in node.start_roads:
-                temp[road.end_node] = [road.n_lines, road.angle]
+                temp[road.end_node] = [road.n_lines, road.angle, road.index]
 
             row_roads[node.index] = temp
 
         # data = json.dumps({"nodes": row_nodes, "roads": row_roads})
-
 
         return {"nodes": row_nodes, "roads": row_roads}
         # ServerRabbit.sendData(data, 'cars') 

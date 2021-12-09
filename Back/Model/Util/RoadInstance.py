@@ -4,6 +4,7 @@ from math import pi
 
 class Road:
     def __init__(self, nodes, start_node, end_node, number_of_lines, index):
+        print(start_node, index)
         self.n_lines = number_of_lines
         self.start_node = start_node
         self.end_node = end_node
