@@ -101,7 +101,7 @@ body{
     z-index: 2;
     background-position: center;
     background-color: red;
-    pointer-events: none
+    /*pointer-events: none*/
 }
 .road_one_line{
     height: 14px;
@@ -154,6 +154,7 @@ body{
     height: 8.5px;
     position: absolute;
     z-index: 3;
+    transition: transform 2s;
 
 }
 

@@ -57,147 +57,51 @@ current_cars = new Map();
 current_lights = new Map();
 
 
+function add_car_to_dictionary_from_string(_map, string_key, string_value){
+    let key = parseInt(string_key)
+    _map.set(key, new Car(key,parseFloat(string_value[0]), parseFloat(string_value[1]), parseFloat(string_value[2]),
+     parseFloat(string_value[3]), parseInt(string_value[4]), parseInt(string_value[5]), string_value[6]));
+}
+
+
+
+
+
+
 function form_car_array(python_car_array_str){
+
+
         const startTime =new Date().getTime();   
         current_cars.clear();
         let python_car_array = JSON.parse(python_car_array_str);
+ 
         for(const [skey, value] of Object.entries(python_car_array)){
-            let key = parseInt(skey);
-            current_cars.set(key, new Car(key,parseFloat(value[0]), parseFloat(value[1]), parseFloat(value[2]), parseFloat(value[3]), parseInt(value[4]), parseInt(value[5]), value[6]));
-
+            add_car_to_dictionary_from_string(current_cars, skey, value);
         }
-        /*
-        console.log("somehting:", this.new_cars.get(2));
-
-        for(const [skey, value] of Object.entries(python_car_array)){
-            let key = parseInt(skey);
-            console.log(key);
-            if(this.prev.has(key)){
-                this.alive.set(key, new Car(key,parseFloat(value[0]), parseFloat(value[1]), parseFloat(value[2])));
-                this.prev.delete(key);
-                console.log("alive");
-            }
-            else{
-                this.new_cars.set(key, new Car(key, parseFloat(value[0]), parseFloat(value[1]), parseFloat(value[2])));
-                console.log("new", this.new_cars.get(key));
-                console.log(this.new_cars.size);
-            }
-        }
-        console.log("somehting:", this.new_cars.get(2));
-        console.log(this.new_cars);
-        console.log(python_car_array);
-        console.log(this.new_cars.size);
-        console.log(this.new_cars.entries());
-        Array.from(this.new_cars.keys()).map(key => console.log(key));
-
-
-        for(const [key, value] of Object.entries(this.new_cars)){
-          
-            const [key, value] = entry;
-            console.log("hellojdsiojfdlskfj");
-        }
-
-        Array.from(this.prev.keys()).map(key =>
-          this.dead.set(key, key));
-        this.prev.clear();
-
-        
-
-
-
-        /*Object.entries(python_car_array).forEach((entry) => {
-            const [key, value] = entry;
-            if(this.living_cars.has(key)){
-                this.living_cars.delete(key);
-            }
-        });
-        console.log(this.living_cars);
-        Object.entries(python_car_array).forEach((entry) => {
-            const [key, value] = entry;
-            if(this.living_cars.has(key)){
-                this.car_array[key] = null;
-                this.prev_car_array[key] = null;
-            }
-            else if(this.car_array[key] == null){
-                this.car_array[key] = new Car(key, value[0], value[1], value[2]);
-                this.living_cars.add(key);
-            }
-            else {
-                this.prev_car_array[key] = this.car_array[key];
-                this.car_array[key] = new Car(key, value[0], value[1], value[2]);
-                this.living_cars.add(key);
-            }
-            
-        
-        });*/
 
         var endTime = new Date().getTime();
         console.log(`${2} time taken ${(endTime - startTime)/1000} seconds`);
         construct_cars();
         endTime = new Date().getTime();
-
-
-        /*
-        Array.from(current_cars.entries()).map(([key, value]) => {
-            prev.set(key, value);
-        });
-        console.log(`${3} time taken ${(endTime - startTime)/1000} seconds`);
-*/
 }
 
 
 function construct_cars(){
         let draw_cars = "";
-        let draw_table = "";
         Array.from(current_cars.entries()).map(([key, value]) => {
             draw_cars += value.draw_car();
-            draw_table += `<tr><td>${value.id}</td><td>${value.x}</td><td>${value.y}</td><td>${value.rotation}deg</td><td>${value.startNode}</td><td>${value.endNode}</td></tr>`;
         });
         document.getElementById("cars").innerHTML = draw_cars;
-        /* WHY ISN'T IT WORKING????????????????????????????*/
-        document.getElementById("cars_table").innerHTML = draw_table;
-        
-        /*
-        let new_cars_html = "";
-        Array.from(this.new_cars.entries()).map(([key, value]) => {
-            new_cars_html += `<div class="car_red c${key}" id="${value.id}" style="left: ${value.x}px; top: ${value.y}px; transform: rotate(${value.rotation}deg);"> </div>`
-            console.log("Drawing", key);
-
-        });
-        document.getElementById("cars").innerHTML += new_cars_html;
-        Array.from(this.alive.entries()).map(([key, value]) => {
-            
-            console.log("ALIVE", key, value);
-            let div = document.getElementById(key);
-            anime.timeline().add({
-                targets: `.c${key}`,
-                rotate:  `rotate(${value.rotation}deg)`,
-            }).add({
-                targets: `.c${key}`,
-                translateX: Math.sqrt((parseFloat(div.style.left)-value.x)*(parseFloat(div.style.left)-value.x)+(parseFloat(div.style.top)-value.y)*(parseFloat(div.style.top)-value.y))
-                
-            });
-              div.style.left = `${value.x}`;
-              div.style.top = `${value.y}`;
-              div.style.transform = `rotate(${value.rotation}deg)`;
-              console.log(value.rotation);
-        });
-        Array.from(this.dead.keys()).map(key =>
-            document.getElementById(`${key}`).innerHTML = "");
-        this.dead.clear();
-    */
 }
 function show_car(car_id){
     if(!paused) return;
     hide_all();
     let car = current_cars.get(car_id);
     showCarsEditor();
-    //alert(`Id: ${car.id}, x: ${car.x}, y:${car.y}, Someone make this menu pretty`);
     highlight_path(car_id);
 }
 
 function form_lights_array(lights_str){ // [id, sublights[], green_period, red_period]
-    //document.getElementById("lights_movable").innerHTML = lights_str["lights"];
      lights_python_array = JSON.parse(lights_str);
      for(const [skey, value] of Object.entries(lights_python_array)){
         let key = parseInt(skey);
@@ -292,10 +196,6 @@ function highlight_path(car_id)
                 for(road_id of roads){
                     
                     var original_road = document.querySelector(`#road_${road_id}`)
-                    if(i == 0){
-                        delta_height = parseFloat($(`#${car_id}`).css('top'), 10) - parseFloat($(`#road_${road_id}`).css('top'), 10); 
-                    }
-                    console.log(delta_height, original_road.style.posTop);
                     var highlighted_road = original_road.cloneNode(true);
                     highlighted_road.id = `#highlighted_road_${road_id}`;
                     if(current_cars.get(parseInt(car_id)).rotation < 90){

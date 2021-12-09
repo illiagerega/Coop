@@ -58,7 +58,6 @@ class PortDriver:
 
         # data = json.dumps({"nodes": row_nodes, "roads": row_roads})
 
-
         return {"nodes": row_nodes, "roads": row_roads}
         # ServerRabbit.sendData(data, 'cars') 
 

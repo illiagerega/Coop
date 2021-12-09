@@ -117,7 +117,7 @@ class Constructor:
                 y = (y1 + y2) / 2
 
                 length = ((abs(x1 - x2) ** 2) + (abs(y1 - y2) ** 2)) ** 0.5
-
+                road_index = Constructor.roads[iroad1][iroad2][2]
                 if iroad1 in Constructor.roads[iroad2]:
                     html += f'<div class="road" id="road_{Constructor.roads[iroad1][iroad2][2]}" style="left: {(x - (length / 2))}px; top: {(y - 12) - 2}px; width: {length}px; transform: rotate({Constructor.roads[iroad1][iroad2][1] * 180 / math.pi}deg);"></div>'
                 else:
