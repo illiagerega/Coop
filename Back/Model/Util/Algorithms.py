@@ -1,7 +1,7 @@
 from numpy.lib.function_base import delete
 import osmnx
 import networkx as nx
-from queue import LifoQueue
+from queue import LifoQueue, PriorityQueue
 from itertools import compress
 from numpy import invert
 from operator import itemgetter
@@ -107,8 +107,9 @@ class GraphAlgorithms:
     # in plans: just h(n1, n2) = |n1.x - n2.x| + |n1.y - n2.y| 
     def heuristic(node1: Node, node2: Node, mode = 0):
         if mode == 0:
-            return 1 * (abs(node1.apos[0] - node2.apos[0]) + abs(node1.apos[1] - node2.apos[1]))
-            # return math.hypot(abs(node1.apos[0] - node2.apos[0]), abs(node1.apos[1] - node2.apos[1]))
+            #return 1 * (abs(node1.apos[0] - node2.apos[0]) + abs(node1.apos[1] - node2.apos[1]))
+            #return max(abs(node1.apos[0] - node2.apos[0]), abs(node1.apos[1] - node2.apos[1]))
+            return math.hypot(abs(node1.apos[0] - node2.apos[0]), abs(node1.apos[1] - node2.apos[1]))
         else:
             return "L0L"
 
@@ -127,30 +128,37 @@ class GraphAlgorithms:
 
     @staticmethod
     # nodes, current_node, destination, current_cost, path, threshold
-    def IDDFS(nodes, current_node, destination, current_cost, path, color_nodes, threshold):
+    def IDDFS(nodes, destination, current_cost, path, color_nodes, threshold):
+        current_node = color_nodes[-1]
 
         if current_node == destination:
-            return [-1, path]
+            return [-current_cost, path]
 
         f = GraphAlgorithms.heuristic(nodes[current_node], nodes[destination]) + current_cost
         if f > threshold:
             return [f, path]
         
         min = math.inf
-        color_nodes[current_node] = 1
+        
 
         for adj_road in nodes[current_node].adj_nodes:
-            if color_nodes[adj_road[0]] == 0:
+            if adj_road[0] not in color_nodes:
+                # color_nodes[adj_road[0]] = 1
+                color_nodes.append(adj_road[0])
                 path.append([adj_road[1], current_node, adj_road[0]])
-                ret = GraphAlgorithms.IDDFS(nodes, adj_road[0], destination, 
+                ret = GraphAlgorithms.IDDFS(nodes, destination, 
                 current_cost + GraphAlgorithms.cost(adj_road[1]), path, color_nodes, threshold)
-                if ret[0] == -1:
-                    return [-1, path]
-                elif ret[0] < min:  
-                    min = ret[0]
-                else:
-                    pass
 
+                if ret[0] < 0:
+                    return ret
+
+                if ret[0] < min:  
+                    min = ret[0]
+                
+                
+                
+                # color_nodes[adj_road[0]] = 0
+                color_nodes.pop()
                 path.pop()
 
         return [min, path]
@@ -160,20 +168,53 @@ class GraphAlgorithms:
         # start = time.time()
         threshold = GraphAlgorithms.heuristic(nodes[start_node], nodes[destination]) 
         
-
+        color_nodes = [start_node] # [0] * len(nodes)
         while True:
-            color_nodes = [0] * len(nodes)
-            ret = GraphAlgorithms.IDDFS(nodes, start_node, destination, 0, [], color_nodes, threshold)
+            
+            # color_nodes[start_node] = 1
+            ret = GraphAlgorithms.IDDFS(nodes, destination, 0, [], color_nodes, threshold)
             if ret[0] == math.inf:
                 return []
-            elif ret[0] == -1:
+            elif ret[0] < 0:
                 # print("The time for one cycle: ", abs(time.time() - start))
                 return ret[1]
             else:
-                threshold = ret[0]
+                threshold = 1.5 * ret[0]
         
+    def A_Star(nodes : list[Node], start_node: int, destination: int):
+        open_list = PriorityQueue()
+        open_list.put((0, start_node))
+        cost_list = {}
+        parent_list = {}
+        cost_list[start_node] = 0
+        parent_list[start_node] = None
+
+        while not open_list.empty():
+            current_node = open_list.get()[1]
+
+            if current_node == destination:
+                break
+
+            for adj_road in nodes[current_node].adj_nodes:
+                new_cost = cost_list[current_node] + GraphAlgorithms.cost(adj_road[1])
+
+                if adj_road[0] not in cost_list or new_cost < cost_list[adj_road[0]]:
+                    cost_list[adj_road[0]] = new_cost
+                    priority = GraphAlgorithms.heuristic(nodes[adj_road[0]], nodes[destination]) + new_cost
+                    open_list.put((priority, adj_road[0]))
+                    parent_list[adj_road[0]] = [adj_road[1], current_node, adj_road[0]]
         
+
+        if destination not in parent_list:
+            return []
+
+        way = []
+        parent = parent_list[destination]
+        while parent != None:
+            way.append(parent)
+            parent = parent_list[parent[1]]
         
+        return way[::-1]
 
     @staticmethod
     def getAdjustingMatrix(nodes):
