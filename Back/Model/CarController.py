@@ -20,22 +20,26 @@ class CarDriver:
         print(Map.n_cars, "cars in that simulation")
         start = time.perf_counter()
         way_counter = 0
+
         for i in range(Map.n_cars):
-            node = random.choice(Map.spawn_nodes)
+            home_node = random.choice(Map.spawn_nodes)
+            work_node = random.choice([i for i in Map.spawn_nodes if i != home_node])
             start_counter = time.perf_counter()
-            way = GraphAlgorithms.A_Star(Map.nodes, node, random.choice([i for i in Map.spawn_nodes if i != node]))
+            way = GraphAlgorithms.A_Star(Map.nodes, home_node, work_node)
             way_counter += time.perf_counter() - start_counter
             #print(way, "way")
-
-            pos = (0, None)
 
             car = Car(-1)
 
             for x in way:
                 car.addWayNode(x[0], x[1], x[2])
-            car.pos = pos
 
-            Map.nodes[node].queue.append(car)
+            car.pos = (0, None)
+            car.home_node = home_node
+            car.work_node = work_node
+
+            Map.nodes[home_node].queue.append(car)
+            Map.nodes[home_node].n_parcking_places += 1
             CarDriver.cars_array.append(car)
 
             #CarDriver.assignCars()
@@ -44,10 +48,15 @@ class CarDriver:
         print(way_counter, "seconds for creating ways for cars")
 
     @staticmethod
-    def assignCars():
+    def assignCars(): # assign cars from queue in spawn_nodes, which are home's, work's, and entertainment's park places
+
         for spawn_node in Map.spawn_nodes:
             queue_del = []
             for car in Map.nodes[spawn_node].queue:
+                if car.delay > 0: # if car is not going anyway
+                    car.delay -= 1
+                    continue
+
                 car.wayProgress = 0
                 for line in car.getLines():
                     try:
@@ -95,6 +104,10 @@ class CarDriver:
             line.K -= 1 / len(line.cells)
             if car.next_x >= len(line.cells):
                 if car.wayProgress + 1 >= len(car.way):
+                    # if car ended his path
+                    # change her path and change her delay
+
+
                     del CarDriver.cars_array[car_index]
                     del car
                     line.K -= 1 / len(line.cells)
@@ -102,6 +115,7 @@ class CarDriver:
 
                 else:
                     
+                    # observing the next line, because car is going there
                     car.next_x -= len(line.cells)
                     old_line = car.currentLine
                     car.wayProgress += 1

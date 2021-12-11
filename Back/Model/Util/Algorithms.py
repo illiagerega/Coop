@@ -180,7 +180,7 @@ class GraphAlgorithms:
                 # print("The time for one cycle: ", abs(time.time() - start))
                 return ret[1]
             else:
-                threshold = 1.5 * ret[0]
+                threshold = ret[0]
         
     def A_Star(nodes : list[Node], start_node: int, destination: int):
         open_list = PriorityQueue()

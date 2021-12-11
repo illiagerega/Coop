@@ -26,6 +26,9 @@ class Car:
         self.wayProgress = -1
         self.currentLine = -1
         self.next_x = -1
+        self.home_node = None
+        self.work_node = None
+        self.delay = 0
         self.color = random.choice(["red", "green", "magenta", "blue"])
 
     def CompV(self, gap) -> int:

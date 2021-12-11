@@ -47,7 +47,8 @@ const onStart = () => {
         $("#button_start").text("Start");
         $("#speed_menu").css("visibility", "hidden");
         $("#map").html("");
-        $("#cars").html("");        
+        $("#cars").html("");
+        $("#lights_movable").html("");        
         clearIntervals();
         paused = false;
     }
