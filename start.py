@@ -4,6 +4,7 @@ from flask.helpers import url_for
 from werkzeug.utils import redirect
 from Back.Model.CarController import CarDriver
 from Back.Model.MainController import Controller
+from Back.Model.Util.MapController import Map
 from Back.Model.LightsController import LightsController
 from Front.parser import *
 from Front.db import Settings
@@ -143,6 +144,16 @@ def util_ajax():
     operation = parse_arg_from_requests('operation')
     if operation == None:
         pass
+    elif operation == "setRoadMaxVelocity":
+        road_index = int(parse_arg_from_requests("road_index"))
+        max_velocity = int(parse_arg_from_requests("max_velocity"))
+        Map.roads[road_index].max_velocity = max_velocity
+
+    elif operation == "getRoadMaxVelocity":
+        road_index = int(parse_arg_from_requests("road_index"))
+        
+        return json.dumps({"max_velocity" : Map.roads[road_index].max_velocity})
+        
     elif operation == "getCarPath":
         car_index = int(parse_arg_from_requests("car_index"))
         # print({"way":[i.road.index for i in CarDriver.cars_array[car_index].way]})

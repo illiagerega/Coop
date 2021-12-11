@@ -29,7 +29,8 @@ class Car:
         self.color = random.choice(["red", "green", "magenta", "blue"])
 
     def CompV(self, gap) -> int:
-        self._v = min(self._v + self._a, MaxVelocity)
+        max_velocity = min(MaxVelocity, self.getRoad().max_velocity)
+        self._v = min(self._v + self._a, max_velocity)
         self._v = min(self._v, gap - 1)
         if random.randint(0, 10) >= Probability * 10:
             self._v = max(self._v - 1, 0)
