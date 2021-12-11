@@ -1,7 +1,9 @@
+from typing import Tuple
 from .NodeInstance import Node
 from .MapController import Map
 from.LineInstance import Line
 from .RoadInstance import Road
+from .Consts import PeriodStopFlow, IngnoringSupreme
 from math import pi, cos, sin
 
 class TrafficLight:
@@ -29,6 +31,86 @@ class TrafficLight:
     #
     # For lines stopping implementation we will just change the last cell in lines
     # (for instance, line = [0, 0, 0, 1, 0, 0] -> [0, 0, 0, 1, 0, 1])
+
+
+    # class Controller which created for regulation of traffic flow
+    # The main idea of this: We have open group of roads
+    # Stop flow in first road for const time, after that
+    # vice versa for another road
+    # But the cycle might change, because of condition (if here's one road, if one road has density == 0)
+
+    # Simple enough, if I will work out something more reasonable for our purposes, I'll write it down 
+    class Controller:
+        def __init__(self, group_roads: list[list[Road]]) -> None:
+            self._period_stopping = PeriodStopFlow
+            self._ignoring_sup = IngnoringSupreme
+            self._group_roads = group_roads
+            self._first_road_stopped = False
+            self._timer = 0
+
+        def changeLine(self):
+            self._first_road_stopped = False
+            self._timer = 0
+
+        def change(self, is_first_open):
+            # firstly, change timers
+            group1 = [False]*len(self._group_roads[0])
+            group2 = [False]*len(self._group_roads[1])
+            
+            for road in self._group_roads[int(not is_first_open)]:
+                road.Flow()
+
+            if is_first_open:
+                if len(group1) >= 2:
+                    if self._first_road_stopped:
+                        if self._group_roads[0][0].K < self._ignoring_sup: # We need to add "seeing" if line's end is busy
+                            group1[0] = True
+                        group1[1] = True
+                    else:
+                        if self._group_roads[0][1].K < self._ignoring_sup:
+                            group1[1] = True
+                        group1[0] = True
+                else:
+                    group1 = [True]
+
+            else:
+                if len(group2) >= 2:
+                    if self._first_road_stopped:
+                        if self._group_roads[1][0].K < self._ignoring_sup: # We need to add "seeing" if line's end is busy
+                            group2[0] = True
+                        group2[1] = True
+                    else:
+                        if self._group_roads[1][1].K < self._ignoring_sup:
+                            group2[1] = True
+                        group2[0] = True
+                else:
+                    group2 = [True]
+
+            self._timer += 1
+            if self._timer > self._period_stopping:
+                self._first_road_stopped = not self._first_road_stopped
+                self._timer = 0
+
+            # and then change roads' stop signals 
+            for index, flag in enumerate(group1):
+                if not flag:
+                    road = self._group_roads[0][index]
+                    for line in road.lines[road.start_node]:
+                        line.cells[-1] = 1
+                else:
+                    road = self._group_roads[0][index]
+                    for line in road.lines[road.start_node]:
+                        line.cells[-1] = 0
+            
+            for index, flag in enumerate(group2):
+                if not flag:
+                    road = self._group_roads[1][index]
+                    for line in road.lines[road.start_node]:
+                        line.cells[-1] = 1
+                else:
+                    road = self._group_roads[1][index]
+                    for line in road.lines[road.start_node]:
+                        line.cells[-1] = 0
 
 
     def __init__(self, light_id, array_of_roads,  init_periods, node_id):
@@ -69,26 +151,29 @@ class TrafficLight:
         self.node : Node = Map.nodes[node_id]
         self.center : int = Map.nodes[node_id].apos
 
+        self.controller = self.Controller(self.array_roads)
+
     def ChangeLine(self):
         
         try:
-            if self._is_first_open:
-                for road in self.array_roads[0]:
-                    for line in road.lines[road.start_node]:
-                        line.cells[-1] = 0
-                for road in self.array_roads[1]:
-                    for line in road.lines[road.start_node]:
-                        line.cells[-1] = 1
-            else:
-                for road in self.array_roads[1]:
-                    for line in road.lines[road.start_node]:
-                        line.cells[-1] = 0
-                for road in self.array_roads[0]:
-                    for line in road.lines[road.start_node]:
-                        line.cells[-1] = 1
+            # if self._is_first_open:
+            #     for road in self.array_roads[0]:
+            #         for line in road.lines[road.start_node]:
+            #             line.cells[-1] = 0
+            #     for road in self.array_roads[1]:
+            #         for line in road.lines[road.start_node]:
+            #             line.cells[-1] = 1
+            # else:
+            #     for road in self.array_roads[1]:
+            #         for line in road.lines[road.start_node]:
+            #             line.cells[-1] = 0
+            #     for road in self.array_roads[0]:
+            #         for line in road.lines[road.start_node]:
+            #             line.cells[-1] = 1
 
+            self.controller.changeLine()
         except:
-            print("fsf")
+            print("Captured some unadequate problems with traffic lights")
 
         self._is_first_open = not self._is_first_open
 
@@ -98,6 +183,8 @@ class TrafficLight:
         if self.counter >= self.periods[flag]:
             self.counter = 0
             self.ChangeLine()
+            
+        self.controller.change(self._is_first_open)
 
 
     def getAttributes(self):
@@ -119,12 +206,12 @@ class TrafficLight:
                 sublight.append(angle)
 
                 if index == 0:
-                    if not self._is_first_open:
+                    if self._is_first_open:
                         color = colorset[1] if self.counter >= self.periods[index] - 1 else colorset[0]
                     else:
                         color = colorset[2]
                 else:
-                    if self._is_first_open:
+                    if not self._is_first_open:
                         color = colorset[1] if self.counter >= self.periods[index] - 1 else colorset[0]
                     else:
                         color = colorset[2]
@@ -133,6 +220,6 @@ class TrafficLight:
 
                 sublights.append(sublight)
 
-        # sublight -> list[[x, y], angle, color]
+        # sublight -> list[list[x, y], angle, color]
         return [self.id, sublights, self.array_roads, self.periods, self._is_first_open, self.counter, self.node]
 

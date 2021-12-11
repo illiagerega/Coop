@@ -76,11 +76,11 @@ class CarDriver:
             try:
                 gap = line.cells.index(1, car.x + 1) - car.x
                 if gap == -1:
-                    car.next_x = car.CompV(max(MaxVelocity, len(line.cells) - car.x))
+                    car.next_x = car.CompV(max(car.getRoad().max_velocity, len(line.cells) - car.x))
                 else:
                     car.next_x = car.CompV(gap)
             except ValueError:
-                car.next_x = car.CompV(max(MaxVelocity, len(line.cells) - car.x))
+                car.next_x = car.CompV(max(car.getRoad().max_velocity, len(line.cells) - car.x))
 
 
         for car_index, car in enumerate(CarDriver.cars_array):
@@ -99,14 +99,32 @@ class CarDriver:
                     del car
                     line.K -= 1 / len(line.cells)
                     continue
+
                 else:
                     
                     car.next_x -= len(line.cells)
+                    old_line = car.currentLine
                     car.wayProgress += 1
                     line.K -= 1 / len(line.cells)
                     car.currentLine = random.randrange(len(car.getLines()))
                     line = car.getLines()[car.currentLine]
-                    line.K += 1 / len(line.cells)
+
+                    try:
+                        gap = line.cells.index(1, 0)
+                        if gap == -1:
+                            car.next_x = min(car.next_x, car.CompV(min(car.getRoad().max_velocity, len(line.cells))))
+                        else:
+                            car.next_x = min(car.next_x, car.CompV(gap))
+                    except ValueError:
+                        car.next_x = min(car.next_x, car.CompV(min(car.getRoad().max_velocity, len(line.cells))))
+                    
+                    if car.next_x == 0:
+                        car.wayProgress -= 1
+                        car.currentLine = old_line
+                        line = car.getLines()[car.currentLine]
+                        car.next_x = len(line.cells) - 1
+                    else:
+                        line.K += 1 / len(line.cells)
 
             
             car.x = car.next_x

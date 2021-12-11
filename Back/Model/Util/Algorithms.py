@@ -142,7 +142,8 @@ class GraphAlgorithms:
         
 
         for adj_road in nodes[current_node].adj_nodes:
-            if adj_road[0] not in color_nodes:
+            if adj_road[0] not in color_nodes and adj_road[1].is_open:
+
                 # color_nodes[adj_road[0]] = 1
                 color_nodes.append(adj_road[0])
                 path.append([adj_road[1], current_node, adj_road[0]])
@@ -196,6 +197,9 @@ class GraphAlgorithms:
                 break
 
             for adj_road in nodes[current_node].adj_nodes:
+                if not adj_road[1].is_open:
+                    continue
+
                 new_cost = cost_list[current_node] + GraphAlgorithms.cost(adj_road[1])
 
                 if adj_road[0] not in cost_list or new_cost < cost_list[adj_road[0]]:

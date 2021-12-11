@@ -9,12 +9,16 @@ class Road:
         self.start_node = start_node
         self.end_node = end_node
         self.max_velocity = MaxVelocity
+        self.is_open: bool = True
         dx = nodes[start_node].apos[0] - nodes[end_node].apos[0]
         dy = nodes[start_node].apos[1] - nodes[end_node].apos[1]
         self.length = int(hypot(dx, dy))
         self.angle = (atan(dy / dx) + pi * (dx < 0)) if dx != 0.00 else copysign(pi / 2, dy)
         self.lines = {start_node: [], end_node: []}
+        self.flow = 0
+        self.K = 0
         self.index = index
+        
 
         if number_of_lines == 1:
             self.lines[start_node] = [(Line(start_node, end_node, self))]
@@ -30,10 +34,10 @@ class Road:
     def __str__(self):
         return "Road: " + str(self.start_node) + ' ' + str(self.end_node)
 
-    def Flow(self):
-        flow = 0
+    def Flow(self) -> None:
+        self.flow = 0
+        self.K = 0
         for node in self.lines.keys():
             for line in self.lines[node]:
-                flow += line.comp() / len(self.lines[node])
-
-        return flow
+                self.flow += line.comp() / len(self.lines[node])
+                self.K += line.K / len(self.lines[node])

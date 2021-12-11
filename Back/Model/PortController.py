@@ -52,7 +52,7 @@ class PortDriver:
             row_nodes.append([node.apos, node.type])
             temp = {}
             for road in node.start_roads:
-                temp[road.end_node] = [road.n_lines, road.angle, road.index]
+                temp[road.end_node] = [road.n_lines, road.angle, road.index, road.is_open]
 
             row_roads[node.index] = temp
 

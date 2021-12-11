@@ -12,17 +12,19 @@ class Line:
         self.end_node = end_node
         self.K = 0
         self.Q = 0
-        self.critical_K = Probability / (MaxVelocity + 1 - 2*(1 - Probability))
+        self.critical_K = Probability / (self.road.max_velocity + 1 - 2*(1 - Probability))
         #self.cars = []
 
     def comp(self): # comp density, flow and another things
         # self.K = sum(self.cells) / len(self.cells)
 
         if self.K <= self.critical_K:
-            self.Q = (MaxVelocity - 1 + Probability) * self.K
+            self.Q = (self.road.max_velocity - 1 + Probability) * self.K
 
         else:
             self.Q = Probability * (1 - self.K)
+
+        return self.Q
 
 
 

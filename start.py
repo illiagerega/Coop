@@ -153,7 +153,12 @@ def util_ajax():
         road_index = int(parse_arg_from_requests("road_index"))
         
         return json.dumps({"max_velocity" : Map.roads[road_index].max_velocity})
-        
+
+    elif operation == "setRoadStatus":
+        road_index = int(parse_arg_from_requests("road_index"))
+        road_status = int(parse_arg_from_requests("road_status")) # It's Bool, false - closed, true - open
+        Map.roads[road_index].is_open = road_status
+
     elif operation == "getCarPath":
         car_index = int(parse_arg_from_requests("car_index"))
         # print({"way":[i.road.index for i in CarDriver.cars_array[car_index].way]})
