@@ -1,5 +1,6 @@
 from math import hypot, atan, copysign
 from .LineInstance import Line
+from .Consts import MaxVelocity
 from math import pi
 
 class Road:
@@ -7,6 +8,7 @@ class Road:
         self.n_lines = number_of_lines
         self.start_node = start_node
         self.end_node = end_node
+        self.max_velocity = MaxVelocity
         dx = nodes[start_node].apos[0] - nodes[end_node].apos[0]
         dy = nodes[start_node].apos[1] - nodes[end_node].apos[1]
         self.length = int(hypot(dx, dy))

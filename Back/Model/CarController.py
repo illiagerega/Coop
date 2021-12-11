@@ -38,7 +38,7 @@ class CarDriver:
             Map.nodes[node].queue.append(car)
             CarDriver.cars_array.append(car)
 
-            CarDriver.assignCars()
+            #CarDriver.assignCars()
 
         print(time.perf_counter() - start, "seconds for creating cars")
         print(way_counter, "seconds for creating ways for cars")
