@@ -207,14 +207,14 @@ class TrafficLight:
 
                 if index == 0:
                     if self._is_first_open:
-                        color = colorset[1] if self.counter >= self.periods[index] - 1 else colorset[0]
+                        color = colorset[0]
                     else:
-                        color = colorset[2]
+                        color = colorset[1] if self.counter >= self.periods[index] - 1 else colorset[2]
                 else:
                     if not self._is_first_open:
-                        color = colorset[1] if self.counter >= self.periods[index] - 1 else colorset[0]
+                        color = colorset[0]
                     else:
-                        color = colorset[2]
+                        color = colorset[1] if self.counter >= self.periods[index] - 1 else colorset[2]
 
                 sublight.append(color)
 

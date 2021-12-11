@@ -121,6 +121,7 @@ class CarDriver:
                     if car.next_x == 0:
                         car.wayProgress -= 1
                         car.currentLine = old_line
+                        line.K += 1 / len(line.cells)
                         line = car.getLines()[car.currentLine]
                         car.next_x = len(line.cells) - 1
                     else:

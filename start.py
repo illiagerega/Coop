@@ -159,6 +159,15 @@ def util_ajax():
         road_status = int(parse_arg_from_requests("road_status")) # It's Bool, false - closed, true - open
         Map.roads[road_index].is_open = road_status
 
+    elif operation == "getAllFromRoad":
+        road_index = int(parse_arg_from_requests("road_index"))
+
+        road = Map.roads[road_index]
+        road.Flow()
+
+        return json.dumps({"density" : road.K, "flow": road.flow, "start_node": road.start_node, 
+                           "end_node": road.end_node, "n_lines": road.n_lines, "max_velocity": road.max_velocity})  
+
     elif operation == "getCarPath":
         car_index = int(parse_arg_from_requests("car_index"))
         # print({"way":[i.road.index for i in CarDriver.cars_array[car_index].way]})
