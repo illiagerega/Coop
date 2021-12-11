@@ -76,7 +76,7 @@ class Car:
         self.apos[1] = shrink(self.x / length, 0, 1, 1 / length, 1) * (y) + start_node.apos[1]
 
 
-        return [self.apos, (self.getRoad().angle + pi * (x < 0)) if x != 0.00 else copysign(pi / 2, y), self._v * Separation / Scale * 111] # 111 km per angle 
+        return [self.apos, (atan(y / x) + pi * (x < 0)) if x != 0.00 else copysign(pi / 2, y), self._v * Separation / Scale * 111] # 111 km per angle 
 
     
     def getCoordinatesReal(self) -> list[list[int], int]: # apos, angle
