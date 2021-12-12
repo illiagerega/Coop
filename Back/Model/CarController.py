@@ -3,7 +3,7 @@ from .Util.CarInstance import Car
 from .Util.MapController import Map
 from .Util.RoadInstance import Road
 from .Util.LineInstance import Line
-from .Util.Consts import MaxVelocity, NameCarsFile
+from .Util.Consts import *
 from numba import jit, cuda
 import os
 import random
@@ -39,7 +39,7 @@ class CarDriver:
             car.work_node = work_node
 
             Map.nodes[home_node].queue.append(car)
-            Map.nodes[home_node].n_parcking_places += 1
+            Map.nodes[home_node].n_parking_places += 1
             CarDriver.cars_array.append(car)
 
             #CarDriver.assignCars()
@@ -106,12 +106,34 @@ class CarDriver:
                 if car.wayProgress + 1 >= len(car.way):
                     # if car ended his path
                     # change her path and change her delay
+                    parking_node = Map.nodes[car.getRoad().end_node]
 
+                    if parking_node.n_parking_places <= len(parking_node.queue):
+                        line.K += 1 / len(line.cells)
+                        line.cells[-1] = 1
+                        car.next_x = len(line.cells) - 1
+                    else:
+                        car.next_x = -1
+                        car.delay = random.randrange(DelayForCarLow, DelayForCarHigh)
+                        if random.randrange(0, 10) <= ProbabilityOfEntertainment * 10:
+                            entertainment_node = random.choice([i for i in Map.spawn_nodes if i != car.home_node and i != car.work_node])
+                            way = GraphAlgorithms.A_Star(Map.nodes, parking_node, entertainment_node)
+                        else:
+                            if car.home_node != parking_node:
+                                way = GraphAlgorithms.A_Star(Map.nodes, parking_node, car.home_node)
+                            else:
+                                way = GraphAlgorithms.A_Star(Map.nodes, parking_node, car.work_node)
 
-                    del CarDriver.cars_array[car_index]
-                    del car
-                    line.K -= 1 / len(line.cells)
-                    continue
+                        for x in way:
+                            car.addWayNode(x[0], x[1], x[2])
+
+                        car.pos = (0, None)
+                        parking_node.queue.append(car)
+
+                    # del CarDriver.cars_array[car_index]
+                    # del car
+                    # line.K -= 1 / len(line.cells)
+                    # continue
 
                 else:
                     
@@ -135,17 +157,17 @@ class CarDriver:
                     if car.next_x == 0:
                         car.wayProgress -= 1
                         car.currentLine = old_line
-                        line.K += 1 / len(line.cells)
                         line = car.getLines()[car.currentLine]
                         car.next_x = len(line.cells) - 1
-                    else:
-                        line.K += 1 / len(line.cells)
+                    
+                    line.K += 1 / len(line.cells)
 
             
             car.x = car.next_x
             try:
-                car.getLines()[car.currentLine].cells[car.x] = 1
-                line.K += 1 / len(line.cells)
+                if car.x != -1:
+                    car.getLines()[car.currentLine].cells[car.x] = 1
+                    line.K += 1 / len(line.cells)
             except:
                 del CarDriver.cars_array[car_index]
                 del car
