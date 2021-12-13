@@ -212,3 +212,20 @@ function highlight_path(car_id)
         });
     }
 }
+
+function setPrice()
+{
+    if(!map_ajax_state_sending){
+        map_ajax_state_sending = true
+        $.ajax({
+            url: "/price",
+            type: "get",
+            cache: false,
+            success: function(response) {
+                $('#price_info').html(response);
+                console.log(response);
+                map_ajax_state_sending = false;
+            },
+        });
+    }
+}

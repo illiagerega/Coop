@@ -1,3 +1,4 @@
+from typing import Counter
 from .Util.MapController import Map
 from .CarController import CarDriver
 from .LightsController import LightsController
@@ -10,6 +11,8 @@ import time
 
 import json
 import osmnx
+
+count = 1
 
 class PortDriver:
 
@@ -188,3 +191,12 @@ class PortDriver:
         
         # sublight -> list[[x, y], angle, color]
         return [self.id, sublights, self.array_roads, self.periods, self._is_first_open, self.counter]
+
+    
+    @staticmethod
+    def price_counter():
+        global count
+        string = f'Traffic lights - {count * 2}$; Adjuster - {count * 1.25}$'
+
+        count += 1
+        return string

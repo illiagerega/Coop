@@ -39,6 +39,7 @@ const onStart = () => {
         $("#button_start").text("Stop");
         $("#button_pause").css("visibility", "visible");
         $("#speed_menu").css("visibility", "visible");
+        $("#price").css("visibility", "visible");
     }
     else
     {
@@ -56,10 +57,12 @@ const onStart = () => {
 
 function setIntervals(){
     eventCars = setInterval(setCars, speed);
+    eventPrice = setInterval(setPrice, speed+100);
 }
 
 function clearIntervals(){
     clearInterval(eventCars);
+    clearInterval(eventPrice);
 }
 
 const setSpeed = (value) => {

@@ -226,6 +226,11 @@ def lights_editor():
     
     return("", 204)
 
+@app.route('/price')
+def price():
+    price = PortDriver.price_counter()
+    return price
+
 if __name__ == "__main__":
     app.run(debug=True)
  
