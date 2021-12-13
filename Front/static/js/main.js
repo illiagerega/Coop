@@ -76,16 +76,16 @@ function createCar(x, y){
         cylinder.renderOrder = 100000;
 
         //Get the position of the click
-        const geoPosition = mapView.getGeoCoordinatesAt(x, y);
+        const geoPosition = mapView.getGeoCoordinatesAt(y, x);
         cylinder.anchor = geoPosition;
 
         //Add object to the map
         mapView.mapAnchors.add(cylinder);
         mapView.update();
 
-        setTimeout(() => {
-            mapView.mapAnchors.remove(cylinder)
-        }, car_speed);
+        //setTimeout(() => {
+        //    mapView.mapAnchors.remove(cylinder)
+        //}, car_speed);
 
         console.log('car was created')
         console.log(x, y)
@@ -167,3 +167,4 @@ function clearIntervals_3d(){
 }
 
 createCar(48.93312, 24.81248);
+createCar(48.92104292204861, 24.708878438194443)
