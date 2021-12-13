@@ -104,8 +104,8 @@ class CarDriver:
             line.K -= 1 / len(line.cells)
             if car.next_x >= len(line.cells):
                 if car.wayProgress + 1 >= len(car.way):
-                    # if car ended his path
-                    # change her path and change her delay
+                    # if the car ends his path
+                    # he will change his path and change his delay
                     parking_node = Map.nodes[car.getRoad().end_node]
 
                     if parking_node.n_parking_places <= len(parking_node.queue):

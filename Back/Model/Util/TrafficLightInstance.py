@@ -37,9 +37,9 @@ class TrafficLight:
     # The main idea of this: We have open group of roads
     # Stop flow in first road for const time, after that
     # vice versa for another road
-    # But the cycle might change, because of condition (if here's one road, if one road has density == 0)
+    # But the cycle might change because of condition (if here's one road, if one road has density == 0)
 
-    # Simple enough, if I will work out something more reasonable for our purposes, I'll write it down 
+    # Simple enough, if I work out something more reasonable for our purposes, I'll write it down
     class Controller:
         def __init__(self, group_roads: list[list[Road]]) -> None:
             self._period_stopping = PeriodStopFlow
@@ -173,7 +173,7 @@ class TrafficLight:
 
             self.controller.changeLine()
         except:
-            print("Captured some unadequate problems with traffic lights")
+            print("Captured some inadequate problems with traffic lights")
 
         self._is_first_open = not self._is_first_open
 
