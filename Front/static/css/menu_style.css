@@ -121,6 +121,7 @@ input[type=submit] {
 
 .menu_settings {
     width: 100%;
+    height: 300px;
     position: absolute;
     border-radius: 10px;
     overflow-x: scroll;
@@ -144,4 +145,51 @@ input[type=submit] {
     font-size: 2em;
     color: rgb(150, 150, 150);
 
+}
+
+.name_menu_info{
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+.name_menu_info_roads{
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+.namu_menu_info > span{
+    margin: 20px;
+}
+.table_info_span_car{
+    background: #333;
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    position: relative;
+    margin: 5px;
+}
+.table_info_span_light{
+    background: #333;
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    position: relative;
+    margin: 5px;
+}
+.table_info_span_road{
+    background: #333;
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    position: relative;
+    margin: 5px;
+}
+span.ok{
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    color: black;
+    margin-top: 20px;
 }
