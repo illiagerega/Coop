@@ -61,56 +61,30 @@
                 <ul class="edit_menu">
                     <li class="edit_menu_li" onclick="closeCars(event)"><a>Close</a></li>
                 </ul>
-                <table class="info">
-                    <form method="post" id="cars_form" action="/editior" enctype="multipart/form-data">
-                        <tr>
-                            <table>
-                                <th>Id</th>
+                <table class="info" id = "table_cars_info">
+                                <!-- <th>Id</th>
                                 <th>X</th>
                                 <th>Y</th>
                                 <th>Angle</th>
                                 <th>Speed</th>
                                 <th>Start Node</th>
-                                <th>End Node</th>
-                            <div id="cars_table">
-
-
-                            </div>
-                                
-                            </table>
-                            <input type="submit" value="Save">
-                        </tr>
-                    </form>
+                                <th>End Node</th> -->
                 </table>
             </div>
             <div style="background-color: white; visibility: hidden;" class="menu_settings" id="lights">
                 <ul class="edit_menu">
                     <li class="edit_menu_li" onclick="closeLights(event)"><a>Close</a></li>
                 </ul>
-                <table class="info">
-                    <tr>
-                        <form method="post" id="cars_form" action="/editior" enctype="multipart/form-data"></form>
-                        <table>
-                            <th>Id</th>
-                            <th>Period 1</th>
-                            <th>Period 2</th>
-                            <th>State</th>
-                            <th>Counter</th>
-                        
-                        </table>
-                            <input type="submit" value="Save">
-                        </form>
-                    </tr>
+                <table class="info" id = "table_lights_info">
+
                 </table>
             </div>
             <div style="background-color: white; visibility: hidden;" class="menu_settings" id="roads">
                 <ul class="edit_menu">
                     <li class="edit_menu_li" onclick="closeRoads(event)"><a>Close</a></li>
                 </ul>
-                <table class="info">
-                    <tr>
-                        <textarea>{{ map_ }}</textarea>
-                    </tr>
+                <table class="info" id = "table_roads_info">
+
                 </table>
             </div>
         </div>
@@ -163,9 +137,18 @@
     </div>
     <div id="cars_editor" style="position:absolute; z-index: 999; visibility: hidden;">
         <ul class="menu_sim"  style="left:30%; padding-top:15px;padding-bottom: 30px;">
-            <li class="name_menu"></li>Roman, make menu to display info about car, desired to make in "atrribute navigator"</li>
+            <li class="name_menu_info">
+
+            </li>
         </ul>
-        </div>
+    </div>
+    <div id="roads_editor" style="position:absolute; z-index: 999; visibility: hidden;">
+        <ul class="menu_sim"  style="left:30%; padding-top:15px;padding-bottom: 30px;">
+            <li class="name_menu_info_roads">
+                
+            </li>
+        </ul>
+    </div>
 </div>
     
     

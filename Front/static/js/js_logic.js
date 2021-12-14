@@ -93,15 +93,27 @@ function construct_cars(){
         });
         document.getElementById("cars").innerHTML = draw_cars;
 }
-function show_car(car_id){
+function show_car(id){
     if(!paused) return;
     hide_all();
-    let car = current_cars.get(car_id);
-    showCarsEditor();
-    highlight_path(car_id);
+    document.getElementById('cars_editor').style.visibility = 'visible';
+    let info_cars = document.querySelector('.name_menu_info');
+    let car = document.getElementById(id);
+    let direction = parseInt(car.style.transform.slice(7, car.style.transform.length));
+    let info = '<span id="car_info_id">car ID: ' + car.id
+    + '</span><span id="car_info_posX">position X: ' + Math.round(parseInt(car.style.left))
+    + '</span><span id="car_info_posY">position Y: ' + Math.round(parseInt(car.style.top))
+    + '</span><span id="car_info_direction">direction: ' + direction + '</span>'
+    + '<span class="ok" onclick="hide_car()">OK</span>';
+    info_cars.innerHTML = info;
+}
+
+function hide_car(){
+    document.getElementById('cars_editor').style.visibility = 'hidden';
 }
 
 function form_lights_array(lights_str){ // [id, sublights[], green_period, red_period]
+    //document.getElementById("lights_movable").innerHTML = lights_str["lights"];
      lights_python_array = JSON.parse(lights_str);
      for(const [skey, value] of Object.entries(lights_python_array)){
         let key = parseInt(skey);
@@ -125,6 +137,7 @@ function construct_lights(){
 }
 
 function get_light_editor(light_index){
+    console.log(light_index);
     if(!current_lights.has(light_index) || !paused) return;
     hide_all();
 
@@ -133,6 +146,24 @@ function get_light_editor(light_index){
     document.getElementById("red_period_input").value=curr_light.red_period;
     document.getElementById("green_period_input").value=curr_light.green_period;
     document.getElementById("light_id").value=light_index;
+}
+
+function show_road(id){
+    document.getElementById('roads_editor').style.visibility = 'visible';
+    let info_roads = document.querySelector('.name_menu_info_roads');
+    let road = document.getElementById('road_' + id);
+    let direction = +parseInt(road.style.transform.slice(7, road.style.transform.length));
+    let info = '<span id="road_info_id">road ID: ' + id
+    + '</span><span id="road_info_posX">center position X: ' + Math.round(parseInt(road.style.left))
+    + '</span><span id="road_info_node2">center position Y: ' + Math.round(parseInt(road.style.top))
+    + '</span><span id="road_info_direction">direction: ' + direction
+    + '</span><span id="road_info_length">lenth: ' + Math.round(parseInt(road.style.width))
+    + '</span><span class="ok" onclick="hide_road()">OK</span>';
+    info_roads.innerHTML = info;
+}
+
+function hide_road() {
+    document.getElementById('roads_editor').style.visibility = 'hidden';
 }
 
 // AJAX receivement
