@@ -54,37 +54,37 @@ class TrafficLight:
 
         def change(self, is_first_open):
             # firstly, change timers
-            group1 = [False]*len(self._group_roads[0])
-            group2 = [False]*len(self._group_roads[1])
+            group_bools1 = [False] * len(self._group_roads[0])
+            group_bools2 = [False] * len(self._group_roads[1])
             
             for road in self._group_roads[int(not is_first_open)]:
                 road.Flow()
 
             if is_first_open:
-                if len(group1) >= 2:
+                if len(group_bools1) >= 2:
                     if self._first_road_stopped:
                         if self._group_roads[0][0].K < self._ignoring_sup: # We need to add "seeing" if line's end is busy
-                            group1[0] = True
-                        group1[1] = True
+                            group_bools1[0] = True
+                        group_bools1[1] = True
                     else:
                         if self._group_roads[0][1].K < self._ignoring_sup:
-                            group1[1] = True
-                        group1[0] = True
+                            group_bools1[1] = True
+                        group_bools1[0] = True
                 else:
-                    group1 = [True]
+                    group_bools1 = [True]
 
             else:
-                if len(group2) >= 2:
+                if len(group_bools2) >= 2:
                     if self._first_road_stopped:
                         if self._group_roads[1][0].K < self._ignoring_sup: # We need to add "seeing" if line's end is busy
-                            group2[0] = True
-                        group2[1] = True
+                            group_bools2[0] = True
+                        group_bools2[1] = True
                     else:
                         if self._group_roads[1][1].K < self._ignoring_sup:
-                            group2[1] = True
-                        group2[0] = True
+                            group_bools2[1] = True
+                        group_bools2[0] = True
                 else:
-                    group2 = [True]
+                    group_bools2 = [True]
 
             self._timer += 1
             if self._timer > self._period_stopping:
@@ -92,7 +92,7 @@ class TrafficLight:
                 self._timer = 0
 
             # and then change roads' stop signals 
-            for index, flag in enumerate(group1):
+            for index, flag in enumerate(group_bools1):
                 if not flag:
                     road = self._group_roads[0][index]
                     for line in road.lines[road.start_node]:
@@ -102,15 +102,19 @@ class TrafficLight:
                     for line in road.lines[road.start_node]:
                         line.cells[-1] = 0
             
-            for index, flag in enumerate(group2):
-                if not flag:
-                    road = self._group_roads[1][index]
-                    for line in road.lines[road.start_node]:
-                        line.cells[-1] = 1
-                else:
-                    road = self._group_roads[1][index]
-                    for line in road.lines[road.start_node]:
-                        line.cells[-1] = 0
+            for index, flag in enumerate(group_bools2):
+                try:
+                    if not flag:
+                        road = self._group_roads[1][index]
+                        for line in road.lines[road.start_node]:
+                            line.cells[-1] = 1
+                    else:
+                        road = self._group_roads[1][index]
+                        for line in road.lines[road.start_node]:
+                            line.cells[-1] = 0
+                
+                except:
+                    pass
 
 
     def __init__(self, light_id, array_of_roads,  init_periods, node_id):
