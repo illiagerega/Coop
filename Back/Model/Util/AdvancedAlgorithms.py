@@ -1,6 +1,7 @@
 from start import info
 from .Consts import *
-from .MapController import Map
+from .NodeInstance import Node
+from .RoadInstance import Road
 import math
 
 class AdvencedGraphAlgorithms:
@@ -13,7 +14,10 @@ class AdvencedGraphAlgorithms:
         n_lines = math.inf
 
         
+        
 
 
 class OptimizedGraph:
-    pass
+
+    def InitGraph(nodes: list[Node], roads: list[Road]):
+        pass
