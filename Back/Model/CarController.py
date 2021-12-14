@@ -117,12 +117,12 @@ class CarDriver:
                         car.delay = random.randrange(DelayForCarLow, DelayForCarHigh)
                         if random.randrange(0, 10) <= ProbabilityOfEntertainment * 10:
                             entertainment_node = random.choice([i for i in Map.spawn_nodes if i != car.home_node and i != car.work_node])
-                            way = GraphAlgorithms.A_Star(Map.nodes, parking_node, entertainment_node)
+                            way = GraphAlgorithms.A_Star(Map.nodes, parking_node.index, entertainment_node)
                         else:
-                            if car.home_node != parking_node:
-                                way = GraphAlgorithms.A_Star(Map.nodes, parking_node, car.home_node)
+                            if car.home_node != parking_node.index:
+                                way = GraphAlgorithms.A_Star(Map.nodes, parking_node.index, car.home_node)
                             else:
-                                way = GraphAlgorithms.A_Star(Map.nodes, parking_node, car.work_node)
+                                way = GraphAlgorithms.A_Star(Map.nodes, parking_node.index, car.work_node)
 
                         for x in way:
                             car.addWayNode(x[0], x[1], x[2])
